@@ -1,0 +1,195 @@
+[
+  {
+    "elr": "http://xbrl.frc.org.uk/dsep/roles/DSEPAgreement",
+    "definition": "114 - DSEP Agreement",
+    "numeric_part": 114,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "ec654152-138b-4a92-8299-02fd043136ce",
+        "qname": "dsep:DSEPAgreementHeading",
+        "name": "DSEP Agreement [heading]",
+        "xbrl_type": "headingItemType",
+        "full_type": "types:headingItemType",
+        "label_cy": "Cytundeb DSEP [pennawd]",
+        "substitution_group": "xbrli:item",
+        "concept_id": "dsep:DSEPAgreementHeading",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "08ec63a8-5e6e-4ce8-80d3-ff1a0de82667",
+            "qname": "bus:EntityInformationHeading",
+            "name": "Entity information [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Gwybodaeth am yr endid [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:EntityInformationHeading",
+            "abstract": true,
+            "children": [
+              {
+                "tree_id": "0000-0000-0000",
+                "uuid": "b68415e5-0eae-48bb-a925-73d60c580a36",
+                "qname": "bus:UKCompaniesHouseRegisteredNumber",
+                "name": "UK Companies House registered number",
+                "xbrl_type": "stringItemType",
+                "full_type": "xbrli:stringItemType",
+                "label_cy": "Rhif cofrestredig Tŷ'r Cwmnïau yn y DU",
+                "substitution_group": "xbrli:item",
+                "concept_id": "bus:UKCompaniesHouseRegisteredNumber",
+                "abstract": false,
+                "children": []
+              },
+              {
+                "tree_id": "0000-0000-0001",
+                "uuid": "d82aed42-0a9e-4c6c-bbd6-e03845fe1904",
+                "qname": "bus:EntityCurrentLegalOrRegisteredName",
+                "name": "Entity current legal or registered name",
+                "xbrl_type": "stringItemType",
+                "full_type": "xbrli:stringItemType",
+                "label_cy": "Enw cyfreithiol neu gofrestredig presennol yr endid",
+                "substitution_group": "xbrli:item",
+                "concept_id": "bus:EntityCurrentLegalOrRegisteredName",
+                "abstract": false,
+                "children": []
+              },
+              {
+                "tree_id": "0000-0000-0002",
+                "uuid": "2cf23f0f-d1aa-480a-ba53-11347c1242cc",
+                "qname": "bus:EndDateForPeriodCoveredByReport",
+                "name": "End date for period covered by report",
+                "xbrl_type": "dateItemType",
+                "full_type": "xbrli:dateItemType",
+                "label_cy": "Dyddiad terfyn cyfnod yr adroddiad",
+                "substitution_group": "xbrli:item",
+                "concept_id": "bus:EndDateForPeriodCoveredByReport",
+                "abstract": false,
+                "children": []
+              }
+            ]
+          },
+          {
+            "tree_id": "0000-0001",
+            "uuid": "a6393e36-b37c-4606-9bea-af077fd75a3b",
+            "qname": "dsep:DSEPAgreementStatementHeading",
+            "name": "DSEP Agreement statement [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Datganiad Cytundeb DSEP [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "dsep:DSEPAgreementStatementHeading",
+            "abstract": true,
+            "children": [
+              {
+                "tree_id": "0000-0001-0000",
+                "uuid": "7360db9b-7344-43e5-8f8b-0b611676b51b",
+                "qname": "dsep:OnlyOneFollowingThreeStatementsMayBeTaggedGuidance",
+                "name": "Only one of the following three statements may be tagged [guidance]",
+                "xbrl_type": "guidanceItemType",
+                "full_type": "types:guidanceItemType",
+                "label_cy": "Dim ond un o'r tri datganiad canlynol y mae modd ei dagio [canllawiau]",
+                "substitution_group": "xbrli:item",
+                "concept_id": "dsep:OnlyOneFollowingThreeStatementsMayBeTaggedGuidance",
+                "abstract": true,
+                "children": []
+              },
+              {
+                "tree_id": "0000-0001-0001",
+                "uuid": "9ca96fa5-687c-43ca-8dee-26a3412adb4b",
+                "qname": "dsep:StatementThatCompanyEntitledToExemptionFromPreparingAccountsUnderSection394ACompaniesAct2006RelatingToDormantSubsidiaryCompanies",
+                "name": "Statement that company entitled to exemption from preparing accounts under section 394A Companies Act 2006 relating to dormant subsidiary companies",
+                "xbrl_type": "stringItemType",
+                "full_type": "xbrli:stringItemType",
+                "label_cy": "Datganiad bod gan y cwmni hawl i gael ei eithrio rhag paratoi cyfrifon o dan adran 394A o Ddeddf Cwmnïau 2006 mewn perthynas ag is-gwmnïau segur",
+                "substitution_group": "xbrli:item",
+                "concept_id": "dsep:StatementThatCompanyEntitledToExemptionFromPreparingAccountsUnderSection394ACompaniesAct2006RelatingToDormantSubsidiaryCompanies",
+                "abstract": false,
+                "children": []
+              },
+              {
+                "tree_id": "0000-0001-0002",
+                "uuid": "bac97d46-26b2-45ca-bc49-53ffe445f4e4",
+                "qname": "dsep:StatementThatCompanyEntitledToExemptionFromObligationToFileAccountsUnderSection448ACompaniesAct2006RelatingToDormantSubsidiaryCompanies",
+                "name": "Statement that company entitled to exemption from obligation to file accounts under section 448A Companies Act 2006 relating to dormant subsidiary companies",
+                "xbrl_type": "stringItemType",
+                "full_type": "xbrli:stringItemType",
+                "label_cy": "Datganiad bod gan y cwmni hawl i gael ei eithrio rhag y rhwymedigaeth i ffeilio cyfrifon o dan adran 448A o Ddeddf Cwmnïau 2006 mewn perthynas ag is-gwmnïau segur",
+                "substitution_group": "xbrli:item",
+                "concept_id": "dsep:StatementThatCompanyEntitledToExemptionFromObligationToFileAccountsUnderSection448ACompaniesAct2006RelatingToDormantSubsidiaryCompanies",
+                "abstract": false,
+                "children": []
+              },
+              {
+                "tree_id": "0000-0001-0003",
+                "uuid": "10fc45ee-06d6-4f4b-9241-c10e01681a6e",
+                "qname": "direp:StatementThatCompanyEntitledToExemptionFromAuditUnderSection479ACompaniesAct2006RelatingToSubsidiaryCompanies",
+                "name": "Statement that company entitled to exemption from audit under section 479A Companies Act 2006 relating to subsidiary companies",
+                "xbrl_type": "stringItemType",
+                "full_type": "xbrli:stringItemType",
+                "label_cy": "Datganiad bod gan y cwmni hawl i esemptiad o archwiliad o dan adran 479A Deddf Cwmnïau 2006 mewn perthynas ag is-gwmnïau",
+                "substitution_group": "xbrli:item",
+                "concept_id": "direp:StatementThatCompanyEntitledToExemptionFromAuditUnderSection479ACompaniesAct2006RelatingToSubsidiaryCompanies",
+                "abstract": false,
+                "children": []
+              }
+            ]
+          },
+          {
+            "tree_id": "0000-0002",
+            "uuid": "5b61c571-25ec-4ff7-a38a-18266c0803e8",
+            "qname": "dsep:DSEPAgreementSignatoriesHeading",
+            "name": "DSEP Agreement Signatories [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Llofnodwyr Cytundeb DSEP [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "dsep:DSEPAgreementSignatoriesHeading",
+            "abstract": true,
+            "children": [
+              {
+                "tree_id": "0000-0002-0000",
+                "uuid": "5b92016a-4dd8-4c5d-9527-1242244cb0b4",
+                "qname": "dsep:DateSigningDSEPAgreement",
+                "name": "Date of signing of DSEP Agreement",
+                "xbrl_type": "dateItemType",
+                "full_type": "xbrli:dateItemType",
+                "label_cy": "Dyddiad llofnodi Cytundeb DSEP",
+                "substitution_group": "xbrli:item",
+                "concept_id": "dsep:DateSigningDSEPAgreement",
+                "abstract": false,
+                "children": []
+              },
+              {
+                "tree_id": "0000-0002-0001",
+                "uuid": "109cd513-e1de-422b-b89f-bc902c01a32d",
+                "qname": "dsep:NameDirectorParentSigningDSEPAgreement",
+                "name": "Name of director of parent signing DSEP Agreement",
+                "xbrl_type": "stringItemType",
+                "full_type": "xbrli:stringItemType",
+                "label_cy": "Enw cyfarwyddwr y rhiant-gwmni sy'n llofnodi Cytundeb DSEP",
+                "substitution_group": "xbrli:item",
+                "concept_id": "dsep:NameDirectorParentSigningDSEPAgreement",
+                "abstract": false,
+                "children": []
+              },
+              {
+                "tree_id": "0000-0002-0002",
+                "uuid": "c96dd738-153b-41b2-861f-e3d2411623b2",
+                "qname": "dsep:NameDirectorSubsidiaryCompanySigningDSEPAgreement",
+                "name": "Name of director of subsidiary company signing DSEP Agreement",
+                "xbrl_type": "stringItemType",
+                "full_type": "xbrli:stringItemType",
+                "label_cy": "Enw cyfarwyddwr yr is-gwmni sy'n llofnodi Cytundeb DSEP",
+                "substitution_group": "xbrli:item",
+                "concept_id": "dsep:NameDirectorSubsidiaryCompanySigningDSEPAgreement",
+                "abstract": false,
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
