@@ -33,6 +33,8 @@ type PendingNavigation = {
   treeId?: string;
 };
 
+const NAV_LOG_PREFIX = "[TreeLocationNavigation]";
+
 const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // UI state
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
@@ -243,6 +245,19 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
 
   // Called from TreeLocationsTab
   const navigateToLocation = useCallback((target: TreeLocationTarget) => {
+    console.debug(
+      `${NAV_LOG_PREFIX} request`,
+      {
+        fromNetwork: network,
+        toNetwork: target.network,
+        qname: target.qname,
+        uuid: target.uuid,
+        treeId: target.treeId,
+        label: target.label,
+        elr: target.elr,
+      }
+    );
+    
     setPendingNavigation({
       network: target.network,
       qname: target.qname,
@@ -263,17 +278,66 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     if (!pendingNavigation) return;
     if (network !== pendingNavigation.network) return;
 
-    const path =
-      findPathInTreeNodes(
-        currentTreeNodes,
-        (node) =>
-          (!!pendingNavigation.uuid && node.data?.uuid === pendingNavigation.uuid) ||
-          (!!pendingNavigation.treeId && node.data?.treeId === pendingNavigation.treeId) ||
-          node.data?.qname === pendingNavigation.qname
-      ) ?? null;
+    // const path =
+    //   findPathInTreeNodes(
+    //     currentTreeNodes,
+    //     (node) =>
+    //       (!!pendingNavigation.uuid && node.data?.uuid === pendingNavigation.uuid) ||
+    //       (!!pendingNavigation.treeId && node.data?.treeId === pendingNavigation.treeId) ||
+    //       node.data?.qname === pendingNavigation.qname
+    //   ) ?? null;
 
-    if (!path) return;
+    // if (!path) return;
+    const treeIdMatches: TreeNode[] = [];
+    const uuidMatches: TreeNode[] = [];
+    const qnameMatches: TreeNode[] = [];
+    const collectMatches = (nodes: TreeNode[]) => {
+      for (const node of nodes) {
+        if (pendingNavigation.treeId && node.data?.treeId === pendingNavigation.treeId) {
+          treeIdMatches.push(node);
+        }
+        if (pendingNavigation.uuid && node.data?.uuid === pendingNavigation.uuid) {
+          uuidMatches.push(node);
+        }
+        if (node.data?.qname === pendingNavigation.qname) {
+          qnameMatches.push(node);
+        }
+        if (node.children?.length) collectMatches(node.children);
+      }
+    };
+    collectMatches(currentTreeNodes);
 
+    let matcher: (node: TreeNode) => boolean;
+    let matchStrategy: "treeId" | "uuid" | "qname";
+    if (pendingNavigation.treeId && treeIdMatches.length > 0) {
+  matcher = (node) => node.data?.treeId === pendingNavigation.treeId;
+  matchStrategy = "treeId";
+} else if (pendingNavigation.uuid && uuidMatches.length > 0) {
+  matcher = (node) => node.data?.uuid === pendingNavigation.uuid;
+  matchStrategy = "uuid";
+} else {
+  matcher = (node) => node.data?.qname === pendingNavigation.qname;
+  matchStrategy = "qname";
+}
+
+    console.debug(`${NAV_LOG_PREFIX} candidates`, {
+      network,
+      requested: pendingNavigation,
+      treeIdMatches: treeIdMatches.length,
+      uuidMatches: uuidMatches.length,
+      qnameMatches: qnameMatches.length,
+      using: matchStrategy,
+    });
+
+    const path = findPathInTreeNodes(currentTreeNodes, matcher) ?? null;
+
+    if (!path) {
+      console.warn(`${NAV_LOG_PREFIX} no path found`, {
+        network,
+        requested: pendingNavigation,
+      });
+      return;
+    }
     const expanded: Record<string, boolean> = {};
     for (const node of path) expanded[node.key] = true;
     setExpandedKeys((prev) => ({ ...prev, ...expanded }));
@@ -282,6 +346,15 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     setSelectedNode(targetNode);
     setHighlightedKey(targetNode.key);
     setTimeout(() => setHighlightedKey(null), 5000);
+
+     console.debug(`${NAV_LOG_PREFIX} resolved`, {
+      using: matchStrategy,
+      targetKey: targetNode.key,
+      targetQname: targetNode.data?.qname,
+      targetUuid: targetNode.data?.uuid,
+      targetTreeId: targetNode.data?.treeId,
+      pathDepth: path.length,
+    });
 
     setPendingNavigation(null);
   }, [pendingNavigation, network, currentTreeNodes, findPathInTreeNodes]);

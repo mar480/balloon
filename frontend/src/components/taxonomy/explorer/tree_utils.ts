@@ -29,28 +29,38 @@ export const mapElrGroupedTreeToTreeNodes = (
     lang === "cy" ? (n.label_cy ?? n.name ?? "Unnamed Node")
                   : (n.name ?? n.label_cy ?? "Unnamed Node");
 
-  const mapConcept = (n: any): TreeNode => ({
-    key: n.uuid || n.tree_id || n.qname || n.concept_id,
-    label: n.name ?? n.label_cy ?? "Unnamed Node", // stable base label
-    data: {
-      qname: n.qname ?? n.concept_id,
-      xbrl_type: n.xbrl_type,
-      full_type: n.full_type,
-      substitution_group: n.substitution_group,
-      abstract: n.abstract === true,
-      treeId: n.tree_id,
-      uuid: n.uuid,
-      label_cy: n.label_cy, // important
-    },
-    children: Array.isArray(n.children) ? n.children.map((c) => mapConcept(c)) : [],
-  });
+const mapConcept = (n: any, pathKey: string): TreeNode => ({
+  // Instance key first (tree occurrence), then deterministic fallback.
+  key: String(n.tree_id ?? `${pathKey}:${n.uuid ?? n.qname ?? n.concept_id ?? "node"}`),
+  label: n.name ?? n.label_cy ?? "Unnamed Node",
+  data: {
+    qname: n.qname ?? n.concept_id,
+    xbrl_type: n.xbrl_type,
+    full_type: n.full_type,
+    substitution_group: n.substitution_group,
+    abstract: n.abstract === true,
+    treeId: n.tree_id,
+    uuid: n.uuid,
+    label_cy: n.label_cy,
+  },
+  children: Array.isArray(n.children)
+    ? n.children.map((c: any, idx: number) => mapConcept(c, `${pathKey}.${idx}`))
+    : [],
+});
 
-  return groups.map(g => ({
-    key: g.elr,                      // stable key per ELR
-    label: g.definition ?? "Unnamed Node",  // ELR header uses definition
-    data: { elr: g.elr, definition: g.definition, numeric_part: g.numeric_part, uuid: g.uuid },
-    children: Array.isArray(g.root_tree) ? g.root_tree.map((n:any) => mapConcept(n)) : [],
-  }));
+return groups.map((g: any, gIdx: number) => ({
+  key: String(g.elr ?? `elr-${gIdx}`),
+  label: g.definition ?? "Unnamed Node",
+  data: {
+    elr: g.elr,
+    definition: g.definition,
+    numeric_part: g.numeric_part,
+    uuid: g.uuid,
+  },
+  children: Array.isArray(g.root_tree)
+    ? g.root_tree.map((n: any, rootIdx: number) =>
+        mapConcept(n, `${g.elr ?? "elr"}:${gIdx}.${rootIdx}`)
+      )
+    : [],
+}));
 };
-
-
