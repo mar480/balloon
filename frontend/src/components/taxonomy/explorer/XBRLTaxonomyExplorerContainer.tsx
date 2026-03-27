@@ -73,6 +73,9 @@ const currentTreeNodes: TreeNode[] = useMemo(() => {
     setLoadingEntrypoint(true);
     setRawTreeData({});
     setNetwork("");
+    setSelectedNode(null);
+    setExpandedKeys({});
+    setHighlightedKey(null);
 
     fetch("/api/load-entrypoint", {
       method: "POST",

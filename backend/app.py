@@ -151,38 +151,6 @@ def get_hypercubes():
 
     return jsonify({"hypercubes": results})
 
-# @app.route("/api/concept-details")
-# def concept_details():
-#     taxonomy = getattr(g, "taxonomy", taxonomy_cache.get("active"))
-
-#     if taxonomy is None:
-#         return jsonify({"error": "No taxonomy loaded"}), 400
-
-#     g.taxonomy = taxonomy
-
-#     qname = request.args.get("qname", "")
-#     if ":" not in qname:
-#         return jsonify({"error": "Invalid qname"}), 400
-
-#     prefix, local_name = qname.split(":", 1)
-
-#     ns = None
-#     for qn in g.taxonomy.model.qnameConcepts.keys():
-#         if getattr(qn, "prefix", None) == prefix:
-#             ns = qn.namespaceURI
-#             break
-
-#     if ns is None:
-#         return jsonify({"error": f"Prefix '{prefix}' not found in loaded taxonomy"}), 404
-
-#     concept_data = g.taxonomy.concepts.get_concept_json(ns, local_name)
-#     if not concept_data:
-#         return jsonify({"error": f"Concept '{qname}' not found"}), 404
-
-#     concept_data["concept"]["qname"] = qname
-#     return jsonify(concept_data)
-
-
 @app.route("/api/concept-details")
 def concept_details():
     taxonomy = getattr(g, "taxonomy", taxonomy_cache.get("active"))
@@ -265,58 +233,6 @@ def list_entrypoints_by_year():
         return jsonify({"error": str(e)}), 404
     except Exception as e:
         return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
-
-# @app.route("/api/load-entrypoint", methods=["POST"])
-# def load_entrypoint():
-#     data = request.get_json()
-#     year = data.get("year")
-#     href = data.get("href")
-
-#     if not year or not href:
-#         return jsonify({"error": "Missing year or href"}), 400
-
-#     entrypoint_path = href
-
-#     try:
-#         # Close previous active taxonomy (if any) before replacing
-#         old_taxonomy = taxonomy_cache.get("active")
-#         if old_taxonomy is not None:
-#             try:
-#                 old_taxonomy.controller.close()
-#             except Exception:
-#                 pass
-
-#         g.taxonomy = TaxonomyContext(entrypoint_path)
-#         taxonomy_cache["active"] = g.taxonomy
-
-#         tree_dir = os.path.join(TAXONOMY_BASE_DIR, year, "trees")
-
-#         if not os.path.isdir(tree_dir):
-#             return jsonify({"error": f"Tree directory not found: {tree_dir}"}), 404
-        
-#         raw_entrypoint_name = os.path.splitext(os.path.basename(href))[0]
-#         entrypoint_name = re.split(r"[-_]\d{4}-\d{2}-\d{2}", raw_entrypoint_name)[0]
-#         print(f"[Flask] Extracted entrypoint_name: {entrypoint_name}")
-
-#         tree_files = os.path.join(TAXONOMY_BASE_DIR, year, "trees", entrypoint_name)
-#         print(f"[Flask] Looking for tree files in: {tree_files}")
-
-#         trees = {}
-#         for file in os.listdir(tree_files):
-#             if file.endswith(".json"):
-#                 with open(os.path.join(tree_files, file), "r", encoding="utf-8") as f:
-#                     tree_name = file.replace(".json", "")
-#                     trees[tree_name] = json.load(f)
-#         print("[Flask] Returning tree keys:", list(trees.keys()))
-
-#         return jsonify({
-#             "status": "loaded",
-#             "entrypoint": os.path.basename(href),
-#             "trees": trees
-#         })
-
-#     except Exception as e:
-#         return jsonify({"error": f"Failed to load taxonomy: {str(e)}"}), 500
 
 @app.route("/api/load-entrypoint", methods=["POST"])
 def load_entrypoint():
@@ -410,10 +326,6 @@ def load_entrypoint():
         print(f"[load-entrypoint] ERROR: {e}")
         return jsonify({"error": f"Failed to load taxonomy: {str(e)}"}), 500
 
-# @app.teardown_appcontext
-# def cleanup(exception=None):
-#     if hasattr(g, "taxonomy"):
-#         g.taxonomy.controller.close()
 
 @app.teardown_appcontext
 def cleanup(exception=None):

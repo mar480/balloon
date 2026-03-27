@@ -123,6 +123,7 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
               onNavigateToNode={onNavigateToNode}
               onNavigateToCrossReference={onNavigateToNode}
               language={language}
+              network={network} 
             />
           </div>
 
