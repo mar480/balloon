@@ -216,8 +216,8 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
       elrDefinition,
       numericPart,
       qname,
-      label: currentLabel,
       uuid: node.uuid,
+      label: currentLabel,
       treeId: node.tree_id,
       pathNodes: nextPathNodes,
     });
@@ -278,26 +278,16 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     if (!pendingNavigation) return;
     if (network !== pendingNavigation.network) return;
 
-    // const path =
-    //   findPathInTreeNodes(
-    //     currentTreeNodes,
-    //     (node) =>
-    //       (!!pendingNavigation.uuid && node.data?.uuid === pendingNavigation.uuid) ||
-    //       (!!pendingNavigation.treeId && node.data?.treeId === pendingNavigation.treeId) ||
-    //       node.data?.qname === pendingNavigation.qname
-    //   ) ?? null;
-
-    // if (!path) return;
-    const treeIdMatches: TreeNode[] = [];
     const uuidMatches: TreeNode[] = [];
+    const treeIdMatches: TreeNode[] = [];
     const qnameMatches: TreeNode[] = [];
     const collectMatches = (nodes: TreeNode[]) => {
       for (const node of nodes) {
-        if (pendingNavigation.treeId && node.data?.treeId === pendingNavigation.treeId) {
-          treeIdMatches.push(node);
-        }
         if (pendingNavigation.uuid && node.data?.uuid === pendingNavigation.uuid) {
           uuidMatches.push(node);
+        }
+        if (pendingNavigation.treeId && node.data?.treeId === pendingNavigation.treeId) {
+          treeIdMatches.push(node);
         }
         if (node.data?.qname === pendingNavigation.qname) {
           qnameMatches.push(node);
@@ -308,23 +298,23 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     collectMatches(currentTreeNodes);
 
     let matcher: (node: TreeNode) => boolean;
-    let matchStrategy: "treeId" | "uuid" | "qname";
-    if (pendingNavigation.treeId && treeIdMatches.length > 0) {
-  matcher = (node) => node.data?.treeId === pendingNavigation.treeId;
-  matchStrategy = "treeId";
-} else if (pendingNavigation.uuid && uuidMatches.length > 0) {
-  matcher = (node) => node.data?.uuid === pendingNavigation.uuid;
-  matchStrategy = "uuid";
-} else {
-  matcher = (node) => node.data?.qname === pendingNavigation.qname;
-  matchStrategy = "qname";
-}
+    let matchStrategy: "uuid" | "treeId" | "qname";
+    if (pendingNavigation.uuid && uuidMatches.length > 0) {
+      matcher = (node) => node.data?.uuid === pendingNavigation.uuid;
+      matchStrategy = "uuid";
+    } else if (pendingNavigation.treeId && treeIdMatches.length > 0) {
+      matcher = (node) => node.data?.treeId === pendingNavigation.treeId;
+      matchStrategy = "treeId";
+    } else {
+      matcher = (node) => node.data?.qname === pendingNavigation.qname;
+      matchStrategy = "qname";
+    }
 
     console.debug(`${NAV_LOG_PREFIX} candidates`, {
       network,
       requested: pendingNavigation,
-      treeIdMatches: treeIdMatches.length,
       uuidMatches: uuidMatches.length,
+      treeIdMatches: treeIdMatches.length,
       qnameMatches: qnameMatches.length,
       using: matchStrategy,
     });

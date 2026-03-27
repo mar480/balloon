@@ -15,8 +15,8 @@ export interface TreeLocationTarget {
   elrDefinition: string;
   numericPart?: number;
   qname: string;
-  label: string;
   uuid?: string;
+  label: string;
   treeId?: string;
   pathNodes: TreeLocationPathNode[];
 }
@@ -161,7 +161,7 @@ const TreeLocationsTab: React.FC<Props> = ({
               const pathKey = `path-${networkKey}-${elr}-${loc.pathNodes
                 .slice(0, depth + 1)
                 .map((p) => p.label)
-                .join("||")}-${loc.uuid ?? loc.treeId ?? ""}`;
+                .join("||")}-${loc.treeId ?? ""}`;
 
               let existing = currentChildren.find((c) => c.key === pathKey);
 

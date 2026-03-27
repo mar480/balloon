@@ -10,7 +10,7 @@ export interface TreeNode {
     label_cy?: string;
     elr?: string;
     definition?: string;
-    uuid:string;
+    uuid?:string;
     /** unique instance ID to avoid key collisions */
     treeId?: string;
   };
@@ -29,9 +29,13 @@ export const mapElrGroupedTreeToTreeNodes = (
     lang === "cy" ? (n.label_cy ?? n.name ?? "Unnamed Node")
                   : (n.name ?? n.label_cy ?? "Unnamed Node");
 
-const mapConcept = (n: any, pathKey: string): TreeNode => ({
+const mapConcept = (n: any, pathKey: string, elrKey: string): TreeNode => ({
   // Instance key first (tree occurrence), then deterministic fallback.
-  key: String(n.tree_id ?? `${pathKey}:${n.uuid ?? n.qname ?? n.concept_id ?? "node"}`),
+  key: String(
+    n.tree_id
+      ? `${elrKey}::${n.tree_id}`
+      : `${pathKey}:${n.uuid ?? n.qname ?? n.concept_id ?? "node"}`
+  ),
   label: n.name ?? n.label_cy ?? "Unnamed Node",
   data: {
     qname: n.qname ?? n.concept_id,
@@ -44,7 +48,7 @@ const mapConcept = (n: any, pathKey: string): TreeNode => ({
     label_cy: n.label_cy,
   },
   children: Array.isArray(n.children)
-    ? n.children.map((c: any, idx: number) => mapConcept(c, `${pathKey}.${idx}`))
+    ? n.children.map((c: any, idx: number) => mapConcept(c, `${pathKey}.${idx}`, elrKey))
     : [],
 });
 
@@ -59,7 +63,7 @@ return groups.map((g: any, gIdx: number) => ({
   },
   children: Array.isArray(g.root_tree)
     ? g.root_tree.map((n: any, rootIdx: number) =>
-        mapConcept(n, `${g.elr ?? "elr"}:${gIdx}.${rootIdx}`)
+        mapConcept(n, `${g.elr ?? "elr"}:${gIdx}.${rootIdx}`,String(g.elr ?? `elr-${gIdx}`))
       )
     : [],
 }));
