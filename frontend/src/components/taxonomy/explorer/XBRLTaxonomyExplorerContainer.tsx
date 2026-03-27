@@ -33,8 +33,8 @@ const currentTreeNodes: TreeNode[] = useMemo(() => {
   if (!raw || !Array.isArray(raw)) return [];
 
   // Both presentation and definition are ELR-grouped
-  return mapElrGroupedTreeToTreeNodes(raw, language);
-}, [rawTreeData, network, language]);
+  return mapElrGroupedTreeToTreeNodes(raw);
+}, [rawTreeData, network]);
 
   useEffect(() => {
     console.log("[Debug] Network:", network);
@@ -181,8 +181,8 @@ const currentTreeNodes: TreeNode[] = useMemo(() => {
           if (entrypointLoaded && rawTreeData[val]) {
             setNetwork(val);
             setExpandedKeys({});        // <-- reset expansions
-    setSelectedNode(null);      // <-- reset selection
-    setHighlightedKey(null);    // <-- reset highlight
+            setSelectedNode(null);      // <-- reset selection
+            setHighlightedKey(null);    // <-- reset highlight
           } else {
             console.warn("[NetworkChange] Ignored invalid or unloaded network:", val);
           }
