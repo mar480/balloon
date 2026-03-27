@@ -4,6 +4,7 @@ import TaxonomyTreeView from "./TaxonomyTreeView";
 import DetailsPanelContainer from "./DetailsPanelContainer";
 import ToolsPanel from "./ToolsPanel";
 import { TreeNode } from "@/components/taxonomy/explorer/tree_utils";
+import { TreeLocationTarget } from "./TreeLocationsTab";
 
 interface Props {
   selectedNode: TreeNode | null;
@@ -13,17 +14,18 @@ interface Props {
   onSelectNode: (node: TreeNode) => void;
   onExpandedKeysChange: (keys: { [key: string]: boolean }) => void;
   onNavigateToNode: (qname: string) => void;
+  onNavigateToLocation: (target: TreeLocationTarget) => void;
   onLanguageChange: (lang: "en" | "cy") => void;
   network: string;
   onNetworkChange: (network: string) => void;
   year: string | null;
   entrypoint: string | null;
-  entrypoints: { name: string; href: string }[]; // NEW
+  entrypoints: { name: string; href: string }[];
   onYearChange: (year: string | null) => void;
   onEntrypointChange: (entrypoint: string | null) => void;
-  // onEntrypointLoadingChange: (isLoading: boolean) => void;
   currentTreeNodes: TreeNode[];
   entrypointLoaded: boolean;
+  treeLocations: TreeLocationTarget[];
 }
 
 const XBRLTaxonomyExplorer: React.FC<Props> = ({
@@ -35,6 +37,7 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
   onSelectNode,
   onExpandedKeysChange,
   onNavigateToNode,
+  onNavigateToLocation,
   onNetworkChange,
   onLanguageChange,
   year,
@@ -42,9 +45,9 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
   entrypoints,
   onYearChange,
   onEntrypointChange,
-  // onEntrypointLoadingChange,
   currentTreeNodes,
   entrypointLoaded,
+  treeLocations,
 }) => {
   return (
     <div className="flex flex-col h-screen bg-white">
@@ -65,6 +68,7 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
               <option value="2023">2023</option>
             </select>
           </div>
+
           <div className="flex flex-col">
             <span className="font-semibold">Entrypoint</span>
             <select
@@ -81,6 +85,7 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
               ))}
             </select>
           </div>
+
           <div className="flex flex-col">
             <span className="font-semibold">Network</span>
             <select
@@ -100,6 +105,7 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
               <option value="definition_outflow">Definition: outflow</option>
             </select>
           </div>
+
           <div className="flex flex-col">
             <span className="font-semibold">Language</span>
             <select
@@ -115,20 +121,32 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
         </div>
       </header>
 
-      <Split direction="vertical" sizes={[79, 21]} minSize={[100, 100]} gutterSize={15} className="flex flex-col flex-1 overflow-hidden">
-        <Split className="flex flex-row-reverse flex-1 overflow-hidden" sizes={[50, 50]} minSize={[30, 40]} gutterSize={15}>
+      <Split
+        direction="vertical"
+        sizes={[79, 21]}
+        minSize={[100, 100]}
+        gutterSize={15}
+        className="flex flex-col flex-1 overflow-hidden"
+      >
+        <Split
+          className="flex flex-row-reverse flex-1 overflow-hidden"
+          sizes={[50, 50]}
+          minSize={[30, 40]}
+          gutterSize={15}
+        >
           <div className="min-w-[30%] max-w-full overflow-auto h-full p-4">
             <DetailsPanelContainer
               selectedNode={selectedNode}
               onNavigateToNode={onNavigateToNode}
               onNavigateToCrossReference={onNavigateToNode}
+              onNavigateToLocation={onNavigateToLocation}
+              treeLocations={treeLocations}
               language={language}
-              network={network} 
+              network={network}
             />
           </div>
 
           <div className="min-w-[40%] max-w-full overflow-auto border-r h-full">
-            
             <TaxonomyTreeView
               treeNodes={currentTreeNodes}
               key={network}
@@ -151,5 +169,3 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
 };
 
 export default XBRLTaxonomyExplorer;
-
-

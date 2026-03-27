@@ -29,21 +29,6 @@ export const mapElrGroupedTreeToTreeNodes = (
     lang === "cy" ? (n.label_cy ?? n.name ?? "Unnamed Node")
                   : (n.name ?? n.label_cy ?? "Unnamed Node");
 
-  // const mapConcept = (n: any, lang: Lang): TreeNode => ({
-  //   key: n.uuid || n.tree_id || n.qname || n.concept_id, // stable > random
-  //   label: pickConceptLabel(n, lang),
-  //   data: {
-  //     qname: n.qname ?? n.concept_id,
-  //     xbrl_type: n.xbrl_type,
-  //     full_type: n.full_type,
-  //     substitution_group: n.substitution_group,
-  //     abstract: n.abstract === true,
-  //     treeId: n.tree_id,
-  //     uuid: n.uuid,
-  //   },
-  //   children: Array.isArray(n.children) ? n.children.map(c => mapConcept(c, lang)) : [],
-  // });
-
   const mapConcept = (n: any): TreeNode => ({
     key: n.uuid || n.tree_id || n.qname || n.concept_id,
     label: n.name ?? n.label_cy ?? "Unnamed Node", // stable base label
