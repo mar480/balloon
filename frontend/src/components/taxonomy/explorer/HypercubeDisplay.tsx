@@ -18,6 +18,7 @@ interface HypercubeDisplayProps {
   };
   language: "en" | "cy";
   standalone?: boolean;
+  sourceQName?: string;
 }
 
 export interface DomainMember {
@@ -31,6 +32,7 @@ const HypercubeDisplay: React.FC<HypercubeDisplayProps> = ({
   hypercube,
   language,
   standalone = false,
+  sourceQName,
 }) => {
   const getDimensionCode = (d: { definition: string; dimensionName: string }) => {
     const source = d.definition || d.dimensionName || "";
@@ -56,7 +58,7 @@ const HypercubeDisplay: React.FC<HypercubeDisplayProps> = ({
         <h3 className="text-xl font-semibold text-blue-700 leading-tight">
           {hypercube.definition}
         </h3>
-        <PopOutButton hypercube={hypercube} />
+        <PopOutButton hypercube={hypercube} language={language} sourceQName={sourceQName}/>
       </div>
 
       <table className="w-full text-left text-sm border-y border-slate-200 table-fixed">

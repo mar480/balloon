@@ -1,7 +1,18 @@
 import React from "react";
 
-const PopOutButton: React.FC<{ hypercube: any }> = ({ hypercube }) => {
-  const openPopoutWindow = () => {
+interface PopOutButtonProps {
+  hypercube: any;
+  language: "en" | "cy";
+  sourceQName?: string;
+}
+
+const PopOutButton: React.FC<PopOutButtonProps> = ({
+  hypercube,
+  language,
+  sourceQName,
+}) => 
+  
+  {  const openPopoutWindow = () => {
     const popout = window.open(
       "/hypercube-popout",
       "_blank",
@@ -9,15 +20,35 @@ const PopOutButton: React.FC<{ hypercube: any }> = ({ hypercube }) => {
     );
 
     // Poll until the window is ready and then send the hypercube
-    const sendData = () => {
-      if (popout && popout.document.readyState === "complete") {
-        popout.postMessage({ type: "SET_HYPERCUBE", payload: hypercube }, "*");
-      } else {
-        setTimeout(sendData, 50);
+    if (!popout) {
+      return;
+    }
+
+      const sendData = (event: MessageEvent) => {
+      const fromPopout = event.source === popout;
+      const ready = event.data?.type === "HYPERCUBE_POPOUT_READY";
+
+      if (fromPopout && ready) {
+        popout.postMessage(
+          {
+            type: "SET_HYPERCUBE",
+            payload: {
+              hypercube,
+              language,
+              sourceQName,
+            },
+          },
+          window.location.origin
+        );
+        window.removeEventListener("message", sendData);
+        window.clearTimeout(cleanupTimeout);
       }
     };
 
-    sendData();
+    window.addEventListener("message", sendData);
+    const cleanupTimeout = window.setTimeout(() => {
+      window.removeEventListener("message", sendData);
+    }, 10000);
   };
 
   return (

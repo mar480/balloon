@@ -1,13 +1,28 @@
 import React, { useEffect, useState } from "react";
 import HypercubeDisplay from "./HypercubeDisplay";
 
+interface PopOutPayload {
+  hypercube: any;
+  language: "en" | "cy";
+  sourceQName?: string;
+}
+
+
 const HypercubePopOut = () => {
-  const [hypercube, setHypercube] = useState<any | null>(null);
+  const [payload, setPayload] = useState<PopOutPayload | null>(null);
 
   useEffect(() => {
+      if (window.opener && !window.opener.closed) {
+      window.opener.postMessage({ type: "HYPERCUBE_POPOUT_READY" }, window.location.origin);
+    }
+
     const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) {
+        return;
+      }
+
       if (event.data?.type === "SET_HYPERCUBE") {
-        setHypercube(event.data.payload);
+        setPayload(event.data.payload);
       }
     };
     window.addEventListener("message", handleMessage);
@@ -15,14 +30,22 @@ const HypercubePopOut = () => {
     return () => window.removeEventListener("message", handleMessage);
   }, []);
 
-  if (!hypercube) {
+  if (!payload) {
     return <p className="p-4 text-gray-600">Waiting for data…</p>;
   }
 
   return (
     <div className="p-4 text-gray-700">
-      <h1 className="text-lg font-semibold mb-4">Hypercube Viewer</h1>
-      <HypercubeDisplay hypercube={hypercube} />
+      {payload.sourceQName && (
+        <p className="mb-2 text-sm text-gray-500">
+          Showing relationships for <strong>{payload.sourceQName}</strong>
+        </p>
+      )}
+      <HypercubeDisplay
+        hypercube={payload.hypercube}
+        language={payload.language}
+        sourceQName={payload.sourceQName}
+      />
     </div>
   );
 };
