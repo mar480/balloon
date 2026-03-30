@@ -182,12 +182,12 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
         </div>
 
         <Accordion type="multiple" defaultValue={["search-filters", "references"]} className="w-full space-y-3">
-          <AccordionItem value="search-filters">
+          <AccordionItem value="search-filters" className="border rounded-md overflow-hidden">
             <AccordionTrigger className="py-2 px-2 text-sm font-semibold bg-blue-100 rounded">
               Search Filters
             </AccordionTrigger>
             <AccordionContent className="pt-3 space-y-3">
-              
+                <div className="p-3 space-y-3">
               <StringCheckboxGroup
                 label="Balance"
                 help="Accounting balance type."
@@ -208,17 +208,17 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
                 options={safeFilterOptions.xbrlType}
                 selected={filters.xbrlType}
                 onChange={(next) => onFiltersChange({ ...filters, xbrlType: next })}
-              />
+              /> </div>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="references">
+          <AccordionItem value="references" className="border rounded-md overflow-hidden">
             <AccordionTrigger className="py-2 px-2 text-sm font-semibold bg-blue-100 rounded">
               References
             </AccordionTrigger>
             <AccordionContent className="pt-3 space-y-3">
-              <div className="space-y-1">
-                <FieldLabelWithHelp
+            <div className="p-3 space-y-3">               
+               <FieldLabelWithHelp
                   label="Source"
                   help="Reference source, e.g. FRS 102."
                 />
@@ -240,9 +240,7 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
                     </option>
                   ))}
                 </select>
-              </div>
 
-              <div className="space-y-1">
                 <FieldLabelWithHelp
                   label="Paragraph"
                   help="Paragraph list filtered by selected source."
@@ -269,12 +267,12 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="advanced-xbrl">
+          <AccordionItem value="advanced-xbrl" className="border rounded-md overflow-hidden">
             <AccordionTrigger className="py-2 px-2 text-sm font-semibold bg-blue-100 rounded">
               Advanced XBRL filters
             </AccordionTrigger>
             <AccordionContent className="pt-3 space-y-3">
-              
+              <div className="p-3 space-y-3">
               <StringCheckboxGroup
                 label="Full type"
                 help="Qualified type QName."
@@ -308,6 +306,7 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
                 selected={filters.substitutionGroup}
                 onChange={(next) => onFiltersChange({ ...filters, substitutionGroup: next })}
               />
+              </div>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
