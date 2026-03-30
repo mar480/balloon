@@ -135,7 +135,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // Advanced Search state
   const [advancedSearchQuery, setAdvancedSearchQuery] = useState("");
   const [advancedSearchFilters, setAdvancedSearchFilters] =
-    useState<AdvancedSearchFilters>(PRESET_ADVANCED_FILTER_OPTIONS);
+    useState<AdvancedSearchFilters>(EMPTY_ADVANCED_FILTERS);
   const [advancedSearchResults, setAdvancedSearchResults] = useState<AdvancedSearchResult[]>([]);
   const [advancedSearchLoading, setAdvancedSearchLoading] = useState(false);
   const [advancedSearchError, setAdvancedSearchError] = useState<string | null>(null);

@@ -4,9 +4,9 @@ import HypercubeRelationshipsTab from "./HypercubeRelationshipsTab";
 import TreeLocationsTab, { TreeLocationTarget } from "./TreeLocationsTab";
 import AdvancedSearchTab from "./AdvancedSearchTab";
 import {
-  AdvancedSearchFacetKey,
   AdvancedSearchState,
   AdvancedSearchFilterOptions,
+  AdvancedSearchFilters,
 } from "@/types/advancedSearch";
 
 type DetailsTabName =
@@ -27,7 +27,7 @@ interface DetailPanelProps {
   advancedSearchFilterOptions: AdvancedSearchFilterOptions;
   referenceParagraphsBySource: Record<string, string[]>;
   onAdvancedSearchQueryChange: (query: string) => void;
-  onAdvancedSearchFacetChange: (facet: AdvancedSearchFacetKey, values: string[]) => void;
+  onAdvancedSearchFiltersChange: (next: AdvancedSearchFilters) => void;
   onRunAdvancedSearch: () => void;
   onResetAdvancedSearch: () => void;
 }
@@ -41,8 +41,10 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
   language,
   network,
   advancedSearchState,
+  advancedSearchFilterOptions,
+  referenceParagraphsBySource,
   onAdvancedSearchQueryChange,
-  onAdvancedSearchFacetChange,
+  onAdvancedSearchFiltersChange,
   onRunAdvancedSearch,
   onResetAdvancedSearch,
 }) => {
@@ -65,7 +67,9 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
   );
 
   useEffect(() => {
-    if (!tabs.includes(activeTab)) setActiveTab("Details");
+    if (!tabs.includes(activeTab)) {
+      setActiveTab("Details");
+    }
   }, [tabs, activeTab]);
 
   useEffect(() => {
@@ -107,8 +111,10 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
         {activeTab === "Advanced Search" && (
           <AdvancedSearchTab
             state={advancedSearchState}
+            filterOptions={advancedSearchFilterOptions}
+            referenceParagraphsBySource={referenceParagraphsBySource}
             onQueryChange={onAdvancedSearchQueryChange}
-            onFacetChange={onAdvancedSearchFacetChange}
+            onFiltersChange={onAdvancedSearchFiltersChange}
             onRunSearch={onRunAdvancedSearch}
             onResetSearch={onResetAdvancedSearch}
             onNavigateToNode={onNavigateToNode}
