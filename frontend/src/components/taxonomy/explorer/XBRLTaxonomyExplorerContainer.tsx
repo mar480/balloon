@@ -52,15 +52,62 @@ const EMPTY_ADVANCED_FILTERS: AdvancedSearchFilters = {
   referenceSource: null,
   referenceParagraph: null,
 };
-const EMPTY_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
-  namespace: [],
-  balance: [],
-  periodType: [],
-  xbrlType: [],
-  fullType: [],
+const PRESET_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
+  balance: ["credit", "debit"],
+  periodType: ["duration", "instant"],
+  xbrlType: [
+    "anyURIItemType",
+    "booleanItemType",
+    "dateItemType",
+    "decimalItemType",
+    "monetaryItemType",
+    "pureItemType",
+    "sharesItemType",
+    "stringItemType",
+  ],
+  fullType: [
+    "Q2:domainItemType",
+    "dtr2022:ghgEmissionsItemType",
+    "nonnum:domainItemType",
+    "num:energyItemType",
+    "num:perShareItemType",
+    "num:percentItemType",
+    "types:fixedItemType",
+    "types:groupingItemType",
+    "types:guidanceItemType",
+    "types:headingItemType",
+    "types:nonNegativeDecimalItemType",
+    "types:xrefItemType",
+    "xbrli:anyURIItemType",
+    "xbrli:booleanItemType",
+    "xbrli:dateItemType",
+    "xbrli:decimalItemType",
+    "xbrli:monetaryItemType",
+    "xbrli:pureItemType",
+    "xbrli:sharesItemType",
+    "xbrli:stringItemType",
+  ],
+  substitutionGroup: [
+    "Q1:dimensionItem",
+    "Q1:hypercubeItem",
+    "xbrldt:dimensionItem",
+    "xbrldt:hypercubeItem",
+    "xbrli:item",
+  ],
+  namespace: [
+    "2026-01-01",
+    "accrep",
+    "aurep",
+    "business",
+    "common",
+    "core",
+    "countries",
+    "currencies",
+    "direp",
+    "languages",
+  ],
   abstract: [true, false],
   nillable: [true, false],
-  substitutionGroup: [],
   referenceSources: [],
 };
 
@@ -88,7 +135,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // Advanced Search state
   const [advancedSearchQuery, setAdvancedSearchQuery] = useState("");
   const [advancedSearchFilters, setAdvancedSearchFilters] =
-    useState<AdvancedSearchFilters>(EMPTY_ADVANCED_FILTERS);
+    useState<AdvancedSearchFilters>(PRESET_ADVANCED_FILTER_OPTIONS);
   const [advancedSearchResults, setAdvancedSearchResults] = useState<AdvancedSearchResult[]>([]);
   const [advancedSearchLoading, setAdvancedSearchLoading] = useState(false);
   const [advancedSearchError, setAdvancedSearchError] = useState<string | null>(null);
@@ -101,7 +148,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
 
   // Option scaffolding for upcoming advanced UI
   const [advancedSearchFilterOptions, setAdvancedSearchFilterOptions] =
-    useState<AdvancedSearchFilterOptions>(EMPTY_ADVANCED_FILTER_OPTIONS);
+    useState<AdvancedSearchFilterOptions>(PRESET_ADVANCED_FILTER_OPTIONS);
   const [referenceParagraphsBySource, setReferenceParagraphsBySource] = useState<
     Record<string, string[]>
   >({});
@@ -224,7 +271,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     resetAdvancedSearch();
 
     // keep options reset deterministic on entrypoint change
-    setAdvancedSearchFilterOptions(EMPTY_ADVANCED_FILTER_OPTIONS);
+    setAdvancedSearchFilterOptions(PRESET_ADVANCED_FILTER_OPTIONS);
     setReferenceParagraphsBySource({});
 
     fetch("/api/load-entrypoint", {
