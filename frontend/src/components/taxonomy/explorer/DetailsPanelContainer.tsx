@@ -87,6 +87,12 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
     }
   }, [selectedNode]);
 
+  useEffect(() => {
+    if (selectedNode) {
+      setActiveTab("Details");
+    }
+  }, [selectedNode]);
+
   const renderNoSelection = () => (
     <div className="p-4 text-gray-500 text-center">Please select a concept.</div>
   );

@@ -3,6 +3,7 @@
 from arelle import ModelXbrl, XbrlConst
 from arelle.ModelDtsObject import ModelConcept
 
+
 class SimpleHypercubeFinder:
     """
     Finds all hypercubes associated with a given concept by climbing
@@ -10,10 +11,15 @@ class SimpleHypercubeFinder:
     an 'all' relationship to a hypercube.
     Returns a list of hypercube QNames as strings.
     """
+
     def __init__(self, model_xbrl: ModelXbrl):
         self.model_xbrl = model_xbrl
-        self.domainMemberRelSet = model_xbrl.relationshipSet("http://xbrl.org/int/dim/arcrole/domain-member")
-        self.allRelSet = model_xbrl.relationshipSet("http://xbrl.org/int/dim/arcrole/all")
+        self.domainMemberRelSet = model_xbrl.relationshipSet(
+            "http://xbrl.org/int/dim/arcrole/domain-member"
+        )
+        self.allRelSet = model_xbrl.relationshipSet(
+            "http://xbrl.org/int/dim/arcrole/all"
+        )
 
     def get_hypercubes(self, concept_ns: str, concept_name: str):
         concept = self._get_concept_by_name(concept_ns, concept_name)
@@ -57,26 +63,23 @@ class SimpleHypercubeFinder:
                 return concept
         return None
 
+
 class ConceptDetailsExtractor:
     """
     Extracts all relevant details about a single concept from the UK Taxonomy Suite.
     """
+
     def __init__(self, model_taxonomy: ModelXbrl):
         self.model_taxonomy = model_taxonomy
-    
+
     @staticmethod
     def is_valid_concept(concept):
         """
         Removes XBRL specific concepts (e.g. xl:documentation).
         """
         ns = concept.qname.namespaceURI
-        return (
-            "frc" in ns
-            and (
-                concept.isItem
-                or concept.isDimensionItem
-                or concept.isDomainMember
-            )
+        return "frc" in ns and (
+            concept.isItem or concept.isDimensionItem or concept.isDomainMember
         )
 
     def get_concept_json(self, concept_ns: str, concept_name: str):
@@ -108,7 +111,9 @@ class ConceptDetailsExtractor:
             "http://www.xbrl.org/2003/role/terseLabel": "Terse Label",
         }
         preferred_label_role = None
-        for presRel in self.model_taxonomy.relationshipSet(XbrlConst.parentChild).toModelObject(concept):
+        for presRel in self.model_taxonomy.relationshipSet(
+            XbrlConst.parentChild
+        ).toModelObject(concept):
             if getattr(presRel, "preferredLabel", None):
                 role_uri = presRel.preferredLabel
                 preferred_label_role = LABEL_ROLE_TO_TYPE.get(role_uri, role_uri)
@@ -116,42 +121,56 @@ class ConceptDetailsExtractor:
 
         # Labels
         labels = []
-        for labRel in self.model_taxonomy.relationshipSet(XbrlConst.conceptLabel).fromModelObject(concept):
+        for labRel in self.model_taxonomy.relationshipSet(
+            XbrlConst.conceptLabel
+        ).fromModelObject(concept):
             label_resource = labRel.toModelObject
             if label_resource is not None:
                 role = label_resource.role
                 label_type = LABEL_ROLE_TO_TYPE.get(role, role)
-                labels.append({
-                    "lang": label_resource.xmlLang,
-                    "type": label_type,
-                    "label_text": label_resource.text
-                })
+                labels.append(
+                    {
+                        "lang": label_resource.xmlLang,
+                        "type": label_type,
+                        "label_text": label_resource.text,
+                    }
+                )
 
         # References
         references = []
-        ref_rels = self.model_taxonomy.relationshipSet(XbrlConst.conceptReference).fromModelObject(concept)
+        ref_rels = self.model_taxonomy.relationshipSet(
+            XbrlConst.conceptReference
+        ).fromModelObject(concept)
         for ref_rel in ref_rels:
             ref_resource = ref_rel.toModelObject
             if ref_resource is not None:
                 ref_data = {}
                 for child in ref_resource.iterchildren():
-                    local_tag = child.tag.split('}')[1] if '}' in child.tag else child.tag
-                    ref_data[local_tag.lower()] = child.text  # use lowercase keys for uniformity
+                    local_tag = (
+                        child.tag.split("}")[1] if "}" in child.tag else child.tag
+                    )
+                    ref_data[local_tag.lower()] = (
+                        child.text
+                    )  # use lowercase keys for uniformity
 
                 role_uri = ref_resource.role
-                role_label = self.model_taxonomy.roleTypeDefinition(role_uri) or "Standard"
+                role_label = (
+                    self.model_taxonomy.roleTypeDefinition(role_uri) or "Standard"
+                )
 
-                references.append({
-                    "reference_role": role_label,
-                    "name": ref_data.get("name"),
-                    "number": ref_data.get("number"),
-                    "year": ref_data.get("year"),
-                    "schedule": ref_data.get("schedule"),
-                    "part": ref_data.get("part"),
-                    "section": ref_data.get("section"),
-                    "paragraph": ref_data.get("paragraph"),
-                })
-
+                references.append(
+                    {
+                        "reference_role": role_label,
+                        "name": ref_data.get("name"),
+                        "number": ref_data.get("number"),
+                        "year": ref_data.get("year"),
+                        "schedule": ref_data.get("schedule"),
+                        "part": ref_data.get("part"),
+                        "section": ref_data.get("section"),
+                        "paragraph": ref_data.get("paragraph"),
+                        "report": ref_data.get("report"),
+                    }
+                )
 
         # Hypercubes
         hypercube_finder = SimpleHypercubeFinder(self.model_taxonomy)
@@ -167,7 +186,9 @@ class ConceptDetailsExtractor:
         relset = self.model_taxonomy.relationshipSet(crossref_arcrole)
         if relset:
             for elr in relset.linkRoleUris:
-                crossref_rels = self.model_taxonomy.relationshipSet(crossref_arcrole, linkrole=elr).modelRelationships
+                crossref_rels = self.model_taxonomy.relationshipSet(
+                    crossref_arcrole, linkrole=elr
+                ).modelRelationships
                 for rel in crossref_rels:
                     if rel.fromModelObject == concept:
                         crossref_sources.append(str(rel.toModelObject.qname))
@@ -175,7 +196,10 @@ class ConceptDetailsExtractor:
 
         # Cash flow classification: inflow/outflow if this concept is a target
         cash_flow_classification = None
-        for arcrole, classification in [(inflow_arcrole, "inflow"), (outflow_arcrole, "outflow")]:
+        for arcrole, classification in [
+            (inflow_arcrole, "inflow"),
+            (outflow_arcrole, "outflow"),
+        ]:
             relset = self.model_taxonomy.relationshipSet(arcrole)
             if relset is not None:
                 for rel in relset.modelRelationships:
@@ -184,7 +208,6 @@ class ConceptDetailsExtractor:
                         break
             if cash_flow_classification:
                 break
-
 
         # Main concept dict
         concept_json = {
@@ -197,17 +220,21 @@ class ConceptDetailsExtractor:
                 "nillable": concept.nillable,
                 "namespace": concept.qname.namespaceURI,
                 "full_type": str(concept.typeQname) if concept.typeQname else None,
-                "substitution_group": str(concept.substitutionGroupQname) if concept.substitutionGroupQname else None,
-                "preferred_label_role": preferred_label_role
+                "substitution_group": (
+                    str(concept.substitutionGroupQname)
+                    if concept.substitutionGroupQname
+                    else None
+                ),
+                "preferred_label_role": preferred_label_role,
             },
             "labels": labels,
             "references": references,
             "hypercubes": hypercubes,
             "cash_flow_classification": cash_flow_classification,
-            "cross_ref_destination": cross_ref_destination
+            "cross_ref_destination": cross_ref_destination,
         }
         return concept_json
-    
+
     def get_all_concept_details(self):
         """
         Iterate over all valid concepts and return a dictionary keyed by QName string.

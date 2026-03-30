@@ -277,16 +277,36 @@ const DetailsTab: React.FC<Props> = ({
                       return aP !== bP ? aP - bP : aRole.localeCompare(bRole);
                     })
                     .map((ref: any, idx: number) => {
-                      const { reference_role, ...details } = ref;
-                      const orderedFields = [
+
+                      const { reference_role, reference_key_values, ...details } = ref;
+
+                      // Preferred display order for known keys
+                      const preferredOrder = [
                         "name",
                         "number",
                         "year",
                         "schedule",
                         "part",
+                        "report",
                         "section",
                         "paragraph",
-                      ].filter((key) => key in details);
+                      ];
+
+                      // 1) Known keys in stable order
+                      const preferredEntries = preferredOrder
+                        .filter((key) => key in details)
+                        .filter((key) => details[key] !== null && details[key] !== undefined && String(details[key]).trim() !== "")
+                        .map((key) => ({ label: key, value: details[key] }));
+
+                      // 2) Dynamic extras from reference_key_values
+                      //    (e.g., future keys not currently in preferredOrder)
+                      const preferredLower = new Set(preferredOrder.map((k) => k.toLowerCase()));
+                      const dynamicEntries = Object.entries((reference_key_values || {}) as Record<string, any>)
+                        .filter(([k, v]) => v !== null && v !== undefined && String(v).trim() !== "")
+                        .filter(([k]) => !preferredLower.has(k.toLowerCase()))
+                        .map(([k, v]) => ({ label: k, value: v }));
+
+                      const displayEntries = [...preferredEntries, ...dynamicEntries];
 
                       return (
                         <tr
@@ -297,25 +317,23 @@ const DetailsTab: React.FC<Props> = ({
                             {reference_role || "—"}
                           </td>
                           <td className="py-1 px-2 border text-sm align-top">
+                            {
                             <div className="grid grid-cols-[120px_1fr] gap-y-1">
-                              {orderedFields
-                                .filter(
-                                  (key) =>
-                                    details[key] !== null &&
-                                    details[key] !== undefined
-                                )
-                                .map((key) => (
-                                  <React.Fragment key={key}>
+                              {displayEntries.length === 0 ? (
+                                <div className="text-sm text-gray-500 col-span-2">—</div>
+                              ) : (
+                                displayEntries.map(({ label, value }) => (
+                                  <React.Fragment key={String(label)}>
                                     <div className="text-sm font-medium text-gray-700">
-                                      {key.charAt(0).toUpperCase() +
-                                        key.slice(1)}
+                                      {label.charAt(0).toUpperCase() + label.slice(1)}
                                     </div>
-                                    <div className="text-sm">
-                                      {String(details[key])}
-                                    </div>
+                                    <div className="text-sm">{String(value)}</div>
                                   </React.Fragment>
-                                ))}
+                                ))
+                              )}
                             </div>
+                            
+                            }
                           </td>
                         </tr>
                       );

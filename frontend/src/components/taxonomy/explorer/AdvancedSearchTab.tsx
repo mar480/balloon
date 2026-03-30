@@ -187,13 +187,7 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
               Search Filters
             </AccordionTrigger>
             <AccordionContent className="pt-3 space-y-3">
-              <StringCheckboxGroup
-                label="Namespace"
-                help="Concept namespace URI."
-                options={safeFilterOptions.namespace}
-                selected={filters.namespace}
-                onChange={(next) => onFiltersChange({ ...filters, namespace: next })}
-              />
+              
               <StringCheckboxGroup
                 label="Balance"
                 help="Accounting balance type."
@@ -280,6 +274,7 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
               Advanced XBRL filters
             </AccordionTrigger>
             <AccordionContent className="pt-3 space-y-3">
+              
               <StringCheckboxGroup
                 label="Full type"
                 help="Qualified type QName."
@@ -298,6 +293,13 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
                 help="Whether concept is nillable."
                 selected={filters.nillable}
                 onChange={(next) => onFiltersChange({ ...filters, nillable: next })}
+              />
+              <StringCheckboxGroup
+                label="Namespace"
+                help="Concept namespace URI."
+                options={safeFilterOptions.namespace}
+                selected={filters.namespace}
+                onChange={(next) => onFiltersChange({ ...filters, namespace: next })}
               />
               <StringCheckboxGroup
                 label="Substitution group"
