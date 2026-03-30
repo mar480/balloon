@@ -2,7 +2,6 @@ import React from "react";
 import Split from "react-split";
 import TaxonomyTreeView from "./TaxonomyTreeView";
 import DetailsPanelContainer from "./DetailsPanelContainer";
-import ToolsPanel from "./ToolsPanel";
 import { TreeNode } from "@/components/taxonomy/explorer/tree_utils";
 import { TreeLocationTarget } from "./TreeLocationsTab";
 
@@ -122,46 +121,34 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
       </header>
 
       <Split
-        direction="vertical"
-        sizes={[79, 21]}
-        minSize={[100, 100]}
+        className="flex flex-row-reverse flex-1 overflow-hidden"
+        sizes={[50, 50]}
+        minSize={[30, 40]}
         gutterSize={15}
-        className="flex flex-col flex-1 overflow-hidden"
       >
-        <Split
-          className="flex flex-row-reverse flex-1 overflow-hidden"
-          sizes={[50, 50]}
-          minSize={[30, 40]}
-          gutterSize={15}
-        >
-          <div className="min-w-[30%] max-w-full overflow-auto h-full p-4">
-            <DetailsPanelContainer
-              selectedNode={selectedNode}
-              onNavigateToNode={onNavigateToNode}
-              onNavigateToCrossReference={onNavigateToNode}
-              onNavigateToLocation={onNavigateToLocation}
-              treeLocations={treeLocations}
-              language={language}
-              network={network}
-            />
-          </div>
+        <div className="min-w-[30%] max-w-full overflow-auto h-full p-4">
+          <DetailsPanelContainer
+            selectedNode={selectedNode}
+            onNavigateToNode={onNavigateToNode}
+            onNavigateToCrossReference={onNavigateToNode}
+            onNavigateToLocation={onNavigateToLocation}
+            treeLocations={treeLocations}
+            language={language}
+            network={network}
+          />
+        </div>
 
-          <div className="min-w-[40%] max-w-full overflow-auto border-r h-full">
-            <TaxonomyTreeView
-              treeNodes={currentTreeNodes}
-              key={network}
-              network={network}
-              expandedKeys={expandedKeys}
-              highlightedKey={highlightedKey}
-              onSelectNode={onSelectNode}
-              onExpandedKeysChange={onExpandedKeysChange}
-              language={language}
-            />
-          </div>
-        </Split>
-
-        <div className="overflow-auto border-t p-2">
-          <ToolsPanel />
+        <div className="min-w-[40%] max-w-full overflow-auto border-r h-full">
+          <TaxonomyTreeView
+            treeNodes={currentTreeNodes}
+            key={network}
+            network={network}
+            expandedKeys={expandedKeys}
+            highlightedKey={highlightedKey}
+            onSelectNode={onSelectNode}
+            onExpandedKeysChange={onExpandedKeysChange}
+            language={language}
+          />
         </div>
       </Split>
     </div>

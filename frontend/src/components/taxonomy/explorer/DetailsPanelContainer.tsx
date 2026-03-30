@@ -2,6 +2,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import DetailsTab from "./DetailsTab";
 import HypercubeRelationshipsTab from "./HypercubeRelationshipsTab";
 import TreeLocationsTab, { TreeLocationTarget } from "./TreeLocationsTab";
+import AdvancedSearchTab from "./AdvancedSearchTab";
+
+type DetailsTabName =
+  | "Details"
+  | "Hypercube Relationships"
+  | "Tree Locations"
+  | "Advanced Search";
 
 interface DetailPanelProps {
   selectedNode: any;
@@ -22,9 +29,7 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
   language,
   network,
 }) => {
-  const [activeTab, setActiveTab] = useState<
-    "Details" | "Hypercube Relationships" | "Tree Locations"
-  >("Details");
+  const [activeTab, setActiveTab] = useState<DetailsTabName>("Details");
   const [concept, setConcept] = useState<any | null>(null);
 
   const showHypercubeTab = network === "presentation";
@@ -32,12 +37,16 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
   const tabs = useMemo(
     () =>
       showHypercubeTab
-        ? (["Details", "Hypercube Relationships", "Tree Locations"] as const)
-        : (["Details", "Tree Locations"] as const),
+        ? ([
+            "Details",
+            "Hypercube Relationships",
+            "Tree Locations",
+            "Advanced Search",
+          ] as const)
+        : (["Details", "Tree Locations", "Advanced Search"] as const),
     [showHypercubeTab]
   );
 
-  // If current active tab is no longer available, reset to Details
   useEffect(() => {
     if (!tabs.includes(activeTab)) {
       setActiveTab("Details");
@@ -59,13 +68,9 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
     }
   }, [selectedNode]);
 
-  if (!selectedNode) {
-    return <div className="p-4 text-gray-500 text-center">Please select a concept.</div>;
-  }
-
-  if (!concept) {
-    return <div className="p-4 text-gray-500 text-center">No concept data found.</div>;
-  }
+  const renderNoSelection = () => (
+    <div className="p-4 text-gray-500 text-center">Please select a concept.</div>
+  );
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
@@ -84,26 +89,39 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
       </div>
 
       <div className="flex-1 overflow-auto">
-        {activeTab === "Details" && (
-          <DetailsTab
-            concept={concept}
-            selectedNode={selectedNode}
-            onNavigateToNode={onNavigateToNode}
-            onNavigateToCrossReference={onNavigateToCrossReference}
-          />
-        )}
+        {activeTab === "Advanced Search" && <AdvancedSearchTab />}
 
-        {showHypercubeTab && activeTab === "Hypercube Relationships" && (
-          <HypercubeRelationshipsTab qname={concept.concept.qname} language={language} />
-        )}
+        {activeTab === "Details" &&
+          (!selectedNode || !concept ? (
+            renderNoSelection()
+          ) : (
+            <DetailsTab
+              concept={concept}
+              selectedNode={selectedNode}
+              onNavigateToNode={onNavigateToNode}
+              onNavigateToCrossReference={onNavigateToCrossReference}
+            />
+          ))}
 
-        {activeTab === "Tree Locations" && (
-          <TreeLocationsTab
-            qname={concept.concept.qname}
-            locations={treeLocations}
-            onNavigateToLocation={(target) => onNavigateToLocation?.(target)}
-          />
-        )}
+        {activeTab === "Hypercube Relationships" &&
+          (showHypercubeTab ? (
+            !selectedNode || !concept ? (
+              renderNoSelection()
+            ) : (
+              <HypercubeRelationshipsTab qname={concept.concept.qname} language={language} />
+            )
+          ) : null)}
+
+        {activeTab === "Tree Locations" &&
+          (!selectedNode || !concept ? (
+            renderNoSelection()
+          ) : (
+            <TreeLocationsTab
+              qname={concept.concept.qname}
+              locations={treeLocations}
+              onNavigateToLocation={(target) => onNavigateToLocation?.(target)}
+            />
+          ))}
       </div>
     </div>
   );
