@@ -211,17 +211,6 @@ def _build_search_filter_options_from_concepts(concepts: dict) -> dict:
     }
 
 
-def _load_concepts_json_for_entrypoint(year: str, href: str) -> dict:
-    entrypoint_name = _entrypoint_name_from_href(href)
-    concepts_path = os.path.join(
-        TAXONOMY_BASE_DIR, year, "trees", entrypoint_name, "concepts.json"
-    )
-    if not os.path.exists(concepts_path):
-        return {}
-    with open(concepts_path, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
 TAXONOMY_BASE_DIR = os.path.join(os.path.dirname(__file__), "taxonomies")

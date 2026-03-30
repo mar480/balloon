@@ -52,64 +52,76 @@ const EMPTY_ADVANCED_FILTERS: AdvancedSearchFilters = {
   referenceSource: null,
   referenceParagraph: null,
 };
-const PRESET_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
-  balance: ["credit", "debit"],
-  periodType: ["duration", "instant"],
-  xbrlType: [
-    "anyURIItemType",
-    "booleanItemType",
-    "dateItemType",
-    "decimalItemType",
-    "monetaryItemType",
-    "pureItemType",
-    "sharesItemType",
-    "stringItemType",
-  ],
-  fullType: [
-    "Q2:domainItemType",
-    "dtr2022:ghgEmissionsItemType",
-    "nonnum:domainItemType",
-    "num:energyItemType",
-    "num:perShareItemType",
-    "num:percentItemType",
-    "types:fixedItemType",
-    "types:groupingItemType",
-    "types:guidanceItemType",
-    "types:headingItemType",
-    "types:nonNegativeDecimalItemType",
-    "types:xrefItemType",
-    "xbrli:anyURIItemType",
-    "xbrli:booleanItemType",
-    "xbrli:dateItemType",
-    "xbrli:decimalItemType",
-    "xbrli:monetaryItemType",
-    "xbrli:pureItemType",
-    "xbrli:sharesItemType",
-    "xbrli:stringItemType",
-  ],
-  substitutionGroup: [
-    "Q1:dimensionItem",
-    "Q1:hypercubeItem",
-    "xbrldt:dimensionItem",
-    "xbrldt:hypercubeItem",
-    "xbrli:item",
-  ],
-  namespace: [
-    "2026-01-01",
-    "accrep",
-    "aurep",
-    "business",
-    "common",
-    "core",
-    "countries",
-    "currencies",
-    "direp",
-    "languages",
-  ],
+
+const EMPTY_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
+  namespace: [],
+  balance: [],
+  periodType: [],
+  xbrlType: [],
+  fullType: [],
   abstract: [true, false],
   nillable: [true, false],
+  substitutionGroup: [],
   referenceSources: [],
 };
+// const PRESET_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
+//   balance: ["credit", "debit"],
+//   periodType: ["duration", "instant"],
+//   xbrlType: [
+//     "anyURIItemType",
+//     "booleanItemType",
+//     "dateItemType",
+//     "decimalItemType",
+//     "monetaryItemType",
+//     "pureItemType",
+//     "sharesItemType",
+//     "stringItemType",
+//   ],
+//   fullType: [
+//     "Q2:domainItemType",
+//     "dtr2022:ghgEmissionsItemType",
+//     "nonnum:domainItemType",
+//     "num:energyItemType",
+//     "num:perShareItemType",
+//     "num:percentItemType",
+//     "types:fixedItemType",
+//     "types:groupingItemType",
+//     "types:guidanceItemType",
+//     "types:headingItemType",
+//     "types:nonNegativeDecimalItemType",
+//     "types:xrefItemType",
+//     "xbrli:anyURIItemType",
+//     "xbrli:booleanItemType",
+//     "xbrli:dateItemType",
+//     "xbrli:decimalItemType",
+//     "xbrli:monetaryItemType",
+//     "xbrli:pureItemType",
+//     "xbrli:sharesItemType",
+//     "xbrli:stringItemType",
+//   ],
+//   substitutionGroup: [
+//     "Q1:dimensionItem",
+//     "Q1:hypercubeItem",
+//     "xbrldt:dimensionItem",
+//     "xbrldt:hypercubeItem",
+//     "xbrli:item",
+//   ],
+//   namespace: [
+//     "2026-01-01",
+//     "accrep",
+//     "aurep",
+//     "business",
+//     "common",
+//     "core",
+//     "countries",
+//     "currencies",
+//     "direp",
+//     "languages",
+//   ],
+//   abstract: [true, false],
+//   nillable: [true, false],
+//   referenceSources: [],
+// };
 
 const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // UI state
@@ -148,7 +160,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
 
   // Option scaffolding for upcoming advanced UI
   const [advancedSearchFilterOptions, setAdvancedSearchFilterOptions] =
-    useState<AdvancedSearchFilterOptions>(PRESET_ADVANCED_FILTER_OPTIONS);
+    useState<AdvancedSearchFilterOptions>(EMPTY_ADVANCED_FILTER_OPTIONS);
   const [referenceParagraphsBySource, setReferenceParagraphsBySource] = useState<
     Record<string, string[]>
   >({});
@@ -271,7 +283,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     resetAdvancedSearch();
 
     // keep options reset deterministic on entrypoint change
-    setAdvancedSearchFilterOptions(PRESET_ADVANCED_FILTER_OPTIONS);
+    setAdvancedSearchFilterOptions(EMPTY_ADVANCED_FILTER_OPTIONS);
     setReferenceParagraphsBySource({});
 
     fetch("/api/load-entrypoint", {
@@ -306,20 +318,20 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   .then((opts) => {
     setAdvancedSearchFilterOptions({
       namespace: opts.namespace ?? [],
-      balance: opts.balance ?? [],
-      periodType: opts.periodType ?? [],
-      xbrlType: opts.xbrlType ?? [],
-      fullType: opts.fullType ?? [],
-      abstract: opts.abstract ?? [true, false],
-      nillable: opts.nillable ?? [true, false],
-      substitutionGroup: opts.substitutionGroup ?? [],
-      referenceSources: opts.referenceSources ?? [],
+        balance: opts.balance ?? [],
+        periodType: opts.periodType ?? [],
+        xbrlType: opts.xbrlType ?? [],
+        fullType: opts.fullType ?? [],
+        abstract: opts.abstract ?? [true, false],
+        nillable: opts.nillable ?? [true, false],
+        substitutionGroup: opts.substitutionGroup ?? [],
+        referenceSources: opts.referenceSources ?? [],
     });
     setReferenceParagraphsBySource(opts.referenceParagraphsBySource ?? {});
   })
   .catch((err) => {
     console.error("Failed to load search filter options", err);
-    setAdvancedSearchFilterOptions(PRESET_ADVANCED_FILTER_OPTIONS); // fallback
+    setAdvancedSearchFilterOptions(EMPTY_ADVANCED_FILTER_OPTIONS); // fallback
     setReferenceParagraphsBySource({});
   });
 
