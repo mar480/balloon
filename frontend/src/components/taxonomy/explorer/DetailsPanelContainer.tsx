@@ -3,6 +3,12 @@ import DetailsTab from "./DetailsTab";
 import HypercubeRelationshipsTab from "./HypercubeRelationshipsTab";
 import TreeLocationsTab, { TreeLocationTarget } from "./TreeLocationsTab";
 import AdvancedSearchTab from "./AdvancedSearchTab";
+import {
+  AdvancedSearchFacetKey,
+  AdvancedSearchState,
+  AdvancedSearchFilterOptions,
+  AdvancedSearchFilters,
+} from "@/types/advancedSearch";
 
 type DetailsTabName =
   | "Details"
@@ -18,6 +24,13 @@ interface DetailPanelProps {
   treeLocations: TreeLocationTarget[];
   language: "en" | "cy";
   network: string;
+  advancedSearchState: AdvancedSearchState;
+  advancedSearchFilterOptions: AdvancedSearchFilterOptions;
+  referenceParagraphsBySource: Record<string, string[]>;
+  onAdvancedSearchQueryChange: (query: string) => void;
+  onAdvancedSearchFiltersChange: (next: AdvancedSearchFilters) => void;
+  onRunAdvancedSearch: () => void;
+  onResetAdvancedSearch: () => void;
 }
 
 const DetailPanelContainer: React.FC<DetailPanelProps> = ({
@@ -28,6 +41,13 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
   treeLocations,
   language,
   network,
+  advancedSearchState,
+  advancedSearchFilterOptions,
+  referenceParagraphsBySource,
+  onAdvancedSearchQueryChange,
+  onAdvancedSearchFiltersChange,
+  onRunAdvancedSearch,
+  onResetAdvancedSearch,
 }) => {
   const [activeTab, setActiveTab] = useState<DetailsTabName>("Details");
   const [concept, setConcept] = useState<any | null>(null);
@@ -89,7 +109,18 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
       </div>
 
       <div className="flex-1 overflow-auto">
-        {activeTab === "Advanced Search" && <AdvancedSearchTab />}
+        {activeTab === "Advanced Search" && (
+  <AdvancedSearchTab
+    state={advancedSearchState}
+    filterOptions={advancedSearchFilterOptions}
+    referenceParagraphsBySource={referenceParagraphsBySource}
+    onQueryChange={onAdvancedSearchQueryChange}
+    onFiltersChange={onAdvancedSearchFiltersChange}
+    onRunSearch={onRunAdvancedSearch}
+    onResetSearch={onResetAdvancedSearch}
+    onNavigateToNode={onNavigateToNode}
+  />
+)}
 
         {activeTab === "Details" &&
           (!selectedNode || !concept ? (

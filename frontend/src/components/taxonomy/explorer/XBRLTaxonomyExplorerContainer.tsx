@@ -7,13 +7,19 @@ import {
   mapElrGroupedTreeToTreeNodes,
 } from "@/components/taxonomy/explorer/tree_utils";
 import { TreeLocationTarget } from "./TreeLocationsTab";
+import {
+  AdvancedSearchFilterOptions,
+  AdvancedSearchFilters,
+  AdvancedSearchResult,
+  AdvancedSearchState,
+} from "@/types/advancedSearch";
 
 type RawTreeNode = {
   qname?: string;
   uuid?: string;
   tree_id?: string;
   name?: string;
-    xbrl_type?: string;
+  xbrl_type?: string;
   full_type?: string;
   substitution_group?: string;
   children?: RawTreeNode[];
@@ -33,7 +39,178 @@ type PendingNavigation = {
   treeId?: string;
 };
 
+const EMPTY_ADVANCED_FILTERS: AdvancedSearchFilters = {
+  namespace: [],
+  balance: [],
+  periodType: [],
+  xbrlType: [],
+  fullType: [],
+  abstract: [],
+  nillable: [],
+  substitutionGroup: [],
+  referenceSource: null,
+  referenceParagraph: null,
+};
+
+const EMPTY_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
+  namespace: [],
+  balance: [],
+  periodType: [],
+  xbrlType: [],
+  fullType: [],
+  abstract: [true, false],
+  nillable: [true, false],
+  substitutionGroup: [],
+  referenceSources: [],
+};
+
+function normalizeBool(value: unknown): boolean | null {
+  if (value === true || value === "true" || value === "True") return true;
+  if (value === false || value === "false" || value === "False") return false;
+  return null;
+}
+
+function deriveAdvancedSearchOptions(concepts: Record<string, any>) {
+  const ns = new Set<string>();
+  const balance = new Set<string>();
+  const periodType = new Set<string>();
+  const xbrlType = new Set<string>();
+  const fullType = new Set<string>();
+  const substitutionGroup = new Set<string>();
+  const sourceSet = new Set<string>();
+  const paragraphsBySource: Record<string, Set<string>> = {};
+
+  for (const item of Object.values(concepts || {})) {
+    const c = (item as any)?.concept ?? {};
+    if (c.namespace) ns.add(String(c.namespace));
+    if (c.balance) balance.add(String(c.balance));
+    if (c.period_type) periodType.add(String(c.period_type));
+    if (c.xbrl_type) xbrlType.add(String(c.xbrl_type));
+    if (c.full_type) fullType.add(String(c.full_type));
+    if (c.substitution_group) substitutionGroup.add(String(c.substitution_group));
+
+    for (const ref of (item as any)?.references || []) {
+      const name = (ref?.name || "").toString().trim();
+      const number = (ref?.number || "").toString().trim();
+      const paragraph = (ref?.paragraph || "").toString().trim();
+      const source = [name, number].filter(Boolean).join(" ").trim();
+
+      if (!source) continue;
+      sourceSet.add(source);
+
+      if (!paragraphsBySource[source]) paragraphsBySource[source] = new Set<string>();
+      if (paragraph) paragraphsBySource[source].add(paragraph);
+    }
+  }
+
+  const referenceParagraphsBySource: Record<string, string[]> = {};
+  for (const [source, paraSet] of Object.entries(paragraphsBySource)) {
+    referenceParagraphsBySource[source] = Array.from(paraSet).sort((a, b) => a.localeCompare(b));
+  }
+
+  const filterOptions: AdvancedSearchFilterOptions = {
+    namespace: Array.from(ns).sort((a, b) => a.localeCompare(b)),
+    balance: Array.from(balance).sort((a, b) => a.localeCompare(b)),
+    periodType: Array.from(periodType).sort((a, b) => a.localeCompare(b)),
+    xbrlType: Array.from(xbrlType).sort((a, b) => a.localeCompare(b)),
+    fullType: Array.from(fullType).sort((a, b) => a.localeCompare(b)),
+    abstract: [true, false],
+    nillable: [true, false],
+    substitutionGroup: Array.from(substitutionGroup).sort((a, b) => a.localeCompare(b)),
+    referenceSources: Array.from(sourceSet).sort((a, b) => a.localeCompare(b)),
+  };
+
+  return { filterOptions, referenceParagraphsBySource };
+}
+
+  const [advancedSearchQuery, setAdvancedSearchQuery] = useState("");
+  const [advancedSearchFilters, setAdvancedSearchFilters] =
+    useState<AdvancedSearchFilters>(EMPTY_ADVANCED_FILTERS);
+  const [advancedSearchResults, setAdvancedSearchResults] = useState<AdvancedSearchResult[]>([]);
+  const [advancedSearchLoading, setAdvancedSearchLoading] = useState(false);
+  const [advancedSearchError, setAdvancedSearchError] = useState<string | null>(null);
+  const [advancedSearchPagination, setAdvancedSearchPagination] = useState({
+    limit: 25,
+    offset: 0,
+    total: 0,
+  });
+  const [advancedSearchLastRunAt, setAdvancedSearchLastRunAt] = useState<string | null>(null);
+
+  const [advancedSearchFilterOptions, setAdvancedSearchFilterOptions] =
+    useState<AdvancedSearchFilterOptions>(EMPTY_ADVANCED_FILTER_OPTIONS);
+  const [referenceParagraphsBySource, setReferenceParagraphsBySource] = useState<
+    Record<string, string[]>
+  >({});
+
+    const resetAdvancedSearch = useCallback(() => {
+    setAdvancedSearchQuery("");
+    setAdvancedSearchFilters(EMPTY_ADVANCED_FILTERS);
+    setAdvancedSearchResults([]);
+    setAdvancedSearchLoading(false);
+    setAdvancedSearchError(null);
+    setAdvancedSearchPagination({ limit: 25, offset: 0, total: 0 });
+    setAdvancedSearchLastRunAt(null);
+  }, []);
+
+  const handleAdvancedSearchFiltersChange = useCallback((next: AdvancedSearchFilters) => {
+    setAdvancedSearchFilters(next);
+  }, []);
+
+  const runAdvancedSearch = useCallback(async () => {
+    setAdvancedSearchLoading(true);
+    setAdvancedSearchError(null);
+
+    try {
+      // temporary mock result; replace in PR4 with backend call
+      const q = advancedSearchQuery.trim();
+      const mock: AdvancedSearchResult[] = q
+        ? [
+            {
+              id: `mock-${q}`,
+              qname: q.includes(":") ? q : `mock:${q}`,
+              localName: q.replace(/^.*:/, ""),
+              label: `Mock result for "${q}"`,
+              matchedFields: ["qname"],
+              score: 1,
+            },
+          ]
+        : [];
+
+      setAdvancedSearchResults(mock);
+      setAdvancedSearchPagination((prev) => ({ ...prev, total: mock.length, offset: 0 }));
+      setAdvancedSearchLastRunAt(new Date().toISOString());
+    } catch (err) {
+      console.error("Advanced search failed", err);
+      setAdvancedSearchError("Advanced search failed.");
+    } finally {
+      setAdvancedSearchLoading(false);
+    }
+  }, [advancedSearchQuery]);
+
+  const advancedSearchState: AdvancedSearchState = useMemo(
+    () => ({
+      query: advancedSearchQuery,
+      filters: advancedSearchFilters,
+      results: advancedSearchResults,
+      loading: advancedSearchLoading,
+      error: advancedSearchError,
+      pagination: advancedSearchPagination,
+      lastRunAt: advancedSearchLastRunAt,
+    }),
+    [
+      advancedSearchQuery,
+      advancedSearchFilters,
+      advancedSearchResults,
+      advancedSearchLoading,
+      advancedSearchError,
+      advancedSearchPagination,
+      advancedSearchLastRunAt,
+    ]
+  );
+
 const NAV_LOG_PREFIX = "[TreeLocationNavigation]";
+
+
 
 const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // UI state
@@ -56,6 +233,20 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // navigation queue (for cross-network jumps)
   const [pendingNavigation, setPendingNavigation] = useState<PendingNavigation | null>(null);
 
+  // Advanced Search (PR2: container-owned state)
+  const [advancedSearchQuery, setAdvancedSearchQuery] = useState("");
+  const [advancedSearchFilters, setAdvancedSearchFilters] =
+    useState<AdvancedSearchFilters>(EMPTY_ADVANCED_FILTERS);
+  const [advancedSearchResults, setAdvancedSearchResults] = useState<AdvancedSearchResult[]>([]);
+  const [advancedSearchLoading, setAdvancedSearchLoading] = useState(false);
+  const [advancedSearchError, setAdvancedSearchError] = useState<string | null>(null);
+  const [advancedSearchPagination, setAdvancedSearchPagination] = useState({
+    limit: 25,
+    offset: 0,
+    total: 0,
+  });
+  const [advancedSearchLastRunAt, setAdvancedSearchLastRunAt] = useState<string | null>(null);
+
   const excludedKeys = new Set(["concepts", "dimensions", "hypercubes", "primary_items"]);
 
   const currentTreeNodes: TreeNode[] = useMemo(() => {
@@ -63,6 +254,84 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     if (!raw || !Array.isArray(raw)) return [];
     return mapElrGroupedTreeToTreeNodes(raw);
   }, [rawTreeData, network]);
+
+  const resetAdvancedSearch = useCallback(() => {
+    setAdvancedSearchQuery("");
+    setAdvancedSearchFilters(EMPTY_ADVANCED_FILTERS);
+    setAdvancedSearchResults([]);
+    setAdvancedSearchLoading(false);
+    setAdvancedSearchError(null);
+    setAdvancedSearchPagination({ limit: 25, offset: 0, total: 0 });
+    setAdvancedSearchLastRunAt(null);
+  }, []);
+
+  const updateAdvancedSearchFacet = useCallback(
+    (facet: AdvancedSearchFacetKey, values: string[]) => {
+      setAdvancedSearchFilters((prev) => ({
+        ...prev,
+        [facet]: values,
+      }));
+    },
+    []
+  );
+
+  // PR2 mock runner (real endpoint wiring in PR4)
+  const runAdvancedSearch = useCallback(async () => {
+    setAdvancedSearchLoading(true);
+    setAdvancedSearchError(null);
+
+    try {
+      const q = advancedSearchQuery.trim();
+      let results: AdvancedSearchResult[] = [];
+
+      if (q.length > 0) {
+        results = [
+          {
+            id: `mock-${q}`,
+            qname: q.includes(":") ? q : `mock:${q}`,
+            localName: q.replace(/^.*:/, ""),
+            label: `Mock result for "${q}"`,
+            score: 1,
+            matchedFields: ["qname"],
+          },
+        ];
+      }
+
+      setAdvancedSearchResults(results);
+      setAdvancedSearchPagination((prev) => ({
+        ...prev,
+        offset: 0,
+        total: results.length,
+      }));
+      setAdvancedSearchLastRunAt(new Date().toISOString());
+    } catch (error) {
+      console.error("Advanced search failed", error);
+      setAdvancedSearchError("Advanced search failed. Please try again.");
+    } finally {
+      setAdvancedSearchLoading(false);
+    }
+  }, [advancedSearchQuery]);
+
+  const advancedSearchState = useMemo(
+    () => ({
+      query: advancedSearchQuery,
+      filters: advancedSearchFilters,
+      results: advancedSearchResults,
+      loading: advancedSearchLoading,
+      error: advancedSearchError,
+      pagination: advancedSearchPagination,
+      lastRunAt: advancedSearchLastRunAt,
+    }),
+    [
+      advancedSearchQuery,
+      advancedSearchFilters,
+      advancedSearchResults,
+      advancedSearchLoading,
+      advancedSearchError,
+      advancedSearchPagination,
+      advancedSearchLastRunAt,
+    ]
+  );
 
   // Warm backend
   useEffect(() => {
@@ -99,6 +368,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     setExpandedKeys({});
     setHighlightedKey(null);
     setPendingNavigation(null);
+    resetAdvancedSearch();
 
     fetch("/api/load-entrypoint", {
       method: "POST",
@@ -123,6 +393,10 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         }
 
         setRawTreeData(treeMap);
+                const concepts = (data.trees?.concepts || {}) as Record<string, any>;
+        const { filterOptions, referenceParagraphsBySource } = deriveAdvancedSearchOptions(concepts);
+        setAdvancedSearchFilterOptions(filterOptions);
+        setReferenceParagraphsBySource(referenceParagraphsBySource);
         setEntrypointLoaded(true);
         setLoadingEntrypoint(false);
       })
@@ -130,7 +404,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         console.error("Failed to load entrypoint", err);
         setLoadingEntrypoint(false);
       });
-  }, [entrypoint, year]);
+  }, [entrypoint, year, resetAdvancedSearch]);
 
   // Default network
   useEffect(() => {
@@ -160,7 +434,6 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     []
   );
 
-  // qname-only jump (existing behavior, used by details/crossref)
   const expandPathToQName = useCallback(
     (targetQName: string) => {
       const path = findPathInTreeNodes(currentTreeNodes, (node) => node.data?.qname === targetQName);
@@ -178,7 +451,6 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     [currentTreeNodes, findPathInTreeNodes]
   );
 
-  // Build Tree Locations list for currently selected concept
   const treeLocations = useMemo<TreeLocationTarget[]>(() => {
     const qname = selectedNode?.data?.qname;
     if (!qname) return [];
@@ -186,47 +458,47 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     const results: TreeLocationTarget[] = [];
 
     const walk = (
-  networkKey: string,
-  elr: string,
-  elrDefinition: string,
-  node: RawTreeNode,
-  pathNodes: {
-    label: string;
-    xbrlType?: string;
-    fullType?: string;
-    substitutionGroup?: string;
-  }[],
-  numericPart?: number
-) => {
-  const currentLabel = node.name ?? node.qname ?? "Unnamed";
-  const nextPathNodes = [
-    ...pathNodes,
-    {
-      label: currentLabel,
-      xbrlType: node.xbrl_type,
-      fullType: node.full_type,
-      substitutionGroup: node.substitution_group,
-    },
-  ];
+      networkKey: string,
+      elr: string,
+      elrDefinition: string,
+      node: RawTreeNode,
+      pathNodes: {
+        label: string;
+        xbrlType?: string;
+        fullType?: string;
+        substitutionGroup?: string;
+      }[],
+      numericPart?: number
+    ) => {
+      const currentLabel = node.name ?? node.qname ?? "Unnamed";
+      const nextPathNodes = [
+        ...pathNodes,
+        {
+          label: currentLabel,
+          xbrlType: node.xbrl_type,
+          fullType: node.full_type,
+          substitutionGroup: node.substitution_group,
+        },
+      ];
 
-  if (node.qname === qname) {
-    results.push({
-      network: networkKey,
-      elr,
-      elrDefinition,
-      numericPart,
-      qname,
-      uuid: node.uuid,
-      label: currentLabel,
-      treeId: node.tree_id,
-      pathNodes: nextPathNodes,
-    });
-  }
+      if (node.qname === qname) {
+        results.push({
+          network: networkKey,
+          elr,
+          elrDefinition,
+          numericPart,
+          qname,
+          uuid: node.uuid,
+          label: currentLabel,
+          treeId: node.tree_id,
+          pathNodes: nextPathNodes,
+        });
+      }
 
-  for (const child of node.children ?? []) {
-    walk(networkKey, elr, elrDefinition, child, nextPathNodes, numericPart);
-  }
-};
+      for (const child of node.children ?? []) {
+        walk(networkKey, elr, elrDefinition, child, nextPathNodes, numericPart);
+      }
+    };
 
     for (const [networkKey, groups] of Object.entries(rawTreeData)) {
       if (!Array.isArray(groups)) continue;
@@ -243,11 +515,9 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     return results;
   }, [rawTreeData, selectedNode?.data?.qname]);
 
-  // Called from TreeLocationsTab
-  const navigateToLocation = useCallback((target: TreeLocationTarget) => {
-    console.debug(
-      `${NAV_LOG_PREFIX} request`,
-      {
+  const navigateToLocation = useCallback(
+    (target: TreeLocationTarget) => {
+      console.debug(`${NAV_LOG_PREFIX} request`, {
         fromNetwork: network,
         toNetwork: target.network,
         qname: target.qname,
@@ -255,25 +525,24 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         treeId: target.treeId,
         label: target.label,
         elr: target.elr,
+      });
+
+      setPendingNavigation({
+        network: target.network,
+        qname: target.qname,
+        uuid: target.uuid,
+        treeId: target.treeId,
+      });
+
+      if (network !== target.network) {
+        setNetwork(target.network);
+        setExpandedKeys({});
+        setHighlightedKey(null);
       }
-    );
-    
-    setPendingNavigation({
-      network: target.network,
-      qname: target.qname,
-      uuid: target.uuid,
-      treeId: target.treeId,
-    });
+    },
+    [network]
+  );
 
-    // switch network if required (do NOT clear selected concept)
-    if (network !== target.network) {
-      setNetwork(target.network);
-      setExpandedKeys({});
-      setHighlightedKey(null);
-    }
-  }, [network]);
-
-  // Execute pending cross-network navigation once the target tree is mounted
   useEffect(() => {
     if (!pendingNavigation) return;
     if (network !== pendingNavigation.network) return;
@@ -337,7 +606,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     setHighlightedKey(targetNode.key);
     setTimeout(() => setHighlightedKey(null), 5000);
 
-     console.debug(`${NAV_LOG_PREFIX} resolved`, {
+    console.debug(`${NAV_LOG_PREFIX} resolved`, {
       using: matchStrategy,
       targetKey: targetNode.key,
       targetQname: targetNode.data?.qname,
@@ -376,7 +645,6 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
             setNetwork(val);
             setExpandedKeys({});
             setHighlightedKey(null);
-            // note: not clearing selectedNode helps preserve details/tree-locations context
           } else {
             console.warn("[NetworkChange] Ignored invalid or unloaded network:", val);
           }
@@ -386,6 +654,11 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         currentTreeNodes={currentTreeNodes}
         entrypointLoaded={entrypointLoaded}
         treeLocations={treeLocations}
+        advancedSearchState={advancedSearchState}
+        onAdvancedSearchQueryChange={setAdvancedSearchQuery}
+        onAdvancedSearchFacetChange={updateAdvancedSearchFacet}
+        onRunAdvancedSearch={runAdvancedSearch}
+        onResetAdvancedSearch={resetAdvancedSearch}
       />
     </>
   );

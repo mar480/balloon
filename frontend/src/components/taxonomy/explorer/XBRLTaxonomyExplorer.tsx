@@ -4,6 +4,11 @@ import TaxonomyTreeView from "./TaxonomyTreeView";
 import DetailsPanelContainer from "./DetailsPanelContainer";
 import { TreeNode } from "@/components/taxonomy/explorer/tree_utils";
 import { TreeLocationTarget } from "./TreeLocationsTab";
+import {
+    AdvancedSearchFilterOptions,
+  AdvancedSearchFilters,
+  AdvancedSearchState,
+} from "@/types/advancedSearch";
 
 interface Props {
   selectedNode: TreeNode | null;
@@ -25,6 +30,13 @@ interface Props {
   currentTreeNodes: TreeNode[];
   entrypointLoaded: boolean;
   treeLocations: TreeLocationTarget[];
+  advancedSearchState: AdvancedSearchState;
+  advancedSearchFilterOptions: AdvancedSearchFilterOptions;
+  referenceParagraphsBySource: Record<string, string[]>;
+  onAdvancedSearchQueryChange: (query: string) => void;
+  onAdvancedSearchFiltersChange: (next: AdvancedSearchFilters) => void;
+  onRunAdvancedSearch: () => void;
+  onResetAdvancedSearch: () => void;
 }
 
 const XBRLTaxonomyExplorer: React.FC<Props> = ({
@@ -47,6 +59,13 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
   currentTreeNodes,
   entrypointLoaded,
   treeLocations,
+  advancedSearchState,
+  advancedSearchFilterOptions,
+  referenceParagraphsBySource,
+  onAdvancedSearchQueryChange,
+  onAdvancedSearchFiltersChange,
+  onRunAdvancedSearch,
+  onResetAdvancedSearch,
 }) => {
   return (
     <div className="flex flex-col h-screen bg-white">
@@ -135,6 +154,13 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
             treeLocations={treeLocations}
             language={language}
             network={network}
+            advancedSearchState={advancedSearchState}
+            advancedSearchFilterOptions={advancedSearchFilterOptions}
+            referenceParagraphsBySource={referenceParagraphsBySource}
+            onAdvancedSearchQueryChange={onAdvancedSearchQueryChange}
+            onAdvancedSearchFiltersChange={onAdvancedSearchFiltersChange}
+            onRunAdvancedSearch={onRunAdvancedSearch}
+            onResetAdvancedSearch={onResetAdvancedSearch}
           />
         </div>
 
