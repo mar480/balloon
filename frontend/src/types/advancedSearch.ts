@@ -1,14 +1,14 @@
-export type AdvancedSearchFacetKey =
-  | "xbrlTypes"
-  | "periodTypes"
-  | "referenceRoles"
-  | "referenceNames";
-
 export interface AdvancedSearchFilters {
-  xbrlTypes: string[];
-  periodTypes: string[];
-  referenceRoles: string[];
-  referenceNames: string[];
+  namespace: string[];
+  balance: string[];
+  periodType: string[];
+  xbrlType: string[];
+  fullType: string[];
+  abstract: boolean[];
+  nillable: boolean[];
+  substitutionGroup: string[];
+  referenceSource: string | null;
+  referenceParagraph: string | null;
 }
 
 export interface AdvancedSearchResult {
@@ -36,7 +36,6 @@ export interface AdvancedSearchState {
   lastRunAt: string | null;
 }
 
-// keep these for forward compatibility with your next UI pass
 export interface AdvancedSearchFilterOptions {
   namespace: string[];
   balance: string[];

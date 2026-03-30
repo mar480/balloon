@@ -41,12 +41,17 @@ type PendingNavigation = {
 const NAV_LOG_PREFIX = "[TreeLocationNavigation]";
 
 const EMPTY_ADVANCED_FILTERS: AdvancedSearchFilters = {
-  xbrlTypes: [],
-  periodTypes: [],
-  referenceRoles: [],
-  referenceNames: [],
+  namespace: [],
+  balance: [],
+  periodType: [],
+  xbrlType: [],
+  fullType: [],
+  abstract: [],
+  nillable: [],
+  substitutionGroup: [],
+  referenceSource: null,
+  referenceParagraph: null,
 };
-
 const EMPTY_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
   namespace: [],
   balance: [],

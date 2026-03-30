@@ -1,102 +1,314 @@
 import React from "react";
+import { Info } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
-  AdvancedSearchFacetKey,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  AdvancedSearchFilterOptions,
   AdvancedSearchFilters,
   AdvancedSearchState,
 } from "@/types/advancedSearch";
 
+const EMPTY_FILTERS: AdvancedSearchFilters = {
+  namespace: [],
+  balance: [],
+  periodType: [],
+  xbrlType: [],
+  fullType: [],
+  abstract: [],
+  nillable: [],
+  substitutionGroup: [],
+  referenceSource: null,
+  referenceParagraph: null,
+};
+
+const EMPTY_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
+  namespace: [],
+  balance: [],
+  periodType: [],
+  xbrlType: [],
+  fullType: [],
+  abstract: [true, false],
+  nillable: [true, false],
+  substitutionGroup: [],
+  referenceSources: [],
+};
+
 interface AdvancedSearchTabProps {
-  state: AdvancedSearchState;
+  state?: AdvancedSearchState;
+  filterOptions?: AdvancedSearchFilterOptions;
+  referenceParagraphsBySource?: Record<string, string[]>;
   onQueryChange: (query: string) => void;
-  onFacetChange: (facet: AdvancedSearchFacetKey, values: string[]) => void;
+  onFiltersChange: (next: AdvancedSearchFilters) => void;
   onRunSearch: () => void;
   onResetSearch: () => void;
   onNavigateToNode?: (qname: string) => void;
 }
 
-const FALLBACK_STATE: AdvancedSearchState = {
-  query: "",
-  filters: {
-    xbrlTypes: [],
-    periodTypes: [],
-    referenceRoles: [],
-    referenceNames: [],
-  },
-  results: [],
-  loading: false,
-  error: null,
-  pagination: { limit: 25, offset: 0, total: 0 },
-  lastRunAt: null,
-};
+const FieldLabelWithHelp: React.FC<{ label: string; help: string }> = ({ label, help }) => (
+  <div className="flex items-center gap-1">
+    <span className="text-sm font-medium">{label}</span>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button type="button" className="text-gray-400 hover:text-gray-600">
+          <Info size={14} />
+        </button>
+      </TooltipTrigger>
+      <TooltipContent side="right" className="max-w-xs text-xs">
+        {help}
+      </TooltipContent>
+    </Tooltip>
+  </div>
+);
 
+function toggleString(values: string[], value: string): string[] {
+  return values.includes(value) ? values.filter((v) => v !== value) : [...values, value];
+}
 
-const parseCsv = (value: string): string[] =>
-  value
-    .split(",")
-    .map((v) => v.trim())
-    .filter(Boolean);
+function toggleBoolean(values: boolean[], value: boolean): boolean[] {
+  return values.includes(value) ? values.filter((v) => v !== value) : [...values, value];
+}
 
-const toCsv = (value: string[]): string => value.join(", ");
+const StringCheckboxGroup: React.FC<{
+  label: string;
+  help: string;
+  options: string[];
+  selected: string[];
+  onChange: (next: string[]) => void;
+}> = ({ label, help, options, selected, onChange }) => (
+  <div className="space-y-1">
+    <FieldLabelWithHelp label={label} help={help} />
+    <div className="border rounded p-2 max-h-40 overflow-auto space-y-1">
+      {options.length === 0 ? (
+        <div className="text-xs text-gray-500">No options available.</div>
+      ) : (
+        options.map((opt) => (
+          <label key={opt} className="flex items-center gap-2 text-sm">
+            <Checkbox
+              checked={selected.includes(opt)}
+              onCheckedChange={() => onChange(toggleString(selected, opt))}
+            />
+            <span>{opt}</span>
+          </label>
+        ))
+      )}
+    </div>
+  </div>
+);
+
+const BooleanCheckboxGroup: React.FC<{
+  label: string;
+  help: string;
+  selected: boolean[];
+  onChange: (next: boolean[]) => void;
+}> = ({ label, help, selected, onChange }) => (
+  <div className="space-y-1">
+    <FieldLabelWithHelp label={label} help={help} />
+    <div className="border rounded p-2 grid grid-cols-2 gap-2">
+      <label className="flex items-center gap-2 text-sm">
+        <Checkbox
+          checked={selected.includes(true)}
+          onCheckedChange={() => onChange(toggleBoolean(selected, true))}
+        />
+        <span>true</span>
+      </label>
+      <label className="flex items-center gap-2 text-sm">
+        <Checkbox
+          checked={selected.includes(false)}
+          onCheckedChange={() => onChange(toggleBoolean(selected, false))}
+        />
+        <span>false</span>
+      </label>
+    </div>
+  </div>
+);
 
 const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
-  state = FALLBACK_STATE,
+  state,
+  filterOptions,
+  referenceParagraphsBySource,
   onQueryChange,
-  onFacetChange,
+  onFiltersChange,
   onRunSearch,
   onResetSearch,
   onNavigateToNode,
 }) => {
-  const { query, filters, results, loading, error, lastRunAt } = state;
+  const safeState: AdvancedSearchState = {
+    query: state?.query ?? "",
+    filters: { ...EMPTY_FILTERS, ...(state?.filters ?? {}) },
+    results: state?.results ?? [],
+    loading: state?.loading ?? false,
+    error: state?.error ?? null,
+    pagination: state?.pagination ?? { limit: 25, offset: 0, total: 0 },
+    lastRunAt: state?.lastRunAt ?? null,
+  };
+
+  const safeFilterOptions = filterOptions ?? EMPTY_FILTER_OPTIONS;
+  const safeReferenceParagraphsBySource = referenceParagraphsBySource ?? {};
+
+  const { query, filters, results, loading, error, lastRunAt } = safeState;
+
+  const paragraphOptions =
+    filters.referenceSource
+      ? safeReferenceParagraphsBySource[filters.referenceSource] || []
+      : [];
 
   return (
-    <div className="p-4 space-y-3">
-      <div>
-        <p className="font-medium text-sm">Advanced Search</p>
-        <p className="text-xs text-gray-500">
-          PR2 scaffolding: state is container-owned and persists across navigation.
-        </p>
-      </div>
+    <TooltipProvider delayDuration={150}>
+      <div className="p-4 space-y-4">
+        <div className="space-y-1">
+          <p className="font-medium text-sm">Advanced Search</p>
+          <FieldLabelWithHelp
+            label="Keyword"
+            help="Free-text search term. Use this with filters below."
+          />
+          <input
+            type="text"
+            className="border rounded p-2 text-sm w-full"
+            placeholder="e.g. turnover, revenue, core:TurnoverRevenue"
+            value={query}
+            onChange={(e) => onQueryChange(e.target.value)}
+          />
+        </div>
 
-      <div className="space-y-2">
-        <input
-          type="text"
-          className="border rounded p-2 text-sm w-full"
-          placeholder="Keyword (e.g. turnover, profit, core:TurnoverRevenue)"
-          value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
-        />
+        <Accordion type="multiple" defaultValue={["search-filters"]} className="w-full">
+          <AccordionItem value="search-filters">
+            <AccordionTrigger className="py-2 px-2 text-sm font-semibold bg-gray-50 rounded">
+              Search Filters
+            </AccordionTrigger>
+            <AccordionContent className="pt-3 space-y-3">
+              <StringCheckboxGroup
+                label="Namespace"
+                help="Concept namespace URI."
+                options={safeFilterOptions.namespace}
+                selected={filters.namespace}
+                onChange={(next) => onFiltersChange({ ...filters, namespace: next })}
+              />
+              <StringCheckboxGroup
+                label="Balance"
+                help="Accounting balance type."
+                options={safeFilterOptions.balance}
+                selected={filters.balance}
+                onChange={(next) => onFiltersChange({ ...filters, balance: next })}
+              />
+              <StringCheckboxGroup
+                label="Period type"
+                help="Duration or instant."
+                options={safeFilterOptions.periodType}
+                selected={filters.periodType}
+                onChange={(next) => onFiltersChange({ ...filters, periodType: next })}
+              />
+              <StringCheckboxGroup
+                label="XBRL type"
+                help="Base XBRL type."
+                options={safeFilterOptions.xbrlType}
+                selected={filters.xbrlType}
+                onChange={(next) => onFiltersChange({ ...filters, xbrlType: next })}
+              />
+            </AccordionContent>
+          </AccordionItem>
 
-        <input
-          type="text"
-          className="border rounded p-2 text-sm w-full"
-          placeholder="XBRL types (comma separated)"
-          value={toCsv(filters.xbrlTypes)}
-          onChange={(e) => onFacetChange("xbrlTypes", parseCsv(e.target.value))}
-        />
+          <AccordionItem value="references">
+            <AccordionTrigger className="py-2 px-2 text-sm font-semibold bg-gray-50 rounded">
+              References
+            </AccordionTrigger>
+            <AccordionContent className="pt-3 space-y-3">
+              <div className="space-y-1">
+                <FieldLabelWithHelp
+                  label="Source"
+                  help="Reference source, e.g. FRS 102."
+                />
+                <select
+                  className="border rounded p-2 text-sm w-full bg-white"
+                  value={filters.referenceSource || ""}
+                  onChange={(e) =>
+                    onFiltersChange({
+                      ...filters,
+                      referenceSource: e.target.value || null,
+                      referenceParagraph: null,
+                    })
+                  }
+                >
+                  <option value="">Any source</option>
+                  {safeFilterOptions.referenceSources.map((source) => (
+                    <option key={source} value={source}>
+                      {source}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-        <input
-          type="text"
-          className="border rounded p-2 text-sm w-full"
-          placeholder="Period types (comma separated)"
-          value={toCsv(filters.periodTypes)}
-          onChange={(e) => onFacetChange("periodTypes", parseCsv(e.target.value))}
-        />
+              <div className="space-y-1">
+                <FieldLabelWithHelp
+                  label="Paragraph"
+                  help="Paragraph list filtered by selected source."
+                />
+                <select
+                  className="border rounded p-2 text-sm w-full bg-white"
+                  value={filters.referenceParagraph || ""}
+                  disabled={!filters.referenceSource}
+                  onChange={(e) =>
+                    onFiltersChange({
+                      ...filters,
+                      referenceParagraph: e.target.value || null,
+                    })
+                  }
+                >
+                  <option value="">Any paragraph</option>
+                  {paragraphOptions.map((paragraph) => (
+                    <option key={paragraph} value={paragraph}>
+                      {paragraph}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
 
-        <input
-          type="text"
-          className="border rounded p-2 text-sm w-full"
-          placeholder="Reference roles (comma separated)"
-          value={toCsv(filters.referenceRoles)}
-          onChange={(e) => onFacetChange("referenceRoles", parseCsv(e.target.value))}
-        />
-
-        <input
-          type="text"
-          className="border rounded p-2 text-sm w-full"
-          placeholder="Reference names (comma separated)"
-          value={toCsv(filters.referenceNames)}
-          onChange={(e) => onFacetChange("referenceNames", parseCsv(e.target.value))}
-        />
+          <AccordionItem value="advanced-xbrl">
+            <AccordionTrigger className="py-2 px-2 text-sm font-semibold bg-gray-50 rounded">
+              Advanced XBRL filters
+            </AccordionTrigger>
+            <AccordionContent className="pt-3 space-y-3">
+              <StringCheckboxGroup
+                label="Full type"
+                help="Qualified type QName."
+                options={safeFilterOptions.fullType}
+                selected={filters.fullType}
+                onChange={(next) => onFiltersChange({ ...filters, fullType: next })}
+              />
+              <BooleanCheckboxGroup
+                label="Abstract"
+                help="Whether concept is abstract."
+                selected={filters.abstract}
+                onChange={(next) => onFiltersChange({ ...filters, abstract: next })}
+              />
+              <BooleanCheckboxGroup
+                label="Nillable"
+                help="Whether concept is nillable."
+                selected={filters.nillable}
+                onChange={(next) => onFiltersChange({ ...filters, nillable: next })}
+              />
+              <StringCheckboxGroup
+                label="Substitution group"
+                help="Substitution group QName."
+                options={safeFilterOptions.substitutionGroup}
+                selected={filters.substitutionGroup}
+                onChange={(next) => onFiltersChange({ ...filters, substitutionGroup: next })}
+              />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
 
         <div className="flex gap-2">
           <button
@@ -106,46 +318,40 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
           >
             {loading ? "Searching..." : "Search"}
           </button>
-
-          <button
-            className="bg-gray-200 text-sm px-3 py-1 rounded"
-            onClick={onResetSearch}
-          >
+          <button className="bg-gray-200 text-sm px-3 py-1 rounded" onClick={onResetSearch}>
             Reset
           </button>
         </div>
-      </div>
 
-      {error && <div className="text-sm text-red-600">{error}</div>}
+        {error && <div className="text-sm text-red-600">{error}</div>}
 
-      <div className="border rounded">
-        <div className="px-3 py-2 border-b bg-gray-50 text-xs text-gray-600">
-          {lastRunAt ? `Last run: ${new Date(lastRunAt).toLocaleString()}` : "No search run yet"}
+        <div className="border rounded">
+          <div className="px-3 py-2 border-b bg-gray-50 text-xs text-gray-600">
+            {lastRunAt ? `Last run: ${new Date(lastRunAt).toLocaleString()}` : "No search run yet"}
+          </div>
+          {results.length === 0 ? (
+            <div className="p-4 text-sm text-gray-500">No results.</div>
+          ) : (
+            <ul className="divide-y">
+              {results.map((result) => (
+                <li key={result.id} className="p-3 flex items-start justify-between gap-3">
+                  <div>
+                    <div className="font-medium text-sm">{result.label || result.qname}</div>
+                    <div className="text-xs text-gray-500">{result.qname}</div>
+                  </div>
+                  <button
+                    className="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded"
+                    onClick={() => onNavigateToNode?.(result.qname)}
+                  >
+                    Go to node
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-
-        {results.length === 0 ? (
-          <div className="p-4 text-sm text-gray-500">No results.</div>
-        ) : (
-          <ul className="divide-y">
-            {results.map((result) => (
-              <li key={result.id} className="p-3 flex items-start justify-between gap-3">
-                <div>
-                  <div className="font-medium text-sm">{result.label || result.qname}</div>
-                  <div className="text-xs text-gray-500">{result.qname}</div>
-                </div>
-
-                <button
-                  className="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded"
-                  onClick={() => onNavigateToNode?.(result.qname)}
-                >
-                  Go to node
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
       </div>
-    </div>
+    </TooltipProvider>
   );
 };
 
