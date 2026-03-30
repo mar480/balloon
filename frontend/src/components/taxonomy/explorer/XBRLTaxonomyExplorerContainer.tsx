@@ -8,10 +8,9 @@ import {
 } from "@/components/taxonomy/explorer/tree_utils";
 import { TreeLocationTarget } from "./TreeLocationsTab";
 import {
-  AdvancedSearchFilterOptions,
   AdvancedSearchFilters,
   AdvancedSearchResult,
-  AdvancedSearchState,
+  AdvancedSearchFilterOptions,
 } from "@/types/advancedSearch";
 
 type RawTreeNode = {
@@ -39,17 +38,13 @@ type PendingNavigation = {
   treeId?: string;
 };
 
+const NAV_LOG_PREFIX = "[TreeLocationNavigation]";
+
 const EMPTY_ADVANCED_FILTERS: AdvancedSearchFilters = {
-  namespace: [],
-  balance: [],
-  periodType: [],
-  xbrlType: [],
-  fullType: [],
-  abstract: [],
-  nillable: [],
-  substitutionGroup: [],
-  referenceSource: null,
-  referenceParagraph: null,
+  xbrlTypes: [],
+  periodTypes: [],
+  referenceRoles: [],
+  referenceNames: [],
 };
 
 const EMPTY_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
@@ -63,154 +58,6 @@ const EMPTY_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
   substitutionGroup: [],
   referenceSources: [],
 };
-
-function normalizeBool(value: unknown): boolean | null {
-  if (value === true || value === "true" || value === "True") return true;
-  if (value === false || value === "false" || value === "False") return false;
-  return null;
-}
-
-function deriveAdvancedSearchOptions(concepts: Record<string, any>) {
-  const ns = new Set<string>();
-  const balance = new Set<string>();
-  const periodType = new Set<string>();
-  const xbrlType = new Set<string>();
-  const fullType = new Set<string>();
-  const substitutionGroup = new Set<string>();
-  const sourceSet = new Set<string>();
-  const paragraphsBySource: Record<string, Set<string>> = {};
-
-  for (const item of Object.values(concepts || {})) {
-    const c = (item as any)?.concept ?? {};
-    if (c.namespace) ns.add(String(c.namespace));
-    if (c.balance) balance.add(String(c.balance));
-    if (c.period_type) periodType.add(String(c.period_type));
-    if (c.xbrl_type) xbrlType.add(String(c.xbrl_type));
-    if (c.full_type) fullType.add(String(c.full_type));
-    if (c.substitution_group) substitutionGroup.add(String(c.substitution_group));
-
-    for (const ref of (item as any)?.references || []) {
-      const name = (ref?.name || "").toString().trim();
-      const number = (ref?.number || "").toString().trim();
-      const paragraph = (ref?.paragraph || "").toString().trim();
-      const source = [name, number].filter(Boolean).join(" ").trim();
-
-      if (!source) continue;
-      sourceSet.add(source);
-
-      if (!paragraphsBySource[source]) paragraphsBySource[source] = new Set<string>();
-      if (paragraph) paragraphsBySource[source].add(paragraph);
-    }
-  }
-
-  const referenceParagraphsBySource: Record<string, string[]> = {};
-  for (const [source, paraSet] of Object.entries(paragraphsBySource)) {
-    referenceParagraphsBySource[source] = Array.from(paraSet).sort((a, b) => a.localeCompare(b));
-  }
-
-  const filterOptions: AdvancedSearchFilterOptions = {
-    namespace: Array.from(ns).sort((a, b) => a.localeCompare(b)),
-    balance: Array.from(balance).sort((a, b) => a.localeCompare(b)),
-    periodType: Array.from(periodType).sort((a, b) => a.localeCompare(b)),
-    xbrlType: Array.from(xbrlType).sort((a, b) => a.localeCompare(b)),
-    fullType: Array.from(fullType).sort((a, b) => a.localeCompare(b)),
-    abstract: [true, false],
-    nillable: [true, false],
-    substitutionGroup: Array.from(substitutionGroup).sort((a, b) => a.localeCompare(b)),
-    referenceSources: Array.from(sourceSet).sort((a, b) => a.localeCompare(b)),
-  };
-
-  return { filterOptions, referenceParagraphsBySource };
-}
-
-  const [advancedSearchQuery, setAdvancedSearchQuery] = useState("");
-  const [advancedSearchFilters, setAdvancedSearchFilters] =
-    useState<AdvancedSearchFilters>(EMPTY_ADVANCED_FILTERS);
-  const [advancedSearchResults, setAdvancedSearchResults] = useState<AdvancedSearchResult[]>([]);
-  const [advancedSearchLoading, setAdvancedSearchLoading] = useState(false);
-  const [advancedSearchError, setAdvancedSearchError] = useState<string | null>(null);
-  const [advancedSearchPagination, setAdvancedSearchPagination] = useState({
-    limit: 25,
-    offset: 0,
-    total: 0,
-  });
-  const [advancedSearchLastRunAt, setAdvancedSearchLastRunAt] = useState<string | null>(null);
-
-  const [advancedSearchFilterOptions, setAdvancedSearchFilterOptions] =
-    useState<AdvancedSearchFilterOptions>(EMPTY_ADVANCED_FILTER_OPTIONS);
-  const [referenceParagraphsBySource, setReferenceParagraphsBySource] = useState<
-    Record<string, string[]>
-  >({});
-
-    const resetAdvancedSearch = useCallback(() => {
-    setAdvancedSearchQuery("");
-    setAdvancedSearchFilters(EMPTY_ADVANCED_FILTERS);
-    setAdvancedSearchResults([]);
-    setAdvancedSearchLoading(false);
-    setAdvancedSearchError(null);
-    setAdvancedSearchPagination({ limit: 25, offset: 0, total: 0 });
-    setAdvancedSearchLastRunAt(null);
-  }, []);
-
-  const handleAdvancedSearchFiltersChange = useCallback((next: AdvancedSearchFilters) => {
-    setAdvancedSearchFilters(next);
-  }, []);
-
-  const runAdvancedSearch = useCallback(async () => {
-    setAdvancedSearchLoading(true);
-    setAdvancedSearchError(null);
-
-    try {
-      // temporary mock result; replace in PR4 with backend call
-      const q = advancedSearchQuery.trim();
-      const mock: AdvancedSearchResult[] = q
-        ? [
-            {
-              id: `mock-${q}`,
-              qname: q.includes(":") ? q : `mock:${q}`,
-              localName: q.replace(/^.*:/, ""),
-              label: `Mock result for "${q}"`,
-              matchedFields: ["qname"],
-              score: 1,
-            },
-          ]
-        : [];
-
-      setAdvancedSearchResults(mock);
-      setAdvancedSearchPagination((prev) => ({ ...prev, total: mock.length, offset: 0 }));
-      setAdvancedSearchLastRunAt(new Date().toISOString());
-    } catch (err) {
-      console.error("Advanced search failed", err);
-      setAdvancedSearchError("Advanced search failed.");
-    } finally {
-      setAdvancedSearchLoading(false);
-    }
-  }, [advancedSearchQuery]);
-
-  const advancedSearchState: AdvancedSearchState = useMemo(
-    () => ({
-      query: advancedSearchQuery,
-      filters: advancedSearchFilters,
-      results: advancedSearchResults,
-      loading: advancedSearchLoading,
-      error: advancedSearchError,
-      pagination: advancedSearchPagination,
-      lastRunAt: advancedSearchLastRunAt,
-    }),
-    [
-      advancedSearchQuery,
-      advancedSearchFilters,
-      advancedSearchResults,
-      advancedSearchLoading,
-      advancedSearchError,
-      advancedSearchPagination,
-      advancedSearchLastRunAt,
-    ]
-  );
-
-const NAV_LOG_PREFIX = "[TreeLocationNavigation]";
-
-
 
 const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // UI state
@@ -233,7 +80,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // navigation queue (for cross-network jumps)
   const [pendingNavigation, setPendingNavigation] = useState<PendingNavigation | null>(null);
 
-  // Advanced Search (PR2: container-owned state)
+  // Advanced Search state
   const [advancedSearchQuery, setAdvancedSearchQuery] = useState("");
   const [advancedSearchFilters, setAdvancedSearchFilters] =
     useState<AdvancedSearchFilters>(EMPTY_ADVANCED_FILTERS);
@@ -246,6 +93,13 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     total: 0,
   });
   const [advancedSearchLastRunAt, setAdvancedSearchLastRunAt] = useState<string | null>(null);
+
+  // Option scaffolding for upcoming advanced UI
+  const [advancedSearchFilterOptions, setAdvancedSearchFilterOptions] =
+    useState<AdvancedSearchFilterOptions>(EMPTY_ADVANCED_FILTER_OPTIONS);
+  const [referenceParagraphsBySource, setReferenceParagraphsBySource] = useState<
+    Record<string, string[]>
+  >({});
 
   const excludedKeys = new Set(["concepts", "dimensions", "hypercubes", "primary_items"]);
 
@@ -265,15 +119,9 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     setAdvancedSearchLastRunAt(null);
   }, []);
 
-  const updateAdvancedSearchFacet = useCallback(
-    (facet: AdvancedSearchFacetKey, values: string[]) => {
-      setAdvancedSearchFilters((prev) => ({
-        ...prev,
-        [facet]: values,
-      }));
-    },
-    []
-  );
+  const updateAdvancedSearchFilters = useCallback((next: AdvancedSearchFilters) => {
+    setAdvancedSearchFilters(next);
+  }, []);
 
   // PR2 mock runner (real endpoint wiring in PR4)
   const runAdvancedSearch = useCallback(async () => {
@@ -370,6 +218,10 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     setPendingNavigation(null);
     resetAdvancedSearch();
 
+    // keep options reset deterministic on entrypoint change
+    setAdvancedSearchFilterOptions(EMPTY_ADVANCED_FILTER_OPTIONS);
+    setReferenceParagraphsBySource({});
+
     fetch("/api/load-entrypoint", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -393,10 +245,6 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         }
 
         setRawTreeData(treeMap);
-                const concepts = (data.trees?.concepts || {}) as Record<string, any>;
-        const { filterOptions, referenceParagraphsBySource } = deriveAdvancedSearchOptions(concepts);
-        setAdvancedSearchFilterOptions(filterOptions);
-        setReferenceParagraphsBySource(referenceParagraphsBySource);
         setEntrypointLoaded(true);
         setLoadingEntrypoint(false);
       })
@@ -597,6 +445,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
       });
       return;
     }
+
     const expanded: Record<string, boolean> = {};
     for (const node of path) expanded[node.key] = true;
     setExpandedKeys((prev) => ({ ...prev, ...expanded }));
@@ -655,8 +504,10 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         entrypointLoaded={entrypointLoaded}
         treeLocations={treeLocations}
         advancedSearchState={advancedSearchState}
+        advancedSearchFilterOptions={advancedSearchFilterOptions}
+        referenceParagraphsBySource={referenceParagraphsBySource}
         onAdvancedSearchQueryChange={setAdvancedSearchQuery}
-        onAdvancedSearchFacetChange={updateAdvancedSearchFacet}
+        onAdvancedSearchFiltersChange={updateAdvancedSearchFilters}
         onRunAdvancedSearch={runAdvancedSearch}
         onResetAdvancedSearch={resetAdvancedSearch}
       />

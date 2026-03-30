@@ -36,15 +36,15 @@ export interface AdvancedSearchState {
   lastRunAt: string | null;
 }
 
-export interface AdvancedSearchFilters {
+// keep these for forward compatibility with your next UI pass
+export interface AdvancedSearchFilterOptions {
   namespace: string[];
   balance: string[];
   periodType: string[];
   xbrlType: string[];
   fullType: string[];
-  abstract: boolean[]; // allows none / true / false / both
-  nillable: boolean[]; // allows none / true / false / both
+  abstract: boolean[];
+  nillable: boolean[];
   substitutionGroup: string[];
-  referenceSource: string | null;   // dropdown
-  referenceParagraph: string | null; // dropdown dependent on source
+  referenceSources: string[];
 }

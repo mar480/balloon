@@ -7,7 +7,6 @@ import {
   AdvancedSearchFacetKey,
   AdvancedSearchState,
   AdvancedSearchFilterOptions,
-  AdvancedSearchFilters,
 } from "@/types/advancedSearch";
 
 type DetailsTabName =
@@ -28,7 +27,7 @@ interface DetailPanelProps {
   advancedSearchFilterOptions: AdvancedSearchFilterOptions;
   referenceParagraphsBySource: Record<string, string[]>;
   onAdvancedSearchQueryChange: (query: string) => void;
-  onAdvancedSearchFiltersChange: (next: AdvancedSearchFilters) => void;
+  onAdvancedSearchFacetChange: (facet: AdvancedSearchFacetKey, values: string[]) => void;
   onRunAdvancedSearch: () => void;
   onResetAdvancedSearch: () => void;
 }
@@ -42,10 +41,8 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
   language,
   network,
   advancedSearchState,
-  advancedSearchFilterOptions,
-  referenceParagraphsBySource,
   onAdvancedSearchQueryChange,
-  onAdvancedSearchFiltersChange,
+  onAdvancedSearchFacetChange,
   onRunAdvancedSearch,
   onResetAdvancedSearch,
 }) => {
@@ -68,9 +65,7 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
   );
 
   useEffect(() => {
-    if (!tabs.includes(activeTab)) {
-      setActiveTab("Details");
-    }
+    if (!tabs.includes(activeTab)) setActiveTab("Details");
   }, [tabs, activeTab]);
 
   useEffect(() => {
@@ -110,17 +105,15 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
 
       <div className="flex-1 overflow-auto">
         {activeTab === "Advanced Search" && (
-  <AdvancedSearchTab
-    state={advancedSearchState}
-    filterOptions={advancedSearchFilterOptions}
-    referenceParagraphsBySource={referenceParagraphsBySource}
-    onQueryChange={onAdvancedSearchQueryChange}
-    onFiltersChange={onAdvancedSearchFiltersChange}
-    onRunSearch={onRunAdvancedSearch}
-    onResetSearch={onResetAdvancedSearch}
-    onNavigateToNode={onNavigateToNode}
-  />
-)}
+          <AdvancedSearchTab
+            state={advancedSearchState}
+            onQueryChange={onAdvancedSearchQueryChange}
+            onFacetChange={onAdvancedSearchFacetChange}
+            onRunSearch={onRunAdvancedSearch}
+            onResetSearch={onResetAdvancedSearch}
+            onNavigateToNode={onNavigateToNode}
+          />
+        )}
 
         {activeTab === "Details" &&
           (!selectedNode || !concept ? (
