@@ -1,22 +1,239 @@
+import json
 import os
 import re
-import json
+from urllib.parse import unquote, urlparse
+
+from flask import Flask, g, jsonify, render_template, request, send_from_directory
 from lxml import etree
-from flask import Flask, render_template, send_from_directory, request, jsonify, g
 from xbrl.loader import TaxonomyContext
-from urllib.parse import urlparse, unquote
 
 taxonomy_cache = {}
 
-app = Flask(__name__, static_folder='static', template_folder='templates')
+search_filter_options_cache = {}  # key: "<year>::<entrypoint_name>" -> options payload
+
+
+def _entrypoint_name_from_href(href: str) -> str:
+    raw_entrypoint_name = os.path.splitext(os.path.basename(href))[0]
+    return re.split(r"[-_]\d{4}-\d{2}-\d{2}", raw_entrypoint_name)[0]
+
+
+def _entrypoint_cache_key(year: str, href: str) -> str:
+    return f"{year}::{_entrypoint_name_from_href(href)}"
+
+
+def _normalize_bool(value):
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        v = value.strip().lower()
+        if v == "true":
+            return True
+        if v == "false":
+            return False
+    return None
+
+
+def _roman_to_int(token: str):
+    """
+    Convert simple roman numerals to int for sorting.
+    Returns None if token is not a valid roman numeral.
+    """
+    if not token:
+        return None
+    token = token.lower().strip()
+    roman_map = {"i": 1, "v": 5, "x": 10, "l": 50, "c": 100, "d": 500, "m": 1000}
+    if any(ch not in roman_map for ch in token):
+        return None
+
+    total = 0
+    prev = 0
+    for ch in reversed(token):
+        val = roman_map[ch]
+        if val < prev:
+            total -= val
+        else:
+            total += val
+        prev = val
+
+    # Very loose validity guard: ensure token was actually roman-looking
+    # (prevents accidental conversion of random alpha strings)
+    return total if total > 0 else None
+
+
+def _natural_sort_key(value: str):
+    """
+    Human sort for source-like labels:
+    IFRS 2 < IFRS 10, IAS 7 < IAS 37.
+    """
+    s = (value or "").strip().lower()
+    parts = re.split(r"(\d+)", s)
+    key = []
+    for part in parts:
+        if not part:
+            continue
+        if part.isdigit():
+            key.append((0, int(part)))
+        else:
+            key.append((1, part))
+    return key
+
+
+def _paragraph_sort_key(value: str):
+    """
+    Sort paragraph refs more naturally:
+      34.7.c.i < 34.7.c.ii < 34.7.c.v < 34.7A < 35.11 < 35.12A ...
+    Handles:
+      - numeric tokens
+      - alpha tokens
+      - roman numerals (i, ii, iii, iv, ...)
+      - mixed tokens like 12A
+      - punctuation separators ., , -, spaces, etc.
+    """
+    s = (value or "").strip().lower()
+
+    # split on non-alnum, preserving sequence
+    primary_parts = re.split(r"[^a-z0-9]+", s)
+
+    key = []
+    for part in primary_parts:
+        if not part:
+            continue
+
+        # split mixed chunks into digit/non-digit components
+        subparts = re.split(r"(\d+)", part)
+        for sp in subparts:
+            if not sp:
+                continue
+
+            if sp.isdigit():
+                key.append((0, int(sp)))
+                continue
+
+            # alphabetic segment - try roman numeral first
+            roman_val = _roman_to_int(sp)
+            if roman_val is not None:
+                key.append((1, roman_val))  # roman bucket
+            else:
+                key.append((2, sp))  # plain alpha bucket
+
+    return key
+
+
+def _load_concepts_json_for_entrypoint(year: str, href: str) -> dict:
+    entrypoint_name = _entrypoint_name_from_href(href)
+    concepts_path = os.path.join(
+        TAXONOMY_BASE_DIR, year, "trees", entrypoint_name, "concepts.json"
+    )
+    if not os.path.exists(concepts_path):
+        return {}
+    with open(concepts_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _build_search_filter_options_from_concepts(concepts: dict) -> dict:
+    namespaces = set()
+    balances = set()
+    periods = set()
+    xbrl_types = set()
+    full_types = set()
+    substitution_groups = set()
+
+    abstract_values = set()
+    nillable_values = set()
+
+    reference_sources = set()
+    paragraphs_by_source = {}
+
+    for _, entry in (concepts or {}).items():
+        concept = (entry or {}).get("concept", {}) or {}
+
+        namespace = concept.get("namespace")
+        balance = concept.get("balance")
+        period_type = concept.get("period_type")
+        xbrl_type = concept.get("xbrl_type")
+        full_type = concept.get("full_type")
+        substitution_group = concept.get("substitution_group")
+
+        if namespace:
+            namespaces.add(str(namespace))
+        if balance:
+            balances.add(str(balance))
+        if period_type:
+            periods.add(str(period_type))
+        if xbrl_type:
+            xbrl_types.add(str(xbrl_type))
+        if full_type:
+            full_types.add(str(full_type))
+        if substitution_group:
+            substitution_groups.add(str(substitution_group))
+
+        abstract_bool = _normalize_bool(concept.get("abstract"))
+        nillable_bool = _normalize_bool(concept.get("nillable"))
+        if abstract_bool is not None:
+            abstract_values.add(abstract_bool)
+        if nillable_bool is not None:
+            nillable_values.add(nillable_bool)
+
+        for ref in (entry or {}).get("references", []) or []:
+            name = (ref.get("name") or "").strip()
+            number = (ref.get("number") or "").strip()
+            paragraph = (ref.get("paragraph") or "").strip()
+
+            # source display key: "FRS 102", "IFRS 15", etc.
+            if not name and not number:
+                continue
+
+            source = f"{name} {number}".strip()
+            reference_sources.add(source)
+
+            if source not in paragraphs_by_source:
+                paragraphs_by_source[source] = set()
+
+            if paragraph:
+                paragraphs_by_source[source].add(paragraph)
+
+    return {
+        "namespace": sorted(namespaces, key=_natural_sort_key),
+        "balance": sorted(balances, key=_natural_sort_key),
+        "periodType": sorted(periods, key=_natural_sort_key),
+        "xbrlType": sorted(xbrl_types, key=_natural_sort_key),
+        "fullType": sorted(full_types, key=_natural_sort_key),
+        "abstract": sorted(abstract_values),  # [False, True]
+        "nillable": sorted(nillable_values),  # [False, True]
+        "substitutionGroup": sorted(substitution_groups, key=_natural_sort_key),
+        "referenceSources": sorted(reference_sources, key=_natural_sort_key),
+        "referenceParagraphsBySource": {
+            source: sorted(values, key=_paragraph_sort_key)
+            for source, values in sorted(
+                paragraphs_by_source.items(), key=lambda kv: _natural_sort_key(kv[0])
+            )
+        },
+    }
+
+
+def _load_concepts_json_for_entrypoint(year: str, href: str) -> dict:
+    entrypoint_name = _entrypoint_name_from_href(href)
+    concepts_path = os.path.join(
+        TAXONOMY_BASE_DIR, year, "trees", entrypoint_name, "concepts.json"
+    )
+    if not os.path.exists(concepts_path):
+        return {}
+    with open(concepts_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+app = Flask(__name__, static_folder="static", template_folder="templates")
 
 TAXONOMY_BASE_DIR = os.path.join(os.path.dirname(__file__), "taxonomies")
+
 
 def _is_lloyds_year_key(year: str) -> bool:
     return isinstance(year, str) and year.lower().startswith("lloyds")
 
+
 def _is_http_href(href: str) -> bool:
     return isinstance(href, str) and href.startswith(("http://", "https://"))
+
 
 def _find_local_entrypoint_from_href(year: str, href: str) -> str:
     """
@@ -30,7 +247,9 @@ def _find_local_entrypoint_from_href(year: str, href: str) -> str:
         raise FileNotFoundError(f"Year root not found: {year_root}")
 
     parsed = urlparse(href)
-    remote_path = unquote(parsed.path).lstrip("/")  # e.g. lloyds/2025-.../lloyds-2025-...xsd
+    remote_path = unquote(parsed.path).lstrip(
+        "/"
+    )  # e.g. lloyds/2025-.../lloyds-2025-...xsd
     base_name = os.path.basename(remote_path)
 
     file_paths = []
@@ -48,7 +267,9 @@ def _find_local_entrypoint_from_href(year: str, href: str) -> str:
 
     # 2) Path suffix match
     remote_suffix = remote_path.replace("\\", "/")
-    suffix_matches = [p for p in file_paths if p.replace("\\", "/").endswith(remote_suffix)]
+    suffix_matches = [
+        p for p in file_paths if p.replace("\\", "/").endswith(remote_suffix)
+    ]
     if len(suffix_matches) == 1:
         return suffix_matches[0]
     if len(suffix_matches) > 1:
@@ -59,6 +280,7 @@ def _find_local_entrypoint_from_href(year: str, href: str) -> str:
         f"Could not map href to local file for year='{year}': {href}"
     )
 
+
 def _safe_close_taxonomy(taxonomy_obj):
     if taxonomy_obj is None:
         return
@@ -66,6 +288,7 @@ def _safe_close_taxonomy(taxonomy_obj):
         taxonomy_obj.controller.close()
     except Exception:
         pass
+
 
 def _load_taxonomy_with_lloyds_fallback(year: str, href: str):
     """
@@ -79,7 +302,9 @@ def _load_taxonomy_with_lloyds_fallback(year: str, href: str):
 
     # Apply fallback only for Lloyds-style keys and only for remote hrefs with empty model
     if _is_lloyds_year_key(year) and _is_http_href(href) and primary_count == 0:
-        print("[taxonomy-load] Lloyds fallback triggered (empty model after remote load)")
+        print(
+            "[taxonomy-load] Lloyds fallback triggered (empty model after remote load)"
+        )
         _safe_close_taxonomy(primary)
 
         local_entrypoint = _find_local_entrypoint_from_href(year, href)
@@ -99,14 +324,19 @@ def _load_taxonomy_with_lloyds_fallback(year: str, href: str):
 
     # Not fallback case, or primary load succeeded
     if primary_count == 0:
-        print("[taxonomy-load] Warning: model empty after primary load (fallback not applied)")
+        print(
+            "[taxonomy-load] Warning: model empty after primary load (fallback not applied)"
+        )
     return primary
 
+
 def get_entrypoints_for_year(year: str):
-    package_path = os.path.join(TAXONOMY_BASE_DIR, year, "META-INF", "taxonomyPackage.xml")
+    package_path = os.path.join(
+        TAXONOMY_BASE_DIR, year, "META-INF", "taxonomyPackage.xml"
+    )
     if not os.path.exists(package_path):
         raise FileNotFoundError(f"taxonomyPackage.xml not found for year {year}")
-    
+
     ns = {"tp": "http://xbrl.org/2016/taxonomy-package"}
     tree = etree.parse(package_path)
     entrypoints = tree.xpath("//tp:entryPoint", namespaces=ns)
@@ -119,13 +349,16 @@ def get_entrypoints_for_year(year: str):
             result.append({"name": name, "href": href})
     return result
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
 
+
 @app.route("/assets/<path:filename>")
 def serve_assets(filename):
-    return send_from_directory(os.path.join(app.static_folder, 'assets'), filename)
+    return send_from_directory(os.path.join(app.static_folder, "assets"), filename)
+
 
 @app.route("/api/hello", methods=["POST"])
 def get_hypercubes():
@@ -145,11 +378,11 @@ def get_hypercubes():
     concept_ns = g.taxonomy.model.prefixedNamespaces.get(ns_prefix)
 
     results = g.taxonomy.hypercubes.find_hypercubes_for_concept(
-        concept_ns=concept_ns,
-        concept_name=local_name
+        concept_ns=concept_ns, concept_name=local_name
     )
 
     return jsonify({"hypercubes": results})
+
 
 @app.route("/api/concept-details")
 def concept_details():
@@ -158,7 +391,9 @@ def concept_details():
     print("\n[concept-details] ===== START =====")
     print(f"[concept-details] requested qname={request.args.get('qname', '')}")
     print(f"[concept-details] g has taxonomy? {hasattr(g, 'taxonomy')}")
-    print(f"[concept-details] cache has active? {'active' in taxonomy_cache and taxonomy_cache.get('active') is not None}")
+    print(
+        f"[concept-details] cache has active? {'active' in taxonomy_cache and taxonomy_cache.get('active') is not None}"
+    )
 
     if taxonomy is None:
         print("[concept-details] taxonomy is None")
@@ -177,12 +412,16 @@ def concept_details():
         sample_qnames = [str(qn) for qn in list(qdict.keys())[:10]]
         print(f"[concept-details] sample qnames={sample_qnames}")
 
-        available_prefixes = sorted({
-            getattr(qn, "prefix", "")
-            for qn in qdict.keys()
-            if getattr(qn, "prefix", None)
-        })
-        print(f"[concept-details] available prefixes (sample): {available_prefixes[:50]}")
+        available_prefixes = sorted(
+            {
+                getattr(qn, "prefix", "")
+                for qn in qdict.keys()
+                if getattr(qn, "prefix", None)
+            }
+        )
+        print(
+            f"[concept-details] available prefixes (sample): {available_prefixes[:50]}"
+        )
     except Exception as ex:
         print(f"[concept-details] model inspection error: {ex}")
         available_prefixes = []
@@ -206,10 +445,15 @@ def concept_details():
 
     if ns is None:
         print("[concept-details] namespace resolution failed")
-        return jsonify({
-            "error": f"Prefix '{prefix}' not found in loaded taxonomy",
-            "available_prefixes": available_prefixes[:50]
-        }), 404
+        return (
+            jsonify(
+                {
+                    "error": f"Prefix '{prefix}' not found in loaded taxonomy",
+                    "available_prefixes": available_prefixes[:50],
+                }
+            ),
+            404,
+        )
 
     concept_data = g.taxonomy.concepts.get_concept_json(ns, local_name)
     if not concept_data:
@@ -219,6 +463,7 @@ def concept_details():
     concept_data["concept"]["qname"] = qname
     print("[concept-details] ===== END OK =====\n")
     return jsonify(concept_data)
+
 
 @app.route("/api/entrypoints", methods=["GET"])
 def list_entrypoints_by_year():
@@ -233,6 +478,7 @@ def list_entrypoints_by_year():
         return jsonify({"error": str(e)}), 404
     except Exception as e:
         return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
+
 
 @app.route("/api/load-entrypoint", methods=["POST"])
 def load_entrypoint():
@@ -250,12 +496,16 @@ def load_entrypoint():
         print(f"[load-entrypoint] year={year}")
         print(f"[load-entrypoint] href={href}")
         print(f"[load-entrypoint] entrypoint_path={entrypoint_path}")
-        print(f"[load-entrypoint] taxonomy_cache has active? {'active' in taxonomy_cache and taxonomy_cache.get('active') is not None}")
+        print(
+            f"[load-entrypoint] taxonomy_cache has active? {'active' in taxonomy_cache and taxonomy_cache.get('active') is not None}"
+        )
 
         old_taxonomy = taxonomy_cache.get("active")
         if old_taxonomy is not None:
             _safe_close_taxonomy(old_taxonomy)
-            print(f"[load-entrypoint] old taxonomy id={id(old_taxonomy)} model_id={id(getattr(old_taxonomy, 'model', None))}")
+            print(
+                f"[load-entrypoint] old taxonomy id={id(old_taxonomy)} model_id={id(getattr(old_taxonomy, 'model', None))}"
+            )
             try:
                 old_count = len(getattr(old_taxonomy.model, "qnameConcepts", {}))
             except Exception as ex:
@@ -273,7 +523,9 @@ def load_entrypoint():
         taxonomy_cache["active"] = g.taxonomy
 
         print(f"[load-entrypoint] new taxonomy id={id(g.taxonomy)}")
-        print(f"[load-entrypoint] new model id={id(getattr(g.taxonomy, 'model', None))}")
+        print(
+            f"[load-entrypoint] new model id={id(getattr(g.taxonomy, 'model', None))}"
+        )
 
         try:
             qdict = getattr(g.taxonomy.model, "qnameConcepts", {})
@@ -283,11 +535,13 @@ def load_entrypoint():
             sample_qnames = [str(qn) for qn in list(qdict.keys())[:10]]
             print(f"[load-entrypoint] sample qnames={sample_qnames}")
 
-            sample_prefixes = sorted({
-                getattr(qn, "prefix", "")
-                for qn in qdict.keys()
-                if getattr(qn, "prefix", None)
-            })[:30]
+            sample_prefixes = sorted(
+                {
+                    getattr(qn, "prefix", "")
+                    for qn in qdict.keys()
+                    if getattr(qn, "prefix", None)
+                }
+            )[:30]
             print(f"[load-entrypoint] sample prefixes={sample_prefixes}")
         except Exception as ex:
             print(f"[load-entrypoint] model inspection error: {ex}")
@@ -314,17 +568,70 @@ def load_entrypoint():
                     trees[tree_name] = json.load(f)
 
         print("[Flask] Returning tree keys:", list(trees.keys()))
+
+        # Build + cache search filter options for this entrypoint
+        concepts_payload = trees.get("concepts", {})
+        if isinstance(concepts_payload, dict):
+            cache_key = _entrypoint_cache_key(year, href)
+            search_filter_options_cache[cache_key] = (
+                _build_search_filter_options_from_concepts(concepts_payload)
+            )
+            taxonomy_cache["active_search_filter_options_key"] = cache_key
+            print(f"[load-entrypoint] cached search filter options key={cache_key}")
+
         print("[load-entrypoint] ===== END OK =====\n")
 
-        return jsonify({
-            "status": "loaded",
-            "entrypoint": os.path.basename(href),
-            "trees": trees
-        })
+        return jsonify(
+            {"status": "loaded", "entrypoint": os.path.basename(href), "trees": trees}
+        )
 
     except Exception as e:
         print(f"[load-entrypoint] ERROR: {e}")
         return jsonify({"error": f"Failed to load taxonomy: {str(e)}"}), 500
+
+
+@app.route("/api/search-filter-options", methods=["GET"])
+def search_filter_options():
+    """
+    Returns filter options for advanced search, including:
+    - checkbox options
+    - referenceSources
+    - referenceParagraphsBySource
+    """
+    year = request.args.get("year")
+    href = request.args.get("href")
+
+    cache_key = None
+    if year and href:
+        cache_key = _entrypoint_cache_key(year, href)
+    else:
+        cache_key = taxonomy_cache.get("active_search_filter_options_key")
+
+    if not cache_key:
+        return (
+            jsonify({"error": "No active entrypoint context. Provide year and href."}),
+            400,
+        )
+
+    cached = search_filter_options_cache.get(cache_key)
+    if cached is not None:
+        return jsonify(cached)
+
+    # Fallback: build from concepts.json on disk if cache miss
+    if not (year and href):
+        return jsonify({"error": "Cache miss and year/href not provided."}), 404
+
+    concepts_payload = _load_concepts_json_for_entrypoint(year, href)
+    if not concepts_payload:
+        return (
+            jsonify({"error": "concepts.json not found or empty for entrypoint"}),
+            404,
+        )
+
+    payload = _build_search_filter_options_from_concepts(concepts_payload)
+    search_filter_options_cache[cache_key] = payload
+    taxonomy_cache["active_search_filter_options_key"] = cache_key
+    return jsonify(payload)
 
 
 @app.teardown_appcontext
@@ -339,9 +646,11 @@ def cleanup(exception=None):
 
     if taxonomy is not None and taxonomy is not active:
         _safe_close_taxonomy(taxonomy)
-   
+
     if taxonomy is not None:
-        print(f"[teardown] g.taxonomy id={id(taxonomy)} model_id={id(getattr(taxonomy, 'model', None))}")
+        print(
+            f"[teardown] g.taxonomy id={id(taxonomy)} model_id={id(getattr(taxonomy, 'model', None))}"
+        )
         try:
             count = len(getattr(taxonomy.model, "qnameConcepts", {}))
         except Exception as ex:
@@ -349,7 +658,9 @@ def cleanup(exception=None):
         print(f"[teardown] g.taxonomy qnameConcepts count={count}")
 
     if active is not None:
-        print(f"[teardown] active taxonomy id={id(active)} model_id={id(getattr(active, 'model', None))}")
+        print(
+            f"[teardown] active taxonomy id={id(active)} model_id={id(getattr(active, 'model', None))}"
+        )
         try:
             count = len(getattr(active.model, "qnameConcepts", {}))
         except Exception as ex:
@@ -360,12 +671,14 @@ def cleanup(exception=None):
     print("[teardown] TEMP no-close mode enabled")
     print("[teardown] ===== END =====\n")
 
+
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def catch_all(path):
     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
         return send_from_directory(app.static_folder, path)
     return render_template("index.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

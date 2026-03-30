@@ -297,6 +297,32 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         }
 
         setRawTreeData(treeMap);
+
+
+        fetch(
+  `/api/search-filter-options?year=${encodeURIComponent(year!)}&href=${encodeURIComponent(entrypoint!)}`
+)
+  .then((res) => res.json())
+  .then((opts) => {
+    setAdvancedSearchFilterOptions({
+      namespace: opts.namespace ?? [],
+      balance: opts.balance ?? [],
+      periodType: opts.periodType ?? [],
+      xbrlType: opts.xbrlType ?? [],
+      fullType: opts.fullType ?? [],
+      abstract: opts.abstract ?? [true, false],
+      nillable: opts.nillable ?? [true, false],
+      substitutionGroup: opts.substitutionGroup ?? [],
+      referenceSources: opts.referenceSources ?? [],
+    });
+    setReferenceParagraphsBySource(opts.referenceParagraphsBySource ?? {});
+  })
+  .catch((err) => {
+    console.error("Failed to load search filter options", err);
+    setAdvancedSearchFilterOptions(PRESET_ADVANCED_FILTER_OPTIONS); // fallback
+    setReferenceParagraphsBySource({});
+  });
+
         setEntrypointLoaded(true);
         setLoadingEntrypoint(false);
       })

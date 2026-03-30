@@ -400,6 +400,7 @@ const DetailPanel: React.FC<DetailPanelProps> = ({
                             "year",
                             "schedule",
                             "part",
+                            "report",
                             "section",
                             "paragraph",
                           ].filter((key) => key in details);
