@@ -79,6 +79,13 @@ function toggleBoolean(values: boolean[], value: boolean): boolean[] {
   return values.includes(value) ? values.filter((v) => v !== value) : [...values, value];
 }
 
+type FilterChip = {
+  key: string;
+  label: string;
+  remove: () => void;
+};
+
+
 const StringCheckboxGroup: React.FC<{
   label: string;
   help: string;
@@ -167,6 +174,82 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
     filters.referenceSource
       ? safeReferenceParagraphsBySource[filters.referenceSource] || []
       : [];
+
+   const chips: FilterChip[] = [
+    ...filters.balance.map((value) => ({
+      key: `balance:${value}`,
+      label: `Balance: ${value}`,
+      remove: () => onFiltersChange({ ...filters, balance: filters.balance.filter((v) => v !== value) }),
+    })),
+    ...filters.periodType.map((value) => ({
+      key: `periodType:${value}`,
+      label: `Period type: ${value}`,
+      remove: () => onFiltersChange({ ...filters, periodType: filters.periodType.filter((v) => v !== value) }),
+    })),
+    ...filters.xbrlType.map((value) => ({
+      key: `xbrlType:${value}`,
+      label: `XBRL type: ${value}`,
+      remove: () => onFiltersChange({ ...filters, xbrlType: filters.xbrlType.filter((v) => v !== value) }),
+    })),
+    ...filters.fullType.map((value) => ({
+      key: `fullType:${value}`,
+      label: `Full type: ${value}`,
+      remove: () => onFiltersChange({ ...filters, fullType: filters.fullType.filter((v) => v !== value) }),
+    })),
+    ...filters.namespace.map((value) => ({
+      key: `namespace:${value}`,
+      label: `Namespace: ${value}`,
+      remove: () => onFiltersChange({ ...filters, namespace: filters.namespace.filter((v) => v !== value) }),
+    })),
+    ...filters.substitutionGroup.map((value) => ({
+      key: `substitutionGroup:${value}`,
+      label: `Substitution group: ${value}`,
+      remove: () =>
+        onFiltersChange({
+          ...filters,
+          substitutionGroup: filters.substitutionGroup.filter((v) => v !== value),
+        }),
+    })),
+    ...filters.abstract.map((value) => ({
+      key: `abstract:${String(value)}`,
+      label: `Abstract: ${String(value)}`,
+      remove: () => onFiltersChange({ ...filters, abstract: filters.abstract.filter((v) => v !== value) }),
+    })),
+    ...filters.nillable.map((value) => ({
+      key: `nillable:${String(value)}`,
+      label: `Nillable: ${String(value)}`,
+      remove: () => onFiltersChange({ ...filters, nillable: filters.nillable.filter((v) => v !== value) }),
+    })),
+    ...(filters.referenceSource
+      ? [
+          {
+            key: `referenceSource:${filters.referenceSource}`,
+            label: `Source: ${filters.referenceSource}`,
+            remove: () => onFiltersChange({ ...filters, referenceSource: null, referenceParagraph: null }),
+          },
+        ]
+      : []),
+    ...(filters.referenceParagraph
+      ? [
+          {
+            key: `referenceParagraph:${filters.referenceParagraph}`,
+            label: `Paragraph: ${filters.referenceParagraph}`,
+            remove: () => onFiltersChange({ ...filters, referenceParagraph: null }),
+          },
+        ]
+      : []),
+  ];
+
+  const removeChipAndSearch = (chip: FilterChip) => {
+    chip.remove();
+    onRunSearch(0);
+  };
+
+  const clearAllFilters = () => {
+    onFiltersChange(EMPTY_FILTERS);
+    onRunSearch(0);
+  };
+
 
   return (
     <TooltipProvider delayDuration={150}>
@@ -335,6 +418,37 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+
+               <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-medium">Active facet filters</div>
+            <button
+              type="button"
+              className="text-xs px-2 py-1 rounded border bg-white disabled:opacity-50"
+              onClick={clearAllFilters}
+              disabled={chips.length === 0}
+            >
+              Clear all filters
+            </button>
+          </div>
+          {chips.length === 0 ? (
+            <div className="text-xs text-gray-500">No facet filters selected.</div>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {chips.map((chip) => (
+                <button
+                  key={chip.key}
+                  type="button"
+                  className="text-xs px-2 py-1 rounded-full bg-blue-50 border border-blue-200 hover:bg-blue-100"
+                  onClick={() => removeChipAndSearch(chip)}
+                  title="Remove filter and search again"
+                >
+                  {chip.label} ×
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
 
         {error && <div className="text-sm text-red-600">{error}</div>}

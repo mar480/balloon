@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import XBRLTaxonomyExplorer from "./XBRLTaxonomyExplorer";
 import Loader from "@/components/loader/Loader";
 import "@/components/loader/loader.scss";
@@ -109,6 +109,10 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   });
   const [advancedSearchLastRunAt, setAdvancedSearchLastRunAt] = useState<string | null>(null);
 
+
+    const latestAdvancedQueryRef = useRef("");
+  const latestAdvancedFiltersRef = useRef<AdvancedSearchFilters>(EMPTY_ADVANCED_FILTERS);
+  const lastRunCriteriaKeyRef = useRef<string | null>(null);
   // Option scaffolding for upcoming advanced UI
   const [advancedSearchFilterOptions, setAdvancedSearchFilterOptions] =
     useState<AdvancedSearchFilterOptions>(EMPTY_ADVANCED_FILTER_OPTIONS);
@@ -125,6 +129,9 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   const resetAdvancedSearch = useCallback(() => {
     setAdvancedSearchQuery("");
     setAdvancedSearchFilters(EMPTY_ADVANCED_FILTERS);
+        latestAdvancedQueryRef.current = "";
+    latestAdvancedFiltersRef.current = EMPTY_ADVANCED_FILTERS;
+    lastRunCriteriaKeyRef.current = null;
     setAdvancedSearchResults([]);
     setAdvancedSearchLoading(false);
     setAdvancedSearchError(null);
@@ -132,7 +139,14 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     setAdvancedSearchLastRunAt(null);
   }, []);
 
+  const updateAdvancedSearchQuery = useCallback((next: string) => {
+    latestAdvancedQueryRef.current = next;
+    setAdvancedSearchQuery(next);
+  }, []);
+
+
   const updateAdvancedSearchFilters = useCallback((next: AdvancedSearchFilters) => {
+    latestAdvancedFiltersRef.current = next;
     setAdvancedSearchFilters(next);
   }, []);
 
@@ -141,10 +155,19 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
       setAdvancedSearchError("Select a taxonomy year and entrypoint before searching.");
       return;
     }
+     const trimmedQuery = latestAdvancedQueryRef.current.trim();
+    const criteriaKey = JSON.stringify({
+      q: trimmedQuery,
+      filters: latestAdvancedFiltersRef.current,
+    });
+    const criteriaChanged = criteriaKey !== lastRunCriteriaKeyRef.current;
 
     const requestedOffset =
-      typeof nextOffset === "number" ? Math.max(0, nextOffset) : advancedSearchPagination.offset;
-
+      typeof nextOffset === "number"
+        ? Math.max(0, nextOffset)
+        : criteriaChanged
+          ? 0
+          : advancedSearchPagination.offset;
     setAdvancedSearchLoading(true);
     setAdvancedSearchError(null);
 
@@ -157,8 +180,8 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         body: JSON.stringify({
           year,
           href: entrypoint,
-          q: advancedSearchQuery.trim(),
-          filters: advancedSearchFilters,
+          q: trimmedQuery,
+          filters: latestAdvancedFiltersRef.current,
           limit: advancedSearchPagination.limit,
           offset: requestedOffset,
         }),
@@ -191,6 +214,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
       }));
 
       setAdvancedSearchLastRunAt(new Date().toISOString());
+      lastRunCriteriaKeyRef.current = criteriaKey;
     } catch (error) {
       console.error("Advanced search failed", error);
       setAdvancedSearchError("Advanced search failed. Please try again.");
@@ -202,8 +226,6 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     advancedSearchPagination.limit,
 
     advancedSearchPagination.offset,
-    advancedSearchQuery,
-    advancedSearchFilters,
     entrypoint,
     year,
   ]);
@@ -581,7 +603,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         advancedSearchState={advancedSearchState}
         advancedSearchFilterOptions={advancedSearchFilterOptions}
         referenceParagraphsBySource={referenceParagraphsBySource}
-        onAdvancedSearchQueryChange={setAdvancedSearchQuery}
+        onAdvancedSearchQueryChange={updateAdvancedSearchQuery}
         onAdvancedSearchFiltersChange={updateAdvancedSearchFilters}
         onRunAdvancedSearch={runAdvancedSearch}
         onResetAdvancedSearch={resetAdvancedSearch}
