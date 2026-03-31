@@ -36,6 +36,7 @@ type PendingNavigation = {
   qname: string;
   uuid?: string;
   treeId?: string;
+  updateDetails?: boolean;
 };
 
 type SearchConceptApiResult = {
@@ -91,6 +92,7 @@ function sanitizeAdvancedFilters(next: AdvancedSearchFilters): AdvancedSearchFil
 const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // UI state
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
+ const [detailNode, setDetailNode] = useState<TreeNode | null>(null);
   const [expandedKeys, setExpandedKeys] = useState<{ [key: string]: boolean }>({});
   const [highlightedKey, setHighlightedKey] = useState<string | null>(null);
   const [language, setLanguage] = useState<"en" | "cy">("en");
@@ -298,6 +300,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     setRawTreeData({});
     setNetwork("");
     setSelectedNode(null);
+    setDetailNode(null);
     setExpandedKeys({});
     setHighlightedKey(null);
     setPendingNavigation(null);
@@ -395,7 +398,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   );
 
   const expandPathToQName = useCallback(
-    (targetQName: string) => {
+    (targetQName: string, options?: { preserveDetails?: boolean }) => {
       const path = findPathInTreeNodes(currentTreeNodes, (node) => node.data?.qname === targetQName);
       if (!path) return;
 
@@ -407,12 +410,15 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
       setHighlightedKey(target.key);
       setTimeout(() => setHighlightedKey(null), 5000);
       setSelectedNode(target);
+            if (!options?.preserveDetails) {
+        setDetailNode(target);
+      }
     },
     [currentTreeNodes, findPathInTreeNodes]
   );
 
   const treeLocations = useMemo<TreeLocationTarget[]>(() => {
-    const qname = selectedNode?.data?.qname;
+    const qname = detailNode?.data?.qname;
     if (!qname) return [];
 
     const results: TreeLocationTarget[] = [];
@@ -473,7 +479,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     }
 
     return results;
-  }, [rawTreeData, selectedNode?.data?.qname]);
+  }, [rawTreeData, detailNode?.data?.qname]);
 
   const navigateToLocation = useCallback(
     (target: TreeLocationTarget) => {
@@ -492,6 +498,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         qname: target.qname,
         uuid: target.uuid,
         treeId: target.treeId,
+        updateDetails: true,
       });
 
       if (network !== target.network) {
@@ -564,6 +571,9 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
 
     const targetNode = path[path.length - 1];
     setSelectedNode(targetNode);
+        if (pendingNavigation.updateDetails !== false) {
+      setDetailNode(targetNode);
+    }
     setHighlightedKey(targetNode.key);
     setTimeout(() => setHighlightedKey(null), 5000);
 
@@ -589,6 +599,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
 
       <XBRLTaxonomyExplorer
         selectedNode={selectedNode}
+        detailNode={detailNode}
         expandedKeys={expandedKeys}
         highlightedKey={highlightedKey}
         language={language}
@@ -598,7 +609,10 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         entrypoints={entrypoints}
         onYearChange={setYear}
         onEntrypointChange={setEntrypoint}
-        onSelectNode={setSelectedNode}
+                onSelectNode={(node) => {
+          setSelectedNode(node);
+          setDetailNode(node);
+        }}
         onExpandedKeysChange={setExpandedKeys}
         onLanguageChange={setLanguage}
         onNetworkChange={(val) => {

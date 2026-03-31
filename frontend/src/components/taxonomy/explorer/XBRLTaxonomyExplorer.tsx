@@ -12,12 +12,13 @@ import {
 
 interface Props {
   selectedNode: TreeNode | null;
+  detailNode: TreeNode | null;
   expandedKeys: { [key: string]: boolean };
   highlightedKey: string | null;
   language: "en" | "cy";
   onSelectNode: (node: TreeNode) => void;
   onExpandedKeysChange: (keys: { [key: string]: boolean }) => void;
-  onNavigateToNode: (qname: string) => void;
+  onNavigateToNode: (qname: string, options?: { preserveDetails?: boolean }) => void;
   onNavigateToLocation: (target: TreeLocationTarget) => void;
   onLanguageChange: (lang: "en" | "cy") => void;
   network: string;
@@ -46,6 +47,7 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
   language,
   network,
   onSelectNode,
+  detailNode,
   onExpandedKeysChange,
   onNavigateToNode,
   onNavigateToLocation,
@@ -147,9 +149,9 @@ const XBRLTaxonomyExplorer: React.FC<Props> = ({
       >
         <div className="min-w-[30%] max-w-full overflow-auto h-full p-4">
           <DetailsPanelContainer
-            selectedNode={selectedNode}
+            selectedNode={detailNode}
             onNavigateToNode={onNavigateToNode}
-            onNavigateToCrossReference={onNavigateToNode}
+            onNavigateToCrossReference={(qname) => onNavigateToNode(qname, { preserveDetails: true })}
             onNavigateToLocation={onNavigateToLocation}
             treeLocations={treeLocations}
             language={language}
