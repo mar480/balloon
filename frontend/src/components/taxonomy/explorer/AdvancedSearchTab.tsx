@@ -184,7 +184,7 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
         <Accordion type="multiple" defaultValue={["search-filters", "references"]} className="w-full space-y-3">
           <AccordionItem value="search-filters" className="border rounded-md overflow-hidden">
             <AccordionTrigger className="py-2 px-2 text-sm font-semibold bg-blue-100 rounded">
-              Search Filters
+              Search filters
             </AccordionTrigger>
             <AccordionContent className="pt-3 space-y-3">
                 <div className="p-3 space-y-3">

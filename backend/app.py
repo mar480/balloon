@@ -5,6 +5,9 @@ from urllib.parse import unquote, urlparse
 
 from flask import Flask, g, jsonify, render_template, request, send_from_directory
 from lxml import etree
+from search.cache import get_search_index, set_search_index
+from search.index_builder import build_search_index
+from search.query_engine import search_index
 from xbrl.loader import TaxonomyContext
 
 taxonomy_cache = {}
@@ -565,6 +568,7 @@ def load_entrypoint():
             search_filter_options_cache[cache_key] = (
                 _build_search_filter_options_from_concepts(concepts_payload)
             )
+            set_search_index(cache_key, build_search_index(concepts_payload))
             taxonomy_cache["active_search_filter_options_key"] = cache_key
             print(f"[load-entrypoint] cached search filter options key={cache_key}")
 
@@ -621,6 +625,44 @@ def search_filter_options():
     search_filter_options_cache[cache_key] = payload
     taxonomy_cache["active_search_filter_options_key"] = cache_key
     return jsonify(payload)
+
+
+@app.route("/api/search-concepts", methods=["POST"])
+def search_concepts():
+    data = request.get_json() or {}
+    year = data.get("year")
+    href = data.get("href")
+    q = (data.get("q") or "").strip()
+
+    try:
+        limit = int(data.get("limit", 25))
+    except (TypeError, ValueError):
+        return jsonify({"error": "limit must be an integer"}), 400
+
+    try:
+        offset = int(data.get("offset", 0))
+    except (TypeError, ValueError):
+        return jsonify({"error": "offset must be an integer"}), 400
+
+    if not year or not href:
+        return jsonify({"error": "Missing year or href"}), 400
+
+    if limit < 1 or limit > 100:
+        return jsonify({"error": "limit must be between 1 and 100"}), 400
+    if offset < 0:
+        return jsonify({"error": "offset must be >= 0"}), 400
+
+    cache_key = _entrypoint_cache_key(year, href)
+    index = get_search_index(cache_key)
+
+    if index is None:
+        concepts_payload = _load_concepts_json_for_entrypoint(year, href)
+        if not concepts_payload:
+            return jsonify({"error": "concepts.json not found or empty for entrypoint"}), 404
+        index = build_search_index(concepts_payload)
+        set_search_index(cache_key, index)
+
+    return jsonify(search_index(index=index, query=q, limit=limit, offset=offset))
 
 
 @app.teardown_appcontext

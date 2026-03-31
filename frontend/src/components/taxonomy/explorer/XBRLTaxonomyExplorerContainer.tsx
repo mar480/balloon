@@ -187,33 +187,48 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     setAdvancedSearchFilters(next);
   }, []);
 
-  // PR2 mock runner (real endpoint wiring in PR4)
   const runAdvancedSearch = useCallback(async () => {
+    if (!year || !entrypoint) {
+      setAdvancedSearchError("Select a taxonomy year and entrypoint before searching.");
+      return;
+    }
+
     setAdvancedSearchLoading(true);
     setAdvancedSearchError(null);
 
     try {
-      const q = advancedSearchQuery.trim();
-      let results: AdvancedSearchResult[] = [];
+      const response = await fetch("/api/search-concepts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          year,
+          href: entrypoint,
+          q: advancedSearchQuery.trim(),
+          limit: advancedSearchPagination.limit,
+          offset: advancedSearchPagination.offset,
+        }),
+      });
 
-      if (q.length > 0) {
-        results = [
-          {
-            id: `mock-${q}`,
-            qname: q.includes(":") ? q : `mock:${q}`,
-            localName: q.replace(/^.*:/, ""),
-            label: `Mock result for "${q}"`,
-            score: 1,
-            matchedFields: ["qname"],
-          },
-        ];
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload?.error || "Search request failed");
       }
+
+      const results: AdvancedSearchResult[] = (payload.results || []).map(
+        (result: any, idx: number) => ({
+          id: `${result.qname}-${advancedSearchPagination.offset + idx}`,
+          qname: result.qname,
+          localName: result.local_name,
+          label: result.label,
+          score: result.score,
+          matchedFields: result.matched_fields ?? [],
+        })
+      );
 
       setAdvancedSearchResults(results);
       setAdvancedSearchPagination((prev) => ({
         ...prev,
-        offset: 0,
-        total: results.length,
+        total: payload.total ?? results.length,
       }));
       setAdvancedSearchLastRunAt(new Date().toISOString());
     } catch (error) {
@@ -222,7 +237,13 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     } finally {
       setAdvancedSearchLoading(false);
     }
-  }, [advancedSearchQuery]);
+  }, [
+    advancedSearchPagination.limit,
+    advancedSearchPagination.offset,
+    advancedSearchQuery,
+    entrypoint,
+    year,
+  ]);
 
   const advancedSearchState = useMemo(
     () => ({

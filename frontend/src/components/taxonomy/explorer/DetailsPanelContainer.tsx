@@ -104,7 +104,7 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
           <button
             key={tab}
             className={`px-4 py-1 text-sm font-medium ${
-              activeTab === tab ? "bg-white border-b-2 border-blue-500" : "bg-gray-100"
+              activeTab === tab ? "bg-blue-100 border-b-2 border-blue-500" : "bg-gray-200"
             }`}
             onClick={() => setActiveTab(tab)}
           >
