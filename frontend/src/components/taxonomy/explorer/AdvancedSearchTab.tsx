@@ -347,12 +347,12 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
             <ul className="divide-y">
               {results.map((result) => (
                 <li key={result.id} className="p-3 flex items-start justify-between gap-3">
-                  <div>
-                    <div className="font-medium text-sm">{result.label || result.qname}</div>
-                    <div className="text-xs text-gray-500">{result.qname}</div>
+                  <div className="min-w-0 flex-1">
+                    <div className="font-medium text-sm break-words">{result.label || result.qname}</div>
+                    <div className="text-xs text-gray-500 break-all">{result.qname}</div>
                   </div>
                   <button
-                    className="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded"
+                    className="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded  flex-shrink-0 w-20"
                     onClick={() => onNavigateToNode?.(result.qname)}
                   >
                     Go to node
