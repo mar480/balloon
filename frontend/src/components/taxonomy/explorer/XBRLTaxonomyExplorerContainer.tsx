@@ -38,7 +38,16 @@ type PendingNavigation = {
   treeId?: string;
 };
 
+type SearchConceptApiResult = {
+  qname: string;
+  local_name?: string;
+  label?: string;
+  score?: number;
+  matched_fields?: string[];
+};
+
 const NAV_LOG_PREFIX = "[TreeLocationNavigation]";
+const EXCLUDED_TREE_KEYS = new Set(["concepts", "dimensions", "hypercubes", "primary_items"]);
 
 const EMPTY_ADVANCED_FILTERS: AdvancedSearchFilters = {
   namespace: [],
@@ -64,64 +73,6 @@ const EMPTY_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
   substitutionGroup: [],
   referenceSources: [],
 };
-// const PRESET_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
-//   balance: ["credit", "debit"],
-//   periodType: ["duration", "instant"],
-//   xbrlType: [
-//     "anyURIItemType",
-//     "booleanItemType",
-//     "dateItemType",
-//     "decimalItemType",
-//     "monetaryItemType",
-//     "pureItemType",
-//     "sharesItemType",
-//     "stringItemType",
-//   ],
-//   fullType: [
-//     "Q2:domainItemType",
-//     "dtr2022:ghgEmissionsItemType",
-//     "nonnum:domainItemType",
-//     "num:energyItemType",
-//     "num:perShareItemType",
-//     "num:percentItemType",
-//     "types:fixedItemType",
-//     "types:groupingItemType",
-//     "types:guidanceItemType",
-//     "types:headingItemType",
-//     "types:nonNegativeDecimalItemType",
-//     "types:xrefItemType",
-//     "xbrli:anyURIItemType",
-//     "xbrli:booleanItemType",
-//     "xbrli:dateItemType",
-//     "xbrli:decimalItemType",
-//     "xbrli:monetaryItemType",
-//     "xbrli:pureItemType",
-//     "xbrli:sharesItemType",
-//     "xbrli:stringItemType",
-//   ],
-//   substitutionGroup: [
-//     "Q1:dimensionItem",
-//     "Q1:hypercubeItem",
-//     "xbrldt:dimensionItem",
-//     "xbrldt:hypercubeItem",
-//     "xbrli:item",
-//   ],
-//   namespace: [
-//     "2026-01-01",
-//     "accrep",
-//     "aurep",
-//     "business",
-//     "common",
-//     "core",
-//     "countries",
-//     "currencies",
-//     "direp",
-//     "languages",
-//   ],
-//   abstract: [true, false],
-//   nillable: [true, false],
-//   referenceSources: [],
-// };
 
 const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // UI state
@@ -137,7 +88,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   const [entrypoints, setEntrypoints] = useState<{ name: string; href: string }[]>([]);
 
   // Tree data + loading state
-  const [rawTreeData, setRawTreeData] = useState<Record<string, any[]>>({});
+  const [rawTreeData, setRawTreeData] = useState<Record<string, RawElrGroup[]>>({});
   const [entrypointLoaded, setEntrypointLoaded] = useState(false);
   const [loadingEntrypoint, setLoadingEntrypoint] = useState(false);
 
@@ -164,8 +115,6 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   const [referenceParagraphsBySource, setReferenceParagraphsBySource] = useState<
     Record<string, string[]>
   >({});
-
-  const excludedKeys = new Set(["concepts", "dimensions", "hypercubes", "primary_items"]);
 
   const currentTreeNodes: TreeNode[] = useMemo(() => {
     const raw = rawTreeData?.[network];
@@ -200,6 +149,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     setAdvancedSearchError(null);
 
 
+    try {
 
       const response = await fetch("/api/search-concepts", {
         method: "POST",
@@ -220,7 +170,9 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
       }
 
       const results: AdvancedSearchResult[] = (payload.results || []).map(
-        (result: any, idx: number) => ({
+
+        (result: SearchConceptApiResult, idx: number) => ({
+
           id: `${result.qname}-${requestedOffset + idx}`,
           qname: result.qname,
           localName: result.local_name,
@@ -229,7 +181,6 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
           matchedFields: result.matched_fields ?? [],
         })
       );
-
 
       setAdvancedSearchResults(results);
       setAdvancedSearchPagination((prev) => ({
@@ -247,7 +198,9 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
       setAdvancedSearchLoading(false);
     }
   }, [
-     advancedSearchPagination.limit,
+
+    advancedSearchPagination.limit,
+
     advancedSearchPagination.offset,
     advancedSearchQuery,
     advancedSearchFilters,
@@ -330,41 +283,42 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
           return;
         }
 
-        const treeMap: Record<string, any[]> = {};
+        const treeMap: Record<string, RawElrGroup[]> = {};
         for (const [key, rawTree] of Object.entries(data.trees || {})) {
           const normalizedKey = key.replace(/_tree$/, "");
-          if (excludedKeys.has(normalizedKey)) continue;
+          if (EXCLUDED_TREE_KEYS.has(normalizedKey)) continue;
           if (Array.isArray(rawTree)) {
-            treeMap[normalizedKey] = rawTree;
+            treeMap[normalizedKey] = rawTree as RawElrGroup[];
           }
         }
 
         setRawTreeData(treeMap);
 
+        const filtersUrl =
+          `/api/search-filter-options?year=${encodeURIComponent(year)}` +
+          `&href=${encodeURIComponent(entrypoint)}`;
 
-        fetch(
-  `/api/search-filter-options?year=${encodeURIComponent(year!)}&href=${encodeURIComponent(entrypoint!)}`
-)
-  .then((res) => res.json())
-  .then((opts) => {
-    setAdvancedSearchFilterOptions({
-      namespace: opts.namespace ?? [],
-        balance: opts.balance ?? [],
-        periodType: opts.periodType ?? [],
-        xbrlType: opts.xbrlType ?? [],
-        fullType: opts.fullType ?? [],
-        abstract: opts.abstract ?? [true, false],
-        nillable: opts.nillable ?? [true, false],
-        substitutionGroup: opts.substitutionGroup ?? [],
-        referenceSources: opts.referenceSources ?? [],
-    });
-    setReferenceParagraphsBySource(opts.referenceParagraphsBySource ?? {});
-  })
-  .catch((err) => {
-    console.error("Failed to load search filter options", err);
-    setAdvancedSearchFilterOptions(EMPTY_ADVANCED_FILTER_OPTIONS); // fallback
-    setReferenceParagraphsBySource({});
-  });
+        fetch(filtersUrl)
+          .then((res) => res.json())
+          .then((opts) => {
+            setAdvancedSearchFilterOptions({
+              namespace: opts.namespace ?? [],
+              balance: opts.balance ?? [],
+              periodType: opts.periodType ?? [],
+              xbrlType: opts.xbrlType ?? [],
+              fullType: opts.fullType ?? [],
+              abstract: opts.abstract ?? [true, false],
+              nillable: opts.nillable ?? [true, false],
+              substitutionGroup: opts.substitutionGroup ?? [],
+              referenceSources: opts.referenceSources ?? [],
+            });
+            setReferenceParagraphsBySource(opts.referenceParagraphsBySource ?? {});
+          })
+          .catch((err) => {
+            console.error("Failed to load search filter options", err);
+            setAdvancedSearchFilterOptions(EMPTY_ADVANCED_FILTER_OPTIONS); // fallback
+            setReferenceParagraphsBySource({});
+          });
 
         setEntrypointLoaded(true);
         setLoadingEntrypoint(false);

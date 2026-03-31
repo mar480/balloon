@@ -65,9 +65,11 @@ def _matches_filters(concept, filters: SearchFilters | None) -> bool:
         if source not in concept.reference_sources:
             return False
         if paragraph:
+
             if paragraph not in concept.reference_paragraphs_by_source.get(
                 source, set()
             ):
+
                 return False
 
     return True
@@ -163,6 +165,7 @@ def search_index(
         score, matched_fields, score_breakdown = _score_match(
             normalized_query, q_tokens, concept
         )
+
         if normalized_query and score <= 0:
             continue
 
