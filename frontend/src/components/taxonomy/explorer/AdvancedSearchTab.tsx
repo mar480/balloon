@@ -287,7 +287,89 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
             </button>
           </div>
         </div>
+        
+        
+               <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-medium">Active facet filters</div>
+            <button
+              type="button"
+              className="text-xs px-2 py-1 rounded border bg-white disabled:opacity-50"
+              onClick={clearAllFilters}
+              disabled={chips.length === 0}
+            >
+              Clear all filters
+            </button>
+          </div>
+          {chips.length === 0 ? (
+            <div className="text-xs text-gray-500">No facet filters selected.</div>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {chips.map((chip) => (
+                <button
+                  key={chip.key}
+                  type="button"
+                  className="text-xs px-2 py-1 rounded-full bg-blue-50 border border-blue-200 hover:bg-blue-100"
+                  onClick={() => removeChipAndSearch(chip)}
+                  title="Remove filter and search again"
+                >
+                  {chip.label} ×
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
+        <div className="border rounded">
+          <div className="px-3 py-2 border-b bg-gray-50 text-xs text-gray-600">
+             <div className="font-bold text-base text-gray-700">Search results</div>
+<div className="mt-1">
+              {lastRunAt ? `Last run: ${new Date(lastRunAt).toLocaleString()}` : "No search run yet"}
+            </div>          </div>
+          {results.length === 0 ? (
+            <div className="p-4 text-sm text-gray-500">No results.</div>
+          ) : (
+            <ul className="divide-y">
+              {results.map((result) => (
+                <li key={result.id} className="p-3 flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <div className="font-medium text-sm break-words">{result.label || result.qname}</div>
+                    <div className="text-xs text-gray-500 break-all">{result.qname}</div>
+                  </div>
+                  <button
+                    className="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded  flex-shrink-0 w-20"
+                    onClick={() => onNavigateToNode?.(result.qname)}
+                  >
+                    Go to node
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="px-3 py-2 border-t bg-gray-50 flex items-center justify-between text-xs text-gray-600">
+            <span>
+              Showing {from}-{to} of {total}
+            </span>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                className="px-2 py-1 rounded border bg-white disabled:opacity-50"
+                disabled={loading || !hasPrev}
+                onClick={() => onRunSearch(Math.max(0, offset - limit))}
+              >
+                Previous
+              </button>
+              <button
+                type="button"
+                className="px-2 py-1 rounded border bg-white disabled:opacity-50"
+                disabled={loading || !hasNext}
+                onClick={() => onRunSearch(offset + limit)}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
 
         <Accordion type="multiple" defaultValue={["search-filters", "references"]} className="w-full space-y-3">
           <AccordionItem value="search-filters" className="border rounded-md overflow-hidden">
@@ -419,90 +501,11 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
           </AccordionItem>
         </Accordion>
 
-               <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="text-sm font-medium">Active facet filters</div>
-            <button
-              type="button"
-              className="text-xs px-2 py-1 rounded border bg-white disabled:opacity-50"
-              onClick={clearAllFilters}
-              disabled={chips.length === 0}
-            >
-              Clear all filters
-            </button>
-          </div>
-          {chips.length === 0 ? (
-            <div className="text-xs text-gray-500">No facet filters selected.</div>
-          ) : (
-            <div className="flex flex-wrap gap-2">
-              {chips.map((chip) => (
-                <button
-                  key={chip.key}
-                  type="button"
-                  className="text-xs px-2 py-1 rounded-full bg-blue-50 border border-blue-200 hover:bg-blue-100"
-                  onClick={() => removeChipAndSearch(chip)}
-                  title="Remove filter and search again"
-                >
-                  {chip.label} ×
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
 
 
         {error && <div className="text-sm text-red-600">{error}</div>}
 
-        <div className="border rounded">
-          <div className="px-3 py-2 border-b bg-gray-50 text-xs text-gray-600">
-             <div className="font-bold text-base text-gray-700">Search results</div>
-<div className="mt-1">
-              {lastRunAt ? `Last run: ${new Date(lastRunAt).toLocaleString()}` : "No search run yet"}
-            </div>          </div>
-          {results.length === 0 ? (
-            <div className="p-4 text-sm text-gray-500">No results.</div>
-          ) : (
-            <ul className="divide-y">
-              {results.map((result) => (
-                <li key={result.id} className="p-3 flex items-start justify-between gap-3">
-                  <div className="min-w-0 flex-1">
-                    <div className="font-medium text-sm break-words">{result.label || result.qname}</div>
-                    <div className="text-xs text-gray-500 break-all">{result.qname}</div>
-                  </div>
-                  <button
-                    className="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded  flex-shrink-0 w-20"
-                    onClick={() => onNavigateToNode?.(result.qname)}
-                  >
-                    Go to node
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-          <div className="px-3 py-2 border-t bg-gray-50 flex items-center justify-between text-xs text-gray-600">
-            <span>
-              Showing {from}-{to} of {total}
-            </span>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                className="px-2 py-1 rounded border bg-white disabled:opacity-50"
-                disabled={loading || !hasPrev}
-                onClick={() => onRunSearch(Math.max(0, offset - limit))}
-              >
-                Previous
-              </button>
-              <button
-                type="button"
-                className="px-2 py-1 rounded border bg-white disabled:opacity-50"
-                disabled={loading || !hasNext}
-                onClick={() => onRunSearch(offset + limit)}
-              >
-                Next
-              </button>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </TooltipProvider>
   );
