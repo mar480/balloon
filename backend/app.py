@@ -661,26 +661,10 @@ def search_concepts():
     if index is None:
         concepts_payload = _load_concepts_json_for_entrypoint(year, href)
         if not concepts_payload:
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
             return (
                 jsonify({"error": "concepts.json not found or empty for entrypoint"}),
                 404,
             )
-=======
-            return jsonify({"error": "concepts.json not found or empty for entrypoint"}), 404
->>>>>>> theirs
-=======
-            return jsonify({"error": "concepts.json not found or empty for entrypoint"}), 404
->>>>>>> theirs
-=======
-            return jsonify({"error": "concepts.json not found or empty for entrypoint"}), 404
->>>>>>> theirs
-=======
-            return jsonify({"error": "concepts.json not found or empty for entrypoint"}), 404
->>>>>>> theirs
         index = build_search_index(concepts_payload)
         set_search_index(cache_key, index)
 
