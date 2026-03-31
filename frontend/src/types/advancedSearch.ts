@@ -8,7 +8,7 @@ export interface AdvancedSearchFilters {
   nillable: boolean[];
   substitutionGroup: string[];
   referenceSource: string | null;
-  referenceParagraph: string | null;
+  referenceParagraph: string[];
 }
 
 export interface AdvancedSearchResult {

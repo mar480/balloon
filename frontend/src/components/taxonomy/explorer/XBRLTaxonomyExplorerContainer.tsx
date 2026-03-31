@@ -59,7 +59,7 @@ const EMPTY_ADVANCED_FILTERS: AdvancedSearchFilters = {
   nillable: [],
   substitutionGroup: [],
   referenceSource: null,
-  referenceParagraph: null,
+  referenceParagraph: [],
 };
 
 const EMPTY_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {

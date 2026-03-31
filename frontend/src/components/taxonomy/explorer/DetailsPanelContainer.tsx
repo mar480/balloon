@@ -99,19 +99,21 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="flex border-b">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            className={`px-4 py-1 text-sm font-medium ${
-              activeTab === tab ? "bg-blue-100 border-b-2 border-blue-500" : "bg-gray-200"
-            }`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
+<div className="flex border-b px-1 pt-1 shadow-sm">
+  {tabs.map((tab) => (
+    <button
+      key={tab}
+      className={`px-4 py-1.5 text-sm font-medium border border-b-0 rounded-t-md shadow-sm transition-colors ${
+        activeTab === tab
+          ? "bg-blue-100 border-blue-300 text-blue-900"
+          : "bg-gray-200 border-gray-300 text-gray-800 hover:bg-gray-300"
+      }`}
+      onClick={() => setActiveTab(tab)}
+    >
+      {tab}
+    </button>
+  ))}
+</div>
 
       <div className="flex-1 overflow-auto">
         {activeTab === "Advanced Search" && (

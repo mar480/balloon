@@ -60,17 +60,23 @@ def _matches_filters(concept, filters: SearchFilters | None) -> bool:
         return False
 
     source = (filters.get("referenceSource") or "").strip()
-    paragraph = (filters.get("referenceParagraph") or "").strip()
+    paragraph_filter = filters.get("referenceParagraph")
+    paragraphs: list[str] = []
+    if isinstance(paragraph_filter, str):
+        p = paragraph_filter.strip()
+        if p:
+            paragraphs = [p]
+    elif isinstance(paragraph_filter, list):
+        paragraphs = [str(p).strip() for p in paragraph_filter if str(p).strip()]
 
     if source:
         if source not in concept.reference_sources:
             return False
-        if paragraph:
-
-            if paragraph not in concept.reference_paragraphs_by_source.get(
+        if paragraphs:
+            source_paragraphs = concept.reference_paragraphs_by_source.get(
                 source, set()
-            ):
-
+            )
+            if not any(paragraph in source_paragraphs for paragraph in paragraphs):
                 return False
 
     return True

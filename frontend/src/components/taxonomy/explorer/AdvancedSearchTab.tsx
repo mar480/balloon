@@ -321,11 +321,26 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
         </div>
 
         <div className="border rounded">
-          <div className="px-3 py-2 border-b bg-gray-50 text-xs text-gray-600">
-             <div className="font-bold text-base text-gray-700">Search results</div>
-<div className="mt-1">
-              {lastRunAt ? `Last run: ${new Date(lastRunAt).toLocaleString()}` : "No search run yet"}
-            </div>          </div>
+<div className="px-3 py-2 border-b bg-gray-50 text-xs text-gray-600">
+  <div className="flex items-center justify-between gap-3">
+    <div>
+      <div className="font-bold text-base text-gray-700">Search results</div>
+      <div className="mt-1">
+        {lastRunAt ? `Last run: ${new Date(lastRunAt).toLocaleString()}` : "No search run yet"}
+      </div>
+    </div>
+    <button
+      type="button"
+      className="px-2 py-1 rounded border bg-white text-xs hover:bg-gray-100"
+      onClick={() => {
+        onQueryChange("");
+        onResetSearch();
+      }}
+    >
+      Clear results
+    </button>
+  </div>
+</div>
           {results.length === 0 ? (
             <div className="p-4 text-sm text-gray-500">No results.</div>
           ) : (
@@ -414,22 +429,26 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
                 />
                 <select
                   className="border rounded p-2 text-sm w-full bg-white"
-                  value={filters.referenceSource || ""}
-                  onChange={(e) =>
-                    onFiltersChange({
-                      ...filters,
-                      referenceSource: e.target.value || null,
-                      referenceParagraph: null,
-                    })
-                  }
-                >
-                  <option value="">Any source</option>
-                  {safeFilterOptions.referenceSources.map((source) => (
-                    <option key={source} value={source}>
-                      {source}
-                    </option>
-                  ))}
-                </select>
+  value={filters.referenceParagraph}
+  disabled={!filters.referenceSource}
+  onChange={(e) =>
+    onFiltersChange({
+      ...filters,
+      referenceParagraph: Array.from(e.target.selectedOptions).map(
+        (option) => option.value
+      ),
+    })
+  }
+>
+  {paragraphOptions.map((paragraph) => (
+    <option key={paragraph} value={paragraph}>
+      {paragraph}
+    </option>
+  ))}
+</select>
+<div className="text-xs text-gray-500">
+  Hold Ctrl/Cmd to select multiple paragraphs.
+</div>
 
                 <FieldLabelWithHelp
                   label="Paragraph"
