@@ -171,35 +171,15 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
   return (
     <TooltipProvider delayDuration={150}>
       <div className="p-4 space-y-4">
-        {/* <div className="space-y-1"> */}
-          {/* <p className="font-medium text-sm">Advanced Search</p> */}
-          {/* <FieldLabelWithHelp
-            label="Keyword"
-            help="Free-text search term. Use this with filters below."
-          />
-          <input */}
-            {/* type="text"
-            className="border rounded p-2 text-sm w-full"
-            placeholder="e.g. turnover, revenue, core:TurnoverRevenue"
-            value={query}
-            onChange={(e) => onQueryChange(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                onRunSearch(0);
-              }
-            }}
-          /> */}
-           <div className="flex items-end gap-2">
-          <div className="space-y-1 flex-1 max-w-2xl">
-            {/* <p className="font-medium text-sm">Advanced Search</p> */}
+        <div className="flex items-end gap-2">
+          <div className="space-y-1 flex-1">
             <FieldLabelWithHelp
               label="Keyword"
               help="Free-text search term. Use this with filters below."
             />
             <input
               type="text"
-              className="border rounded p-2 text-sm w-full"
+              className="border rounded p-2 text-sm w-full max-w-2xl"
               placeholder="e.g. turnover, revenue, core:TurnoverRevenue"
               value={query}
               onChange={(e) => onQueryChange(e.target.value)}
@@ -356,18 +336,6 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
           </AccordionItem>
         </Accordion>
 
-        <div className="flex gap-2">
-          <button
-            className="bg-blue-600 text-white text-sm px-3 py-1 rounded disabled:opacity-50"
-            onClick={() => onRunSearch(0)}
-            disabled={loading}
-          >
-            {loading ? "Searching..." : "Search"}
-          </button>
-          <button className="bg-gray-200 text-sm px-3 py-1 rounded" onClick={onResetSearch}>
-            Reset
-          </button>
-        </div>
 
         {error && <div className="text-sm text-red-600">{error}</div>}
 
