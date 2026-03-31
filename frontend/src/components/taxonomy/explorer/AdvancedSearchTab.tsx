@@ -50,7 +50,7 @@ interface AdvancedSearchTabProps {
   referenceParagraphsBySource?: Record<string, string[]>;
   onQueryChange: (query: string) => void;
   onFiltersChange: (next: AdvancedSearchFilters) => void;
-  onRunSearch: () => void;
+  onRunSearch: (nextOffset?: number) => void;
   onResetSearch: () => void;
   onNavigateToNode?: (qname: string) => void;
 }
@@ -156,7 +156,12 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
   const safeFilterOptions = filterOptions ?? EMPTY_FILTER_OPTIONS;
   const safeReferenceParagraphsBySource = referenceParagraphsBySource ?? {};
 
-  const { query, filters, results, loading, error, lastRunAt } = safeState;
+  const { query, filters, results, loading, error, lastRunAt, pagination } = safeState;
+  const { limit, offset, total } = pagination;
+  const hasPrev = offset > 0;
+  const hasNext = offset + limit < total;
+  const from = total === 0 ? 0 : offset + 1;
+  const to = total === 0 ? 0 : Math.min(offset + limit, total);
 
   const paragraphOptions =
     filters.referenceSource
@@ -178,6 +183,12 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
             placeholder="e.g. turnover, revenue, core:TurnoverRevenue"
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                onRunSearch(0);
+              }
+            }}
           />
         </div>
 
@@ -314,7 +325,7 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
         <div className="flex gap-2">
           <button
             className="bg-blue-600 text-white text-sm px-3 py-1 rounded disabled:opacity-50"
-            onClick={onRunSearch}
+            onClick={() => onRunSearch(0)}
             disabled={loading}
           >
             {loading ? "Searching..." : "Search"}
@@ -350,6 +361,29 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
               ))}
             </ul>
           )}
+          <div className="px-3 py-2 border-t bg-gray-50 flex items-center justify-between text-xs text-gray-600">
+            <span>
+              Showing {from}-{to} of {total}
+            </span>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                className="px-2 py-1 rounded border bg-white disabled:opacity-50"
+                disabled={loading || !hasPrev}
+                onClick={() => onRunSearch(Math.max(0, offset - limit))}
+              >
+                Previous
+              </button>
+              <button
+                type="button"
+                className="px-2 py-1 rounded border bg-white disabled:opacity-50"
+                disabled={loading || !hasNext}
+                onClick={() => onRunSearch(offset + limit)}
+              >
+                Next
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </TooltipProvider>

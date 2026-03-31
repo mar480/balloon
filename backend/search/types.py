@@ -2,12 +2,26 @@ from dataclasses import dataclass
 from typing import List, TypedDict
 
 
+class SearchFilters(TypedDict, total=False):
+    namespace: List[str]
+    balance: List[str]
+    periodType: List[str]
+    xbrlType: List[str]
+    fullType: List[str]
+    abstract: List[bool]
+    nillable: List[bool]
+    substitutionGroup: List[str]
+    referenceSource: str | None
+    referenceParagraph: str | None
+
+
 class SearchRequest(TypedDict):
     year: str
     href: str
     q: str
     limit: int
     offset: int
+    filters: SearchFilters
 
 
 class SearchResult(TypedDict):
@@ -16,6 +30,7 @@ class SearchResult(TypedDict):
     local_name: str
     score: int
     matched_fields: List[str]
+    score_breakdown: dict[str, int]
 
 
 class SearchResponse(TypedDict):
@@ -30,9 +45,22 @@ class IndexedConcept:
     qname: str
     local_name: str
     label: str
+    all_labels: List[str]
     normalized_qname: str
     normalized_local_name: str
     normalized_label: str
+    normalized_all_labels: str
+    namespace: str
+    xbrl_type: str
+    full_type: str
+    substitution_group: str
+    balance: str
+    period_type: str
+    abstract: bool | None
+    nillable: bool | None
+    reference_sources: set[str]
+    reference_paragraphs_by_source: dict[str, set[str]]
+    is_commentary: bool
 
 
 @dataclass(frozen=True)

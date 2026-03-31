@@ -187,16 +187,20 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     setAdvancedSearchFilters(next);
   }, []);
 
-  const runAdvancedSearch = useCallback(async () => {
+  const runAdvancedSearch = useCallback(async (nextOffset?: number) => {
     if (!year || !entrypoint) {
       setAdvancedSearchError("Select a taxonomy year and entrypoint before searching.");
       return;
     }
 
+    const requestedOffset =
+      typeof nextOffset === "number" ? Math.max(0, nextOffset) : advancedSearchPagination.offset;
+
     setAdvancedSearchLoading(true);
     setAdvancedSearchError(null);
 
-    try {
+
+
       const response = await fetch("/api/search-concepts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -204,8 +208,9 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
           year,
           href: entrypoint,
           q: advancedSearchQuery.trim(),
+          filters: advancedSearchFilters,
           limit: advancedSearchPagination.limit,
-          offset: advancedSearchPagination.offset,
+          offset: requestedOffset,
         }),
       });
 
@@ -216,7 +221,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
 
       const results: AdvancedSearchResult[] = (payload.results || []).map(
         (result: any, idx: number) => ({
-          id: `${result.qname}-${advancedSearchPagination.offset + idx}`,
+          id: `${result.qname}-${requestedOffset + idx}`,
           qname: result.qname,
           localName: result.local_name,
           label: result.label,
@@ -225,11 +230,15 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         })
       );
 
+
       setAdvancedSearchResults(results);
       setAdvancedSearchPagination((prev) => ({
         ...prev,
+        limit: payload.limit ?? prev.limit,
+        offset: payload.offset ?? requestedOffset,
         total: payload.total ?? results.length,
       }));
+
       setAdvancedSearchLastRunAt(new Date().toISOString());
     } catch (error) {
       console.error("Advanced search failed", error);
@@ -238,9 +247,10 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
       setAdvancedSearchLoading(false);
     }
   }, [
-    advancedSearchPagination.limit,
+     advancedSearchPagination.limit,
     advancedSearchPagination.offset,
     advancedSearchQuery,
+    advancedSearchFilters,
     entrypoint,
     year,
   ]);

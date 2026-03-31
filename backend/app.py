@@ -633,6 +633,7 @@ def search_concepts():
     year = data.get("year")
     href = data.get("href")
     q = (data.get("q") or "").strip()
+    filters = data.get("filters") or {}
 
     try:
         limit = int(data.get("limit", 25))
@@ -646,6 +647,8 @@ def search_concepts():
 
     if not year or not href:
         return jsonify({"error": "Missing year or href"}), 400
+    if not isinstance(filters, dict):
+        return jsonify({"error": "filters must be an object"}), 400
 
     if limit < 1 or limit > 100:
         return jsonify({"error": "limit must be between 1 and 100"}), 400
@@ -658,11 +661,38 @@ def search_concepts():
     if index is None:
         concepts_payload = _load_concepts_json_for_entrypoint(year, href)
         if not concepts_payload:
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
+            return (
+                jsonify({"error": "concepts.json not found or empty for entrypoint"}),
+                404,
+            )
+=======
             return jsonify({"error": "concepts.json not found or empty for entrypoint"}), 404
+>>>>>>> theirs
+=======
+            return jsonify({"error": "concepts.json not found or empty for entrypoint"}), 404
+>>>>>>> theirs
+=======
+            return jsonify({"error": "concepts.json not found or empty for entrypoint"}), 404
+>>>>>>> theirs
+=======
+            return jsonify({"error": "concepts.json not found or empty for entrypoint"}), 404
+>>>>>>> theirs
         index = build_search_index(concepts_payload)
         set_search_index(cache_key, index)
 
-    return jsonify(search_index(index=index, query=q, limit=limit, offset=offset))
+    return jsonify(
+        search_index(
+            index=index,
+            query=q,
+            limit=limit,
+            offset=offset,
+            filters=filters,
+        )
+    )
 
 
 @app.teardown_appcontext
