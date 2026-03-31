@@ -3,7 +3,7 @@ set -euo pipefail
 
 BASE_URL="${BASE_URL:-http://localhost:5000}"
 YEAR="${YEAR:-2026}"
-HREF="${HREF:-core-full-2026-01-01.xsd}"
+HREF="${HREF:-https://xbrl.frc.org.uk/FRS-102/2026-01-01/FRS-102-2026-01-01.xsd}"
 Q="${Q:-turnover}"
 
 pass() { echo "✅ $1"; }
