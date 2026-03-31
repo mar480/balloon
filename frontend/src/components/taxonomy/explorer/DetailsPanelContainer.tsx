@@ -28,7 +28,7 @@ interface DetailPanelProps {
   referenceParagraphsBySource: Record<string, string[]>;
   onAdvancedSearchQueryChange: (query: string) => void;
   onAdvancedSearchFiltersChange: (next: AdvancedSearchFilters) => void;
-  onRunAdvancedSearch: () => void;
+  onRunAdvancedSearch: (nextOffset?: number) => void;
   onResetAdvancedSearch: () => void;
 }
 
