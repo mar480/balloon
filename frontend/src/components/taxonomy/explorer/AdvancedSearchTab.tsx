@@ -85,6 +85,24 @@ type FilterChip = {
   remove: () => void;
 };
 
+function normalizeReferenceSource(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
+}
+
+function normalizeReferenceParagraph(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value
+      .map((v) => (typeof v === "string" ? v.trim() : ""))
+      .filter((v) => v.length > 0);
+  }
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed ? [trimmed] : [];
+  }
+  return [];
+}
 
 const StringCheckboxGroup: React.FC<{
   label: string;
@@ -150,9 +168,17 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
   onResetSearch,
   onNavigateToNode,
 }) => {
+
+    const normalizedFilters: AdvancedSearchFilters = {
+    ...EMPTY_FILTERS,
+    ...(state?.filters ?? {}),
+    referenceSource: normalizeReferenceSource(state?.filters?.referenceSource),
+    referenceParagraph: normalizeReferenceParagraph(state?.filters?.referenceParagraph),
+  };
+
   const safeState: AdvancedSearchState = {
     query: state?.query ?? "",
-    filters: { ...EMPTY_FILTERS, ...(state?.filters ?? {}) },
+    filters: normalizedFilters,
     results: state?.results ?? [],
     loading: state?.loading ?? false,
     error: state?.error ?? null,
@@ -175,7 +201,7 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
       ? safeReferenceParagraphsBySource[filters.referenceSource] || []
       : [];
 
-   const chips: FilterChip[] = [
+  const chips: FilterChip[] = [
     ...filters.balance.map((value) => ({
       key: `balance:${value}`,
       label: `Balance: ${value}`,
@@ -225,19 +251,19 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
           {
             key: `referenceSource:${filters.referenceSource}`,
             label: `Source: ${filters.referenceSource}`,
-            remove: () => onFiltersChange({ ...filters, referenceSource: null, referenceParagraph: null }),
+            remove: () => onFiltersChange({ ...filters, referenceSource: null, referenceParagraph: [] }),
           },
         ]
       : []),
-    ...(filters.referenceParagraph
-      ? [
-          {
-            key: `referenceParagraph:${filters.referenceParagraph}`,
-            label: `Paragraph: ${filters.referenceParagraph}`,
-            remove: () => onFiltersChange({ ...filters, referenceParagraph: null }),
-          },
-        ]
-      : []),
+    ...filters.referenceParagraph.map((value) => ({
+      key: `referenceParagraph:${value}`,
+      label: `Paragraph: ${value}`,
+      remove: () =>
+        onFiltersChange({
+          ...filters,
+          referenceParagraph: filters.referenceParagraph.filter((v) => v !== value),
+        }),
+    })),
   ];
 
   const removeChipAndSearch = (chip: FilterChip) => {

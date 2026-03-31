@@ -12,7 +12,7 @@ class SearchFilters(TypedDict, total=False):
     nillable: List[bool]
     substitutionGroup: List[str]
     referenceSource: str | None
-    referenceParagraph: str | None
+    referenceParagraph: str | List[str] | None
 
 
 class SearchRequest(TypedDict):

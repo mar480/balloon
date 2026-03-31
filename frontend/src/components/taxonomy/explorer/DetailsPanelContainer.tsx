@@ -103,7 +103,7 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
   {tabs.map((tab) => (
     <button
       key={tab}
-      className={`px-4 py-1.5 text-sm font-medium border border-b-0 rounded-t-md shadow-sm transition-colors ${
+      className={`px-4 py-1.5 text-sm font-medium border border-b-0 rounded-t-md shadow-sm transition-colors mr-1 ${
         activeTab === tab
           ? "bg-blue-100 border-blue-300 text-blue-900"
           : "bg-gray-200 border-gray-300 text-gray-800 hover:bg-gray-300"

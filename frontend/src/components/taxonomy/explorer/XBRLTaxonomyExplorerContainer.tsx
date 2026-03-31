@@ -74,6 +74,20 @@ const EMPTY_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
   referenceSources: [],
 };
 
+function sanitizeAdvancedFilters(next: AdvancedSearchFilters): AdvancedSearchFilters {
+  return {
+    ...next,
+    referenceSource:
+      typeof next.referenceSource === "string" && next.referenceSource.trim()
+        ? next.referenceSource
+        : null,
+    referenceParagraph: (Array.isArray(next.referenceParagraph) ? next.referenceParagraph : [])
+      .map((value) => (typeof value === "string" ? value.trim() : ""))
+      .filter((value) => value.length > 0),
+  };
+}
+
+
 const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // UI state
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
@@ -146,8 +160,9 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
 
 
   const updateAdvancedSearchFilters = useCallback((next: AdvancedSearchFilters) => {
-    latestAdvancedFiltersRef.current = next;
-    setAdvancedSearchFilters(next);
+    const sanitized = sanitizeAdvancedFilters(next);
+    latestAdvancedFiltersRef.current = sanitized;
+    setAdvancedSearchFilters(sanitized);
   }, []);
 
   const runAdvancedSearch = useCallback(async (nextOffset?: number) => {
