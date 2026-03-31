@@ -2,7 +2,8 @@ import re
 
 from .types import SearchFilters, SearchIndex, SearchResponse, SearchResult
 
-TOKEN_PATTERN = re.compile(r"[a-z0-9]+")
+# TOKEN_PATTERN = re.compile(r"[a-z0-9]+")
+TOKEN_PATTERN = re.compile(r"[^\W_]+", flags=re.UNICODE)
 CAMEL_BOUNDARY_PATTERN = re.compile(r"(?<=[a-z])(?=[A-Z])")
 
 

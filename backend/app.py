@@ -668,15 +668,30 @@ def search_concepts():
         index = build_search_index(concepts_payload)
         set_search_index(cache_key, index)
 
-    return jsonify(
-        search_index(
-            index=index,
-            query=q,
-            limit=limit,
-            offset=offset,
-            filters=filters,
-        )
+    payload = search_index(
+        index=index,
+        query=q,
+        limit=limit,
+        offset=offset,
+        filters=filters,
     )
+
+    top_scores = [
+        {
+            "qname": item.get("qname"),
+            "score": item.get("score"),
+            "matched_fields": item.get("matched_fields"),
+            "score_breakdown": item.get("score_breakdown"),
+        }
+        for item in (payload.get("results") or [])[:10]
+    ]
+    print(
+        f"[search-concepts] year={year} href={href} q='{q}' "
+        f"offset={offset} limit={limit} total={payload.get('total')}"
+    )
+    print(f"[search-concepts] top_scores={top_scores}")
+
+    return jsonify(payload)
 
 
 @app.teardown_appcontext

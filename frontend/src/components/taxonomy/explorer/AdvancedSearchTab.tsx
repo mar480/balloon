@@ -171,14 +171,14 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
   return (
     <TooltipProvider delayDuration={150}>
       <div className="p-4 space-y-4">
-        <div className="space-y-1">
+        {/* <div className="space-y-1"> */}
           {/* <p className="font-medium text-sm">Advanced Search</p> */}
-          <FieldLabelWithHelp
+          {/* <FieldLabelWithHelp
             label="Keyword"
             help="Free-text search term. Use this with filters below."
           />
-          <input
-            type="text"
+          <input */}
+            {/* type="text"
             className="border rounded p-2 text-sm w-full"
             placeholder="e.g. turnover, revenue, core:TurnoverRevenue"
             value={query}
@@ -189,8 +189,42 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
                 onRunSearch(0);
               }
             }}
-          />
+          /> */}
+           <div className="flex items-end gap-2">
+          <div className="space-y-1 flex-1 max-w-2xl">
+            {/* <p className="font-medium text-sm">Advanced Search</p> */}
+            <FieldLabelWithHelp
+              label="Keyword"
+              help="Free-text search term. Use this with filters below."
+            />
+            <input
+              type="text"
+              className="border rounded p-2 text-sm w-full"
+              placeholder="e.g. turnover, revenue, core:TurnoverRevenue"
+              value={query}
+              onChange={(e) => onQueryChange(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  onRunSearch(0);
+                }
+              }}
+            />
+          </div>
+          <div className="flex gap-2 pb-[1px]">
+            <button
+              className="bg-blue-600 text-white text-sm px-3 py-1 rounded disabled:opacity-50"
+              onClick={() => onRunSearch(0)}
+              disabled={loading}
+            >
+              {loading ? "Searching..." : "Search"}
+            </button>
+            <button className="bg-gray-200 text-sm px-3 py-1 rounded" onClick={onResetSearch}>
+              Reset
+            </button>
+          </div>
         </div>
+
 
         <Accordion type="multiple" defaultValue={["search-filters", "references"]} className="w-full space-y-3">
           <AccordionItem value="search-filters" className="border rounded-md overflow-hidden">
@@ -339,8 +373,10 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
 
         <div className="border rounded">
           <div className="px-3 py-2 border-b bg-gray-50 text-xs text-gray-600">
-            {lastRunAt ? `Last run: ${new Date(lastRunAt).toLocaleString()}` : "No search run yet"}
-          </div>
+             <div className="font-bold text-base text-gray-700">Search results</div>
+<div className="mt-1">
+              {lastRunAt ? `Last run: ${new Date(lastRunAt).toLocaleString()}` : "No search run yet"}
+            </div>          </div>
           {results.length === 0 ? (
             <div className="p-4 text-sm text-gray-500">No results.</div>
           ) : (
