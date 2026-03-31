@@ -29,7 +29,7 @@ const EMPTY_FILTERS: AdvancedSearchFilters = {
   nillable: [],
   substitutionGroup: [],
   referenceSource: null,
-  referenceParagraph: null,
+  referenceParagraph: [],
 };
 
 const EMPTY_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
@@ -448,58 +448,60 @@ const AdvancedSearchTab: React.FC<AdvancedSearchTabProps> = ({
               References
             </AccordionTrigger>
             <AccordionContent className="pt-3 space-y-3">
-            <div className="p-3 space-y-3">               
-               <FieldLabelWithHelp
-                  label="Source"
-                  help="Reference source, e.g. FRS 102."
-                />
-                <select
-                  className="border rounded p-2 text-sm w-full bg-white"
-  value={filters.referenceParagraph}
-  disabled={!filters.referenceSource}
-  onChange={(e) =>
-    onFiltersChange({
-      ...filters,
-      referenceParagraph: Array.from(e.target.selectedOptions).map(
-        (option) => option.value
-      ),
-    })
-  }
->
-  {paragraphOptions.map((paragraph) => (
-    <option key={paragraph} value={paragraph}>
-      {paragraph}
-    </option>
-  ))}
-</select>
-<div className="text-xs text-gray-500">
-  Hold Ctrl/Cmd to select multiple paragraphs.
-</div>
+  <div className="p-3 space-y-3">
+    <FieldLabelWithHelp
+      label="Source"
+      help="Reference source, e.g. FRS 102."
+    />
+    <select
+      className="border rounded p-2 text-sm w-full bg-white"
+      value={filters.referenceSource || ""}
+      onChange={(e) =>
+        onFiltersChange({
+          ...filters,
+          referenceSource: e.target.value || null,
+          referenceParagraph: [],
+        })
+      }
+    >
+      <option value="">Any source</option>
+      {safeFilterOptions.referenceSources.map((source) => (
+        <option key={source} value={source}>
+          {source}
+        </option>
+      ))}
+    </select>
 
-                <FieldLabelWithHelp
-                  label="Paragraph"
-                  help="Paragraph list filtered by selected source."
-                />
-                <select
-                  className="border rounded p-2 text-sm w-full bg-white"
-                  value={filters.referenceParagraph || ""}
-                  disabled={!filters.referenceSource}
-                  onChange={(e) =>
-                    onFiltersChange({
-                      ...filters,
-                      referenceParagraph: e.target.value || null,
-                    })
-                  }
-                >
-                  <option value="">Any paragraph</option>
-                  {paragraphOptions.map((paragraph) => (
-                    <option key={paragraph} value={paragraph}>
-                      {paragraph}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </AccordionContent>
+    <FieldLabelWithHelp
+      label="Paragraph"
+      help="Paragraph list filtered by selected source."
+    />
+    <select
+      multiple
+      size={Math.min(10, Math.max(4, paragraphOptions.length))}
+      className="border rounded p-2 text-sm w-full bg-white"
+      value={filters.referenceParagraph}
+      disabled={!filters.referenceSource}
+      onChange={(e) =>
+        onFiltersChange({
+          ...filters,
+          referenceParagraph: Array.from(e.target.selectedOptions)
+            .map((option) => option.value)
+            .filter((value) => value.trim().length > 0),
+        })
+      }
+    >
+      {paragraphOptions.map((paragraph) => (
+        <option key={paragraph} value={paragraph}>
+          {paragraph}
+        </option>
+      ))}
+    </select>
+    <div className="text-xs text-gray-500">
+      Hold Ctrl/Cmd to select multiple paragraphs.
+    </div>
+  </div>
+</AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="advanced-xbrl" className="border rounded-md overflow-hidden">
