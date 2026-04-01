@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HypercubeDisplay from "./HypercubeDisplay";
+import { HypercubeApiResponse } from "./apiTypes";
 
 interface Props {
   qname: string;
@@ -7,7 +8,7 @@ interface Props {
 }
 
 const HypercubeRelationshipsPanel: React.FC<Props> = ({ qname, language }) => {
-  const [response, setResponse] = useState<any[] | null>(null);
+  const [response, setResponse] = useState<unknown[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,7 +26,7 @@ const HypercubeRelationshipsPanel: React.FC<Props> = ({ qname, language }) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
-      .then((data) => {
+      .then((data: HypercubeApiResponse) => {
         if (data.hypercubes && Array.isArray(data.hypercubes)) {
           setResponse(data.hypercubes);
         } else {

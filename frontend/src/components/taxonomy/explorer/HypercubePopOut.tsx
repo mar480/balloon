@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import HypercubeDisplay from "./HypercubeDisplay";
 
-interface PopOutPayload {
-  hypercube: any;
-  language: "en" | "cy";
-  sourceQName?: string;
-}
+import { PopOutPayload } from "./apiTypes";
 
 
 const HypercubePopOut = () => {
