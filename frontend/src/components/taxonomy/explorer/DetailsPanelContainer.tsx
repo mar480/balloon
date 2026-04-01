@@ -8,6 +8,8 @@ import {
   AdvancedSearchFilterOptions,
   AdvancedSearchFilters,
 } from "@/types/advancedSearch";
+import { ConceptDetailsResponse } from "./apiTypes";
+import { TreeNode } from "./tree_utils";
 
 type DetailsTabName =
   | "Details"
@@ -16,7 +18,7 @@ type DetailsTabName =
   | "Advanced Search";
 
 interface DetailPanelProps {
-  selectedNode: any;
+  selectedNode: TreeNode | null;
   onNavigateToNode?: (qname: string) => void;
   onNavigateToCrossReference?: (qname: string) => void;
   onNavigateToLocation?: (target: TreeLocationTarget) => void;
@@ -49,7 +51,7 @@ const DetailPanelContainer: React.FC<DetailPanelProps> = ({
   onResetAdvancedSearch,
 }) => {
   const [activeTab, setActiveTab] = useState<DetailsTabName>("Details");
-  const [concept, setConcept] = useState<any | null>(null);
+  const [concept, setConcept] = useState<ConceptDetailsResponse | null>(null);
 
   const showHypercubeTab = network === "presentation";
 
