@@ -247,13 +247,15 @@ const TreeLocationsTab: React.FC<Props> = ({
         onToggle={(e) => setExpandedKeys((e.value as Record<string, boolean>) ?? {})}
         selectionMode="single"
         onSelect={(e) => {
-          const target = (e.node?.data as any)?.target as
-            | TreeLocationTarget
-            | undefined;
+          const target = (e.node?.data as { target?: TreeLocationTarget } | undefined)?.target;
           if (target) onNavigateToLocation(target);
         }}
         nodeTemplate={(node) => {
-          const data = (node.data ?? {}) as any;
+          const data = (node.data ?? {}) as {
+            isNetwork?: boolean;
+            isElr?: boolean;
+            segmentMeta?: TreeLocationPathNode;
+          };
           const isNetwork = !!data.isNetwork;
           const isElr = !!data.isElr;
           const segmentMeta = data.segmentMeta as

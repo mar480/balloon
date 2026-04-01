@@ -7,9 +7,12 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 
+import { ConceptDetailsResponse, ConceptReference } from "./apiTypes";
+import { TreeNode } from "./tree_utils";
+
 interface Props {
-  concept: any;
-  selectedNode: any;
+  concept: ConceptDetailsResponse;
+  selectedNode: TreeNode;
   onNavigateToNode?: (qname: string) => void;
   onNavigateToCrossReference?: (qname: string) => void;
 }
@@ -276,7 +279,7 @@ const DetailsTab: React.FC<Props> = ({
                       const bP = priority(bRole);
                       return aP !== bP ? aP - bP : aRole.localeCompare(bRole);
                     })
-                    .map((ref: any, idx: number) => {
+                    .map((ref: ConceptReference, idx: number) => {
 
                       const { reference_role, reference_key_values, ...details } = ref;
 
@@ -301,7 +304,7 @@ const DetailsTab: React.FC<Props> = ({
                       // 2) Dynamic extras from reference_key_values
                       //    (e.g., future keys not currently in preferredOrder)
                       const preferredLower = new Set(preferredOrder.map((k) => k.toLowerCase()));
-                      const dynamicEntries = Object.entries((reference_key_values || {}) as Record<string, any>)
+                      const dynamicEntries = Object.entries((reference_key_values || {}) as Record<string, unknown>)
                         .filter(([k, v]) => v !== null && v !== undefined && String(v).trim() !== "")
                         .filter(([k]) => !preferredLower.has(k.toLowerCase()))
                         .map(([k, v]) => ({ label: k, value: v }));

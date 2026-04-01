@@ -10,89 +10,31 @@ import { TreeLocationTarget } from "./TreeLocationsTab";
 import {
   AdvancedSearchFilters,
   AdvancedSearchResult,
-  AdvancedSearchFilterOptions,
 } from "@/types/advancedSearch";
-
-type RawTreeNode = {
-  qname?: string;
-  uuid?: string;
-  tree_id?: string;
-  name?: string;
-  xbrl_type?: string;
-  full_type?: string;
-  substitution_group?: string;
-  children?: RawTreeNode[];
-};
-
-type RawElrGroup = {
-  elr: string;
-  definition?: string;
-  numeric_part?: number;
-  root_tree?: RawTreeNode[];
-};
-
-type PendingNavigation = {
-  network: string;
-  qname: string;
-  uuid?: string;
-  treeId?: string;
-  updateDetails?: boolean;
-};
-
-type SearchConceptApiResult = {
-  qname: string;
-  local_name?: string;
-  label?: string;
-  score?: number;
-  matched_fields?: string[];
-};
-
-const NAV_LOG_PREFIX = "[TreeLocationNavigation]";
-const EXCLUDED_TREE_KEYS = new Set(["concepts", "dimensions", "hypercubes", "primary_items"]);
-
-const EMPTY_ADVANCED_FILTERS: AdvancedSearchFilters = {
-  namespace: [],
-  balance: [],
-  periodType: [],
-  xbrlType: [],
-  fullType: [],
-  abstract: [],
-  nillable: [],
-  substitutionGroup: [],
-  referenceSource: null,
-  referenceParagraph: [],
-};
-
-const EMPTY_ADVANCED_FILTER_OPTIONS: AdvancedSearchFilterOptions = {
-  namespace: [],
-  balance: [],
-  periodType: [],
-  xbrlType: [],
-  fullType: [],
-  abstract: [true, false],
-  nillable: [true, false],
-  substitutionGroup: [],
-  referenceSources: [],
-};
-
-function sanitizeAdvancedFilters(next: AdvancedSearchFilters): AdvancedSearchFilters {
-  return {
-    ...next,
-    referenceSource:
-      typeof next.referenceSource === "string" && next.referenceSource.trim()
-        ? next.referenceSource
-        : null,
-    referenceParagraph: (Array.isArray(next.referenceParagraph) ? next.referenceParagraph : [])
-      .map((value) => (typeof value === "string" ? value.trim() : ""))
-      .filter((value) => value.length > 0),
-  };
-}
-
+import {
+  chooseNavigationMatcher,
+  collectTreeLocations,
+  findPathInTreeNodes,
+} from "./navigationUtils";
+import {
+  mapSearchOptionsPayload,
+  mapSearchResultsPayload,
+  mapTreesPayloadToNetworkMap,
+  sanitizeAdvancedFilters,
+} from "./explorerDataUtils";
+import {
+  EMPTY_ADVANCED_FILTER_OPTIONS,
+  EMPTY_ADVANCED_FILTERS,
+  EXCLUDED_TREE_KEYS,
+  NAV_LOG_PREFIX,
+  PendingNavigation,
+  RawElrGroup,
+} from "./explorerTypes";
 
 const XBRLTaxonomyExplorerContainer: React.FC = () => {
   // UI state
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
- const [detailNode, setDetailNode] = useState<TreeNode | null>(null);
+  const [detailNode, setDetailNode] = useState<TreeNode | null>(null);
   const [expandedKeys, setExpandedKeys] = useState<{ [key: string]: boolean }>({});
   const [highlightedKey, setHighlightedKey] = useState<string | null>(null);
   const [language, setLanguage] = useState<"en" | "cy">("en");
@@ -125,13 +67,12 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   });
   const [advancedSearchLastRunAt, setAdvancedSearchLastRunAt] = useState<string | null>(null);
 
-
-    const latestAdvancedQueryRef = useRef("");
+  const latestAdvancedQueryRef = useRef("");
   const latestAdvancedFiltersRef = useRef<AdvancedSearchFilters>(EMPTY_ADVANCED_FILTERS);
   const lastRunCriteriaKeyRef = useRef<string | null>(null);
-  // Option scaffolding for upcoming advanced UI
+
   const [advancedSearchFilterOptions, setAdvancedSearchFilterOptions] =
-    useState<AdvancedSearchFilterOptions>(EMPTY_ADVANCED_FILTER_OPTIONS);
+    useState(EMPTY_ADVANCED_FILTER_OPTIONS);
   const [referenceParagraphsBySource, setReferenceParagraphsBySource] = useState<
     Record<string, string[]>
   >({});
@@ -145,7 +86,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
   const resetAdvancedSearch = useCallback(() => {
     setAdvancedSearchQuery("");
     setAdvancedSearchFilters(EMPTY_ADVANCED_FILTERS);
-        latestAdvancedQueryRef.current = "";
+    latestAdvancedQueryRef.current = "";
     latestAdvancedFiltersRef.current = EMPTY_ADVANCED_FILTERS;
     lastRunCriteriaKeyRef.current = null;
     setAdvancedSearchResults([]);
@@ -160,92 +101,76 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     setAdvancedSearchQuery(next);
   }, []);
 
-
   const updateAdvancedSearchFilters = useCallback((next: AdvancedSearchFilters) => {
     const sanitized = sanitizeAdvancedFilters(next);
     latestAdvancedFiltersRef.current = sanitized;
     setAdvancedSearchFilters(sanitized);
   }, []);
 
-  const runAdvancedSearch = useCallback(async (nextOffset?: number) => {
-    if (!year || !entrypoint) {
-      setAdvancedSearchError("Select a taxonomy year and entrypoint before searching.");
-      return;
-    }
-     const trimmedQuery = latestAdvancedQueryRef.current.trim();
-    const criteriaKey = JSON.stringify({
-      q: trimmedQuery,
-      filters: latestAdvancedFiltersRef.current,
-    });
-    const criteriaChanged = criteriaKey !== lastRunCriteriaKeyRef.current;
-
-    const requestedOffset =
-      typeof nextOffset === "number"
-        ? Math.max(0, nextOffset)
-        : criteriaChanged
-          ? 0
-          : advancedSearchPagination.offset;
-    setAdvancedSearchLoading(true);
-    setAdvancedSearchError(null);
-
-
-    try {
-
-      const response = await fetch("/api/search-concepts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          year,
-          href: entrypoint,
-          q: trimmedQuery,
-          filters: latestAdvancedFiltersRef.current,
-          limit: advancedSearchPagination.limit,
-          offset: requestedOffset,
-        }),
-      });
-
-      const payload = await response.json();
-      if (!response.ok) {
-        throw new Error(payload?.error || "Search request failed");
+  const runAdvancedSearch = useCallback(
+    async (nextOffset?: number) => {
+      if (!year || !entrypoint) {
+        setAdvancedSearchError("Select a taxonomy year and entrypoint before searching.");
+        return;
       }
 
-      const results: AdvancedSearchResult[] = (payload.results || []).map(
+      const trimmedQuery = latestAdvancedQueryRef.current.trim();
+      const criteriaKey = JSON.stringify({
+        q: trimmedQuery,
+        filters: latestAdvancedFiltersRef.current,
+      });
+      const criteriaChanged = criteriaKey !== lastRunCriteriaKeyRef.current;
 
-        (result: SearchConceptApiResult, idx: number) => ({
+      const requestedOffset =
+        typeof nextOffset === "number"
+          ? Math.max(0, nextOffset)
+          : criteriaChanged
+            ? 0
+            : advancedSearchPagination.offset;
 
-          id: `${result.qname}-${requestedOffset + idx}`,
-          qname: result.qname,
-          localName: result.local_name,
-          label: result.label,
-          score: result.score,
-          matchedFields: result.matched_fields ?? [],
-        })
-      );
+      setAdvancedSearchLoading(true);
+      setAdvancedSearchError(null);
 
-      setAdvancedSearchResults(results);
-      setAdvancedSearchPagination((prev) => ({
-        ...prev,
-        limit: payload.limit ?? prev.limit,
-        offset: payload.offset ?? requestedOffset,
-        total: payload.total ?? results.length,
-      }));
+      try {
+        const response = await fetch("/api/search-concepts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            year,
+            href: entrypoint,
+            q: trimmedQuery,
+            filters: latestAdvancedFiltersRef.current,
+            limit: advancedSearchPagination.limit,
+            offset: requestedOffset,
+          }),
+        });
 
-      setAdvancedSearchLastRunAt(new Date().toISOString());
-      lastRunCriteriaKeyRef.current = criteriaKey;
-    } catch (error) {
-      console.error("Advanced search failed", error);
-      setAdvancedSearchError("Advanced search failed. Please try again.");
-    } finally {
-      setAdvancedSearchLoading(false);
-    }
-  }, [
+        const payload = await response.json();
+        if (!response.ok) {
+          throw new Error(payload?.error || "Search request failed");
+        }
 
-    advancedSearchPagination.limit,
+        const results = mapSearchResultsPayload(payload.results || [], requestedOffset);
 
-    advancedSearchPagination.offset,
-    entrypoint,
-    year,
-  ]);
+        setAdvancedSearchResults(results);
+        setAdvancedSearchPagination((prev) => ({
+          ...prev,
+          limit: payload.limit ?? prev.limit,
+          offset: payload.offset ?? requestedOffset,
+          total: payload.total ?? results.length,
+        }));
+
+        setAdvancedSearchLastRunAt(new Date().toISOString());
+        lastRunCriteriaKeyRef.current = criteriaKey;
+      } catch (error) {
+        console.error("Advanced search failed", error);
+        setAdvancedSearchError("Advanced search failed. Please try again.");
+      } finally {
+        setAdvancedSearchLoading(false);
+      }
+    },
+    [advancedSearchPagination.limit, advancedSearchPagination.offset, entrypoint, year]
+  );
 
   const advancedSearchState = useMemo(
     () => ({
@@ -323,16 +248,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
           return;
         }
 
-        const treeMap: Record<string, RawElrGroup[]> = {};
-        for (const [key, rawTree] of Object.entries(data.trees || {})) {
-          const normalizedKey = key.replace(/_tree$/, "");
-          if (EXCLUDED_TREE_KEYS.has(normalizedKey)) continue;
-          if (Array.isArray(rawTree)) {
-            treeMap[normalizedKey] = rawTree as RawElrGroup[];
-          }
-        }
-
-        setRawTreeData(treeMap);
+        setRawTreeData(mapTreesPayloadToNetworkMap(data.trees || {}, EXCLUDED_TREE_KEYS));
 
         const filtersUrl =
           `/api/search-filter-options?year=${encodeURIComponent(year)}` +
@@ -341,22 +257,12 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         fetch(filtersUrl)
           .then((res) => res.json())
           .then((opts) => {
-            setAdvancedSearchFilterOptions({
-              namespace: opts.namespace ?? [],
-              balance: opts.balance ?? [],
-              periodType: opts.periodType ?? [],
-              xbrlType: opts.xbrlType ?? [],
-              fullType: opts.fullType ?? [],
-              abstract: opts.abstract ?? [true, false],
-              nillable: opts.nillable ?? [true, false],
-              substitutionGroup: opts.substitutionGroup ?? [],
-              referenceSources: opts.referenceSources ?? [],
-            });
+            setAdvancedSearchFilterOptions(mapSearchOptionsPayload(opts));
             setReferenceParagraphsBySource(opts.referenceParagraphsBySource ?? {});
           })
           .catch((err) => {
             console.error("Failed to load search filter options", err);
-            setAdvancedSearchFilterOptions(EMPTY_ADVANCED_FILTER_OPTIONS); // fallback
+            setAdvancedSearchFilterOptions(EMPTY_ADVANCED_FILTER_OPTIONS);
             setReferenceParagraphsBySource({});
           });
 
@@ -374,32 +280,19 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     if (!entrypointLoaded || !Object.keys(rawTreeData).length) return;
 
     if (!network || !rawTreeData[network]) {
-      const preferred = rawTreeData["presentation"] ? "presentation" : Object.keys(rawTreeData)[0];
+      const preferred = rawTreeData["presentation"]
+        ? "presentation"
+        : Object.keys(rawTreeData)[0];
       if (preferred) setNetwork(preferred);
     }
   }, [rawTreeData, entrypointLoaded, network]);
 
-  const findPathInTreeNodes = useCallback(
-    (nodes: TreeNode[], predicate: (node: TreeNode) => boolean): TreeNode[] | null => {
-      const dfs = (arr: TreeNode[], acc: TreeNode[]): TreeNode[] | null => {
-        for (const node of arr) {
-          const next = [...acc, node];
-          if (predicate(node)) return next;
-          if (node.children?.length) {
-            const found = dfs(node.children, next);
-            if (found) return found;
-          }
-        }
-        return null;
-      };
-      return dfs(nodes, []);
-    },
-    []
-  );
-
   const expandPathToQName = useCallback(
     (targetQName: string, options?: { preserveDetails?: boolean }) => {
-      const path = findPathInTreeNodes(currentTreeNodes, (node) => node.data?.qname === targetQName);
+      const path = findPathInTreeNodes(
+        currentTreeNodes,
+        (node) => node.data?.qname === targetQName
+      );
       if (!path) return;
 
       const expanded: Record<string, boolean> = {};
@@ -410,76 +303,17 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
       setHighlightedKey(target.key);
       setTimeout(() => setHighlightedKey(null), 5000);
       setSelectedNode(target);
-            if (!options?.preserveDetails) {
+      if (!options?.preserveDetails) {
         setDetailNode(target);
       }
     },
-    [currentTreeNodes, findPathInTreeNodes]
+    [currentTreeNodes]
   );
 
-  const treeLocations = useMemo<TreeLocationTarget[]>(() => {
-    const qname = detailNode?.data?.qname;
-    if (!qname) return [];
-
-    const results: TreeLocationTarget[] = [];
-
-    const walk = (
-      networkKey: string,
-      elr: string,
-      elrDefinition: string,
-      node: RawTreeNode,
-      pathNodes: {
-        label: string;
-        xbrlType?: string;
-        fullType?: string;
-        substitutionGroup?: string;
-      }[],
-      numericPart?: number
-    ) => {
-      const currentLabel = node.name ?? node.qname ?? "Unnamed";
-      const nextPathNodes = [
-        ...pathNodes,
-        {
-          label: currentLabel,
-          xbrlType: node.xbrl_type,
-          fullType: node.full_type,
-          substitutionGroup: node.substitution_group,
-        },
-      ];
-
-      if (node.qname === qname) {
-        results.push({
-          network: networkKey,
-          elr,
-          elrDefinition,
-          numericPart,
-          qname,
-          uuid: node.uuid,
-          label: currentLabel,
-          treeId: node.tree_id,
-          pathNodes: nextPathNodes,
-        });
-      }
-
-      for (const child of node.children ?? []) {
-        walk(networkKey, elr, elrDefinition, child, nextPathNodes, numericPart);
-      }
-    };
-
-    for (const [networkKey, groups] of Object.entries(rawTreeData)) {
-      if (!Array.isArray(groups)) continue;
-      for (const group of groups as RawElrGroup[]) {
-        const elr = group.elr ?? "";
-        const elrDefinition = group.definition ?? elr;
-        const numericPart = group.numeric_part;
-        for (const root of group.root_tree ?? []) {
-          walk(networkKey, elr, elrDefinition, root, [], numericPart);
-        }
-      }
-    }
-
-    return results;
-  }, [rawTreeData, detailNode?.data?.qname]);
+  const treeLocations = useMemo<TreeLocationTarget[]>(
+    () => collectTreeLocations(rawTreeData, detailNode?.data?.qname),
+    [rawTreeData, detailNode?.data?.qname]
+  );
 
   const navigateToLocation = useCallback(
     (target: TreeLocationTarget) => {
@@ -514,37 +348,8 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     if (!pendingNavigation) return;
     if (network !== pendingNavigation.network) return;
 
-    const uuidMatches: TreeNode[] = [];
-    const treeIdMatches: TreeNode[] = [];
-    const qnameMatches: TreeNode[] = [];
-    const collectMatches = (nodes: TreeNode[]) => {
-      for (const node of nodes) {
-        if (pendingNavigation.uuid && node.data?.uuid === pendingNavigation.uuid) {
-          uuidMatches.push(node);
-        }
-        if (pendingNavigation.treeId && node.data?.treeId === pendingNavigation.treeId) {
-          treeIdMatches.push(node);
-        }
-        if (node.data?.qname === pendingNavigation.qname) {
-          qnameMatches.push(node);
-        }
-        if (node.children?.length) collectMatches(node.children);
-      }
-    };
-    collectMatches(currentTreeNodes);
-
-    let matcher: (node: TreeNode) => boolean;
-    let matchStrategy: "uuid" | "treeId" | "qname";
-    if (pendingNavigation.uuid && uuidMatches.length > 0) {
-      matcher = (node) => node.data?.uuid === pendingNavigation.uuid;
-      matchStrategy = "uuid";
-    } else if (pendingNavigation.treeId && treeIdMatches.length > 0) {
-      matcher = (node) => node.data?.treeId === pendingNavigation.treeId;
-      matchStrategy = "treeId";
-    } else {
-      matcher = (node) => node.data?.qname === pendingNavigation.qname;
-      matchStrategy = "qname";
-    }
+    const { matcher, matchStrategy, uuidMatches, treeIdMatches, qnameMatches } =
+      chooseNavigationMatcher(currentTreeNodes, pendingNavigation);
 
     console.debug(`${NAV_LOG_PREFIX} candidates`, {
       network,
@@ -571,7 +376,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
 
     const targetNode = path[path.length - 1];
     setSelectedNode(targetNode);
-        if (pendingNavigation.updateDetails !== false) {
+    if (pendingNavigation.updateDetails !== false) {
       setDetailNode(targetNode);
     }
     setHighlightedKey(targetNode.key);
@@ -587,7 +392,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
     });
 
     setPendingNavigation(null);
-  }, [pendingNavigation, network, currentTreeNodes, findPathInTreeNodes]);
+  }, [pendingNavigation, network, currentTreeNodes]);
 
   return (
     <>
@@ -609,7 +414,7 @@ const XBRLTaxonomyExplorerContainer: React.FC = () => {
         entrypoints={entrypoints}
         onYearChange={setYear}
         onEntrypointChange={setEntrypoint}
-                onSelectNode={(node) => {
+        onSelectNode={(node) => {
           setSelectedNode(node);
           setDetailNode(node);
         }}
