@@ -12,14 +12,16 @@ import {
   RawElrGroup,
 } from "../explorerTypes";
 import {
+  EntrypointOption,
   fetchEntrypoints,
   fetchSearchFilterOptions,
   loadEntrypoint,
+  SearchFilterOptionsResponse,
   warmConceptDetails,
 } from "../services/explorerApi";
 
 interface EntrypointDataState {
-  entrypoints: { name: string; href: string }[];
+  entrypoints: EntrypointOption[];
   rawTreeData: Record<string, RawElrGroup[]>;
   entrypointLoaded: boolean;
   loadingEntrypoint: boolean;
@@ -33,7 +35,7 @@ export function useEntrypointData(
   resetAdvancedSearch: () => void,
   clearTreeUiState: () => void
 ): EntrypointDataState {
-  const [entrypoints, setEntrypoints] = useState<{ name: string; href: string }[]>([]);
+  const [entrypoints, setEntrypoints] = useState<EntrypointOption[]>([]);
   const [rawTreeData, setRawTreeData] = useState<Record<string, RawElrGroup[]>>({});
   const [entrypointLoaded, setEntrypointLoaded] = useState(false);
   const [loadingEntrypoint, setLoadingEntrypoint] = useState(false);
@@ -83,12 +85,12 @@ export function useEntrypointData(
           return;
         }
 
-        setRawTreeData(mapTreesPayloadToNetworkMap((data.trees as Record<string, unknown>) || {}, EXCLUDED_TREE_KEYS));
+        setRawTreeData(mapTreesPayloadToNetworkMap(data.trees || {}, EXCLUDED_TREE_KEYS));
 
         fetchSearchFilterOptions(year, entrypoint)
-          .then((opts) => {
+          .then((opts: SearchFilterOptionsResponse) => {
             setAdvancedSearchFilterOptions(mapSearchOptionsPayload(opts));
-            setReferenceParagraphsBySource((opts.referenceParagraphsBySource as Record<string, string[]>) ?? {});
+            setReferenceParagraphsBySource(opts.referenceParagraphsBySource ?? {});
           })
           .catch((err) => {
             console.error("Failed to load search filter options", err);

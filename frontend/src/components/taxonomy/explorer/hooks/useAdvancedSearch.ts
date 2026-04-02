@@ -85,17 +85,14 @@ export function useAdvancedSearch(year: string | null, entrypoint: string | null
           offset: requestedOffset,
         });
 
-        const results = mapSearchResultsPayload(
-          (payload.results as Parameters<typeof mapSearchResultsPayload>[0]) || [],
-          requestedOffset
-        );
+        const results = mapSearchResultsPayload(payload.results || [], requestedOffset);
 
         setAdvancedSearchResults(results);
         setAdvancedSearchPagination((prev) => ({
           ...prev,
-          limit: (payload.limit as number | undefined) ?? prev.limit,
-          offset: (payload.offset as number | undefined) ?? requestedOffset,
-          total: (payload.total as number | undefined) ?? results.length,
+          limit: payload.limit ?? prev.limit,
+          offset: payload.offset ?? requestedOffset,
+          total: payload.total ?? results.length,
         }));
 
         setAdvancedSearchLastRunAt(new Date().toISOString());
