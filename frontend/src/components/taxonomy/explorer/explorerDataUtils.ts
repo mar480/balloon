@@ -32,7 +32,19 @@ export function mapTreesPayloadToNetworkMap(
   return treeMap;
 }
 
-export function mapSearchOptionsPayload(opts: Record<string, unknown>): AdvancedSearchFilterOptions {
+type SearchOptionsPayload = {
+  namespace?: string[];
+  balance?: string[];
+  periodType?: string[];
+  xbrlType?: string[];
+  fullType?: string[];
+  abstract?: boolean[];
+  nillable?: boolean[];
+  substitutionGroup?: string[];
+  referenceSources?: string[];
+};
+
+export function mapSearchOptionsPayload(opts: SearchOptionsPayload): AdvancedSearchFilterOptions {
   return {
     namespace: opts.namespace ?? [],
     balance: opts.balance ?? [],
