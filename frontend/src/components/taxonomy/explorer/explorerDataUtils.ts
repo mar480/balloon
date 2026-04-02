@@ -1,6 +1,6 @@
 import { AdvancedSearchFilterOptions, AdvancedSearchFilters, AdvancedSearchResult } from "@/types/advancedSearch";
 
-import { RawElrGroup, SearchConceptApiResult } from "./explorerTypes";
+import { RawElrGroup, SearchConceptApiResult, SearchFilterOptionsApiPayload } from "./explorerTypes";
 
 export function sanitizeAdvancedFilters(next: AdvancedSearchFilters): AdvancedSearchFilters {
   return {
@@ -32,7 +32,9 @@ export function mapTreesPayloadToNetworkMap(
   return treeMap;
 }
 
-export function mapSearchOptionsPayload(opts: Record<string, unknown>): AdvancedSearchFilterOptions {
+export function mapSearchOptionsPayload(
+  opts: SearchFilterOptionsApiPayload
+): AdvancedSearchFilterOptions {
   return {
     namespace: opts.namespace ?? [],
     balance: opts.balance ?? [],

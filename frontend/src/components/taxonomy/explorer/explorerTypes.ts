@@ -34,6 +34,32 @@ export type SearchConceptApiResult = {
   matched_fields?: string[];
 };
 
+export type LoadEntrypointApiResponse = {
+  status?: string;
+  error?: string;
+  trees?: Record<string, unknown>;
+};
+
+export type SearchFilterOptionsApiPayload = {
+  namespace?: string[];
+  balance?: string[];
+  periodType?: string[];
+  xbrlType?: string[];
+  fullType?: string[];
+  abstract?: boolean[];
+  nillable?: boolean[];
+  substitutionGroup?: string[];
+  referenceSources?: string[];
+  referenceParagraphsBySource?: Record<string, string[]>;
+};
+
+export type SearchConceptsApiResponse = {
+  results?: SearchConceptApiResult[];
+  total?: number;
+  limit?: number;
+  offset?: number;
+};
+
 export const EMPTY_ADVANCED_FILTERS: AdvancedSearchFilters = {
   namespace: [],
   balance: [],
