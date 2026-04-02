@@ -1,0 +1,4456 @@
+[
+  {
+    "elr": "http://xbrl.frc.org.uk/dpl/roles/Dimension-ExpenseType",
+    "definition": "551 - Dimension - Expense Type",
+    "numeric_part": 551,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "e86594bf-7652-4287-8056-00a02f11f253",
+        "qname": "dpl:ExpenseTypeDimension",
+        "name": "Expense type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gost [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "dpl:ExpenseTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "3391556d-6ab2-43fe-9949-fe14ba20a7b9",
+            "qname": "dpl:TotalCostsDefault",
+            "name": "Total costs [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm cost [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "dpl:TotalCostsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/dpl/roles/Dimension-DetailedAnalysis",
+    "definition": "553 - Dimension - Detailed Analysis",
+    "numeric_part": 553,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "cd3d19f5-da63-4388-bb8c-b1dac6d0be5b",
+        "qname": "dpl:DetailedAnalysisDimension",
+        "name": "Detailed analysis [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dadansoddiad manwl [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "dpl:DetailedAnalysisDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "60b31dfa-4ebe-4b96-9f52-381e7c16cb74",
+            "qname": "dpl:TotalItemsDefault",
+            "name": "Total items [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm eitemau [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "dpl:TotalItemsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/dpl/roles/Dimension-IntraExtraGroupTransactions",
+    "definition": "554 - Dimension - Intra / extra group transactions",
+    "numeric_part": 554,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "b6b75d16-c652-48b4-8ea4-08a6c824ec3c",
+        "qname": "dpl:IntraExtraGroupTransactionsDimension",
+        "name": "Intra / extra group transactions [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Trafodion mewnol / allanol i'r grŵp [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "dpl:IntraExtraGroupTransactionsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "b26fb9ed-b695-4ce4-9f6c-0f668023e377",
+            "qname": "dpl:TotalTransactionsDefault",
+            "name": "Total transactions [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm trafodion [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "dpl:TotalTransactionsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-CountriesAndRegions",
+    "definition": "6001 - Dimension - CountriesAndRegions",
+    "numeric_part": 6001,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "1386f174-0984-494d-9f79-edc0ed7c1c5f",
+        "qname": "countries:CountriesRegionsDimension",
+        "name": "Countries and regions [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Gwledydd a rhanbarthau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "countries:CountriesRegionsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "29d58471-5c20-4bbb-ab46-2ab839b979f3",
+            "qname": "countries:CountriesRegionsHeading",
+            "name": "Countries and regions [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Gwledydd a rhanbarthau [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "countries:CountriesRegionsHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-Currencies",
+    "definition": "6002 - Dimension - Currencies",
+    "numeric_part": 6002,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "f72fb160-e8a9-4d6f-9c5e-db6688602033",
+        "qname": "curr:CurrenciesDimension",
+        "name": "Currencies [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Arian cyfred [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "curr:CurrenciesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "552c885f-9e76-43c8-839c-92914fa19591",
+            "qname": "curr:CurrenciesHeading",
+            "name": "Currencies [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Arian cyfred [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "curr:CurrenciesHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-Languages",
+    "definition": "6003 - Dimension - Languages",
+    "numeric_part": 6003,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "264c1316-9b52-4bb0-a5a6-11a5d6ab69ab",
+        "qname": "lang:LanguagesDimension",
+        "name": "Languages [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Ieithoedd [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "lang:LanguagesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "02201d61-ef22-4599-b919-285208ca4cdf",
+            "qname": "lang:LanguagesHeading",
+            "name": "Languages [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Ieithoedd [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "lang:LanguagesHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-Original-Revised-Data",
+    "definition": "6009 - Dimension - Original and Revised Data",
+    "numeric_part": 6009,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "3d92fa73-9068-41d8-9115-ba7127a69e57",
+        "qname": "bus:OriginalRevisedDataDimension",
+        "name": "Original and revised data [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Data gwreiddiol a diwygiedig [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:OriginalRevisedDataDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "2fe7b950-60a6-499f-bcda-9b44fbf43f83",
+            "qname": "bus:CurrentlyStatedDefault",
+            "name": "Currently stated [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Wedi'i nodi ar hyn o bryd [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:CurrentlyStatedDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-GroupCompanyData",
+    "definition": "6010 - Dimension - Group and Company Data",
+    "numeric_part": 6010,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "ff9cd5ff-d352-4a60-8b8f-7209825be601",
+        "qname": "bus:GroupCompanyDataDimension",
+        "name": "Group and company data [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Data grŵp a chwmni [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:GroupCompanyDataDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "2f8c9a1d-ebf8-4382-af10-edb924021a90",
+            "qname": "bus:Consolidated",
+            "name": "Consolidated",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Wedi'i gydgrynhoi",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:Consolidated",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-MainIndustrySector",
+    "definition": "6011 - Dimension - Main Industry Sector",
+    "numeric_part": 6011,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "46e6de0f-49ff-41fb-9369-d249cf579509",
+        "qname": "bus:MainIndustrySectorDimension",
+        "name": "Main industry sector [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Prif sector y diwydiant [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:MainIndustrySectorDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "c71bd7cf-2f95-4021-97d6-454b03067aee",
+            "qname": "bus:MainIndustrySectorHeading",
+            "name": "Main industry sector [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Prif sector y diwydiant [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:MainIndustrySectorHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-LegalFormEntity",
+    "definition": "6012 - Dimension - Legal Form of Entity",
+    "numeric_part": 6012,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "d6224198-38cd-493e-8b9a-0db4cd7cb6c2",
+        "qname": "bus:LegalFormEntityDimension",
+        "name": "Legal form of entity [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Ffurf gyfreithiol yr endid [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:LegalFormEntityDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "d1de6999-0434-461c-a0d1-ab5ed99b36ce",
+            "qname": "bus:LegalFormEntityHeading",
+            "name": "Legal form of entity [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Ffurf gyfreithiol yr endid [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:LegalFormEntityHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-EntityTradingStatus",
+    "definition": "6013 - Dimension - Entity Trading Status",
+    "numeric_part": 6013,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "77dd85eb-9433-4309-8e51-23f9f383c0bf",
+        "qname": "bus:EntityTradingStatusDimension",
+        "name": "Entity trading status [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Statws masnachu yr endid [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:EntityTradingStatusDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "8c0c169f-58b7-45d1-9cae-9f435991fc0d",
+            "qname": "bus:EntityTradingDefault",
+            "name": "Entity is trading [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Mae'r endid yn masnachu [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:EntityTradingDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-EntitySpecialLegalStatus",
+    "definition": "6014 - Dimension - Entity Special Legal Status",
+    "numeric_part": 6014,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "5e6353f1-96e4-4649-b17b-0b230d6d6205",
+        "qname": "bus:EntitySpecialLegalStatusDimension",
+        "name": "Entity special legal status [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Statws cyfreithiol arbennig yr endid [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:EntitySpecialLegalStatusDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "99099438-f581-4676-8484-a0f79bf99cb3",
+            "qname": "bus:EntitySpecialLegalStatusHeading",
+            "name": "Entity special legal status [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Statws cyfreithiol arbennig yr endid [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:EntitySpecialLegalStatusHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-EntityShareClasses",
+    "definition": "6015 - Dimension - Entity Share Classes",
+    "numeric_part": 6015,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "96f1db02-cdbd-4d1b-91fc-f1c146f7d18d",
+        "qname": "bus:EntityShareClassesDimension",
+        "name": "Entity share classes [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dosbarthiadau cyfranddaliadau yr endid [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:EntityShareClassesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "3bc778db-5868-468e-bda7-ad807ffaa7e8",
+            "qname": "bus:AllShareClassesDefault",
+            "name": "All share classes [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob dosbarth o gyfranddaliadau [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:AllShareClassesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-ShareTypes",
+    "definition": "6016 - Dimension - Share Types",
+    "numeric_part": 6016,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "7c456727-b4f6-4ed8-99ee-5c5a74d211c4",
+        "qname": "bus:ShareTypesDimension",
+        "name": "Share types [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Mathau o gyfranddaliadau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:ShareTypesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "932823b3-4e57-47c3-9318-01e21c31bc87",
+            "qname": "bus:AllShareTypesDefault",
+            "name": "All share types [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob math o gyfranddaliad [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:AllShareTypesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-EntityOfficers",
+    "definition": "6017 - Dimension - Entity Officers",
+    "numeric_part": 6017,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "1d76fdba-a055-4415-bbca-a8c5530dd7ac",
+        "qname": "bus:EntityOfficersDimension",
+        "name": "Entity officers [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Swyddogion yr endid [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:EntityOfficersDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "7ef820ff-a980-4b0c-8ebb-2cfff3cb52c9",
+            "qname": "bus:AllEntityOfficersEntityOfficersTotalDefault",
+            "name": "All entity officers / Entity officers total [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob swyddog endid / cyfanswm swyddogion endid [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:AllEntityOfficersEntityOfficersTotalDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-EntityOfficerStatus",
+    "definition": "6018 - Dimension - Entity Officer Type",
+    "numeric_part": 6018,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "5063519e-c90d-495d-8c52-a950c3f49443",
+        "qname": "bus:EntityOfficerStatusDimension",
+        "name": "Entity officer status [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Statws swyddog yr endid [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:EntityOfficerStatusDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "0eac2b24-8f02-4619-97c9-115d99031098",
+            "qname": "bus:AllEntityOfficerTypesDefault",
+            "name": "All entity officer types [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob math o swyddog endid [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:AllEntityOfficerTypesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-EntityContactType",
+    "definition": "6019 - Dimension - Entity Contact Type",
+    "numeric_part": 6019,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "b3b86e9f-cf22-4d79-89d1-305cea240b16",
+        "qname": "bus:EntityContactTypeDimension",
+        "name": "Entity contact type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gyswllt yr endid [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:EntityContactTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "d33e2cf4-c98f-438e-9a77-246e1228b219",
+            "qname": "bus:EntityContactTypeHeading",
+            "name": "Entity contact type [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o gyswllt yr endid [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:EntityContactTypeHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-AddressType",
+    "definition": "6020 - Dimension - Address Type",
+    "numeric_part": 6020,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "a4bdab9e-6b09-4a07-a060-c5b07e0ab056",
+        "qname": "bus:AddressTypeDimension",
+        "name": "Address type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gyfeiriad [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:AddressTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "2292207f-f4a2-462c-8de9-1dff6555e5dc",
+            "qname": "bus:AddressTypeHeading",
+            "name": "Address type [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o gyfeiriad [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:AddressTypeHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-PhoneNumberType",
+    "definition": "6021 - Dimension - Phone Number Type",
+    "numeric_part": 6021,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "9bfad52d-76f2-4352-a056-b26f898e871a",
+        "qname": "bus:PhoneNumberTypeDimension",
+        "name": "Phone number type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o rif ffôn [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:PhoneNumberTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "38934e09-17f0-4cef-ab72-1b4ce01d1db0",
+            "qname": "bus:PhoneNumberTypeHeading",
+            "name": "Phone number type [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o rif ffôn [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:PhoneNumberTypeHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-FormOfContact",
+    "definition": "6022 - Dimension - Form of Contact",
+    "numeric_part": 6022,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "d4d5c40a-eb4e-4b50-8ed6-20052b1519e8",
+        "qname": "bus:FormContactDimension",
+        "name": "Form of contact [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dull cysylltu [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:FormContactDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "3c366b10-6e5c-48de-905e-de13a287b49a",
+            "qname": "bus:FormContactHeading",
+            "name": "Form of contact [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Dull cysylltu [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:FormContactHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-ThirdPartyAgentStatus",
+    "definition": "6023 - Dimension - Third Party Agent Status",
+    "numeric_part": 6023,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "146ff3bb-8866-4dd6-b9af-66ec83756c59",
+        "qname": "bus:ThirdPartyAgentStatusDimension",
+        "name": "Third party agent status [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Statws asiant trydydd parti [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:ThirdPartyAgentStatusDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "90367ff1-daec-479e-8269-0de3ee465603",
+            "qname": "bus:TotalAgentsDefault",
+            "name": "Total agents [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm asiantau [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:TotalAgentsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-ScopeAccounts",
+    "definition": "6024 - Dimension - Scope of Accounts",
+    "numeric_part": 6024,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "054c59de-2b34-49fc-9548-601745a31d74",
+        "qname": "bus:ScopeAccountsDimension",
+        "name": "Scope of accounts [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Cwmpas y cyfrifon [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:ScopeAccountsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "bd36632f-0757-4ad1-b494-fdd6ea100b6b",
+            "qname": "bus:CompanyAccountsDefault",
+            "name": "Company accounts [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfrifon y cwmni [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:CompanyAccountsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-AccountingStandards",
+    "definition": "6025 - Dimension - Accounting Standards",
+    "numeric_part": 6025,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "bc055cdd-f054-406d-b427-94b95a116aee",
+        "qname": "bus:AccountingStandardsDimension",
+        "name": "Accounting standards [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Safonau cyfrifyddu [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:AccountingStandardsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "e0ac10b4-11d2-4519-94a4-b7e11bfb98b8",
+            "qname": "bus:AccountingStandardsHeading",
+            "name": "Accounting standards [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Safonau cyfrifyddu [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:AccountingStandardsHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-SORPs",
+    "definition": "6026 - Dimension - SORPs",
+    "numeric_part": 6026,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "3bf8b163-009f-4eda-8705-937ace5adca6",
+        "qname": "bus:SORPsDimension",
+        "name": "SORPs [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "SORPS [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:SORPsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "88450a96-dcc3-4a71-ba6b-fb11fc271128",
+            "qname": "bus:SORPsHeading",
+            "name": "SORPs [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "SORPS [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:SORPsHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-ApplicableLegislation",
+    "definition": "6027 - Dimension - Applicable Legislation",
+    "numeric_part": 6027,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "7e459e26-a928-4750-b8d5-ac82db28b0c0",
+        "qname": "bus:ApplicableLegislationDimension",
+        "name": "Applicable legislation [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Deddfwriaeth gymwys [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:ApplicableLegislationDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "f8d0ceec-d785-4171-9b62-6776bf3db8ff",
+            "qname": "bus:ApplicableLegislationHeading",
+            "name": "Applicable legislation [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Deddfwriaeth gymwys [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:ApplicableLegislationHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-AccountsStatus",
+    "definition": "6028 - Dimension - Accounts Status",
+    "numeric_part": 6028,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "039913b2-3e58-40ba-a01b-915785e9f509",
+        "qname": "bus:AccountsStatusDimension",
+        "name": "Accounts status [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Statws cyfrifon [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:AccountsStatusDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "2fcfee94-9e3d-4839-9b3a-9448d694b6a5",
+            "qname": "bus:AccountsStatusHeading",
+            "name": "Accounts status [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Statws cyfrifon [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:AccountsStatusHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-AccountsType",
+    "definition": "6029 - Dimension - Accounts Type",
+    "numeric_part": 6029,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "7cb80d03-49d2-46c0-9524-5995684b2ea9",
+        "qname": "bus:AccountsTypeDimension",
+        "name": "Accounts type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gyfrifon [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:AccountsTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "0d6a04ed-316f-4522-9c21-50fc7670ea2e",
+            "qname": "bus:AccountsTypeHeading",
+            "name": "Accounts type [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o gyfrifon [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:AccountsTypeHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/cd/roles/Dimension-ReportPeriod",
+    "definition": "6030 - Dimension - Report Period",
+    "numeric_part": 6030,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "2dcdf494-a809-41fd-a646-e59d83dc039f",
+        "qname": "bus:ReportPeriodDimension",
+        "name": "Report period [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Cyfnod yr adroddiad [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "bus:ReportPeriodDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "bd58e7b9-38db-4db1-8547-50f98eca5e41",
+            "qname": "bus:FinancialYearDefault",
+            "name": "Financial year [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Blwyddyn ariannol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "bus:FinancialYearDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-ContinuingAndDiscontinuedOperations",
+    "definition": "6040 - Dimension - Continuing and Discontinued Operations",
+    "numeric_part": 6040,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "f5e352a8-eade-41df-a08d-e06f14bd6a7b",
+        "qname": "core:ContinuingDiscontinuedOperationsDimension",
+        "name": "Continuing and discontinued operations [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Gweithrediad sy'n parhau ac a derfynwyd [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:ContinuingDiscontinuedOperationsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "674754d1-bea7-4b3a-91a5-ea764539d6fe",
+            "qname": "core:ContinuingDiscontinuedOperationsTotalDefault",
+            "name": "Continuing and discontinued operations, total [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Gweithrediad sy'n parhau ac a derfynwyd, cyfanswm [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:ContinuingDiscontinuedOperationsTotalDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-Exceptionals",
+    "definition": "6041 - Dimension - Exceptionals",
+    "numeric_part": 6041,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "01bb8891-73e5-40e6-8275-9b7888707ad3",
+        "qname": "core:ExceptionalsDimension",
+        "name": "Exceptionals [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Eitemau eithriadol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:ExceptionalsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "c81b65f6-45eb-4241-a698-d78305af0ed5",
+            "qname": "core:TotalReportedDefault",
+            "name": "Total reported [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm yr adroddwyd arnynt [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalReportedDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-EquityClasses",
+    "definition": "6042 - Dimension - Equity Classes",
+    "numeric_part": 6042,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "f45513e2-e3fa-49b6-908e-5b2a03ad8d03",
+        "qname": "core:EquityClassesDimension",
+        "name": "Equity classes [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dosbarthiadau ecwiti [Dimensiynau]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:EquityClassesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "857bb3fb-8ca5-4b7a-9e32-cd431a3979e4",
+            "qname": "core:TotalEquityDefault",
+            "name": "Total equity [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm ecwiti [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalEquityDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-GeographicSegments",
+    "definition": "6043 - Dimension - Geographic Segments",
+    "numeric_part": 6043,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "dbb6273c-dff0-4330-8e61-ab672e6b5b13",
+        "qname": "core:GeographicSegmentsDimension",
+        "name": "Geographic segments [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Segmentau daearyddol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:GeographicSegmentsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "9d7ddf65-bbbe-4ba4-9b2b-282f5e18a1ca",
+            "qname": "core:GeographicSegmentsHeading",
+            "name": "Geographic segments [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Segmentau daearyddol [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:GeographicSegmentsHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-OperatingSegments",
+    "definition": "6044 - Dimension - Operating Segments",
+    "numeric_part": 6044,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "c940d7c1-837c-4dbe-8512-e0cbdc0f6b06",
+        "qname": "core:OperatingSegmentsDimension",
+        "name": "Operating segments [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Segmentau Gweithredol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:OperatingSegmentsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "d377f681-2e1b-412d-81a6-bb2ea972e1c6",
+            "qname": "core:ReportableOperatingSegmentsHeading",
+            "name": "Reportable operating segments [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Segmentau gweithredu y gellir eu hadrodd [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:ReportableOperatingSegmentsHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-ProductsAndServices",
+    "definition": "6045 - Dimension - Products and Services",
+    "numeric_part": 6045,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "fee4a3eb-8823-440f-b407-cb118819c8d5",
+        "qname": "core:ProductsServicesDimension",
+        "name": "Products and services [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Cynhyrchion a gwasanaethau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:ProductsServicesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "42a25a94-cd03-4849-a93c-2ba4bacde165",
+            "qname": "core:ProductsServicesHeading",
+            "name": "Products and services [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Cynhyrchion a gwasanaethau [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:ProductsServicesHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-MajorCustomers",
+    "definition": "6046 - Dimension - Major Customers",
+    "numeric_part": 6046,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "08fb93df-ad3a-45da-8839-c2e41cc5db9c",
+        "qname": "core:MajorCustomersDimension",
+        "name": "Major customers [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Cwsmeriaid mawr [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:MajorCustomersDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "aac853f8-eecd-4e34-8477-bb7bc38532b8",
+            "qname": "core:MajorCustomersHeading",
+            "name": "Major customers [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Cwsmeriaid mawr [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:MajorCustomersHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-SegmentReconciliation",
+    "definition": "6047 - Dimension - Segment Reconciliation",
+    "numeric_part": 6047,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "9b5ae25e-51b5-4f36-acf3-ede238738428",
+        "qname": "core:SegmentReconciliationDimension",
+        "name": "Segment reconciliation [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Cysoni segment [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:SegmentReconciliationDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "117d1957-4e61-4588-83f0-93370b28ccd5",
+            "qname": "core:EntityReportedValueAfterAdjustmentsDefault",
+            "name": "Entity reported value after adjustments [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Gwerth yr endid a adroddwyd ar ôl addasiadau [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:EntityReportedValueAfterAdjustmentsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-BusinessCombinations",
+    "definition": "6048 - Dimension - Business Combinations",
+    "numeric_part": 6048,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "d6fe20ad-ae58-49fb-a21d-a3f7dba6fc1c",
+        "qname": "core:BusinessCombinationsDimension",
+        "name": "Business combinations [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Cyfuniadau Busnes [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:BusinessCombinationsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "21f24088-aa65-4322-a0e9-2d9a192bcb2c",
+            "qname": "core:TotalBusinessCombinationsDefault",
+            "name": "Total business combinations [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm cyfuniadau Busnes [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalBusinessCombinationsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-OwnershipOfAssets",
+    "definition": "6049 - Dimension - Ownership Of Assets",
+    "numeric_part": 6049,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "946efc43-e304-4f24-9002-cee6bfc160a5",
+        "qname": "core:OwnershipAssetsDimension",
+        "name": "Ownership of assets [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Perchenogaeth ar asedau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:OwnershipAssetsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "26f16196-baa8-4982-82f9-2c85141e59f1",
+            "qname": "core:TotalOwnedLeasedAssetsDefault",
+            "name": "Total owned and leased assets [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm asedau a berchnogir ac ar brydles [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalOwnedLeasedAssetsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-OperatingLeasePurpose",
+    "definition": "6050 - Dimension - Operating Lease Purpose",
+    "numeric_part": 6050,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "5baab0c8-6ecd-4340-853b-796ff9e344aa",
+        "qname": "core:OperatingLeasePurposeDimension",
+        "name": "Operating lease purpose [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Pwrpas prydles weithredol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:OperatingLeasePurposeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "063302ce-4c9f-42fc-b02e-6ce4f2a3a253",
+            "qname": "core:TotalAssetsUnderOperatingLeasesDefault",
+            "name": "Total assets under operating leases [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm asedau o dan brydlesau gweithredol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalAssetsUnderOperatingLeasesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-TaxJurisdiction",
+    "definition": "6051 - Dimension - Tax Jurisdiction",
+    "numeric_part": 6051,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "32b73e06-3e91-496c-ab4e-d10b5fb44166",
+        "qname": "core:TaxJurisdictionDimension",
+        "name": "Tax jurisdiction [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Awdurdodaeth treth [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:TaxJurisdictionDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "fe18334e-cf51-42e8-afab-dfa0de33ecaf",
+            "qname": "core:TotalTaxDefault",
+            "name": "Total tax [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm Treth [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalTaxDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-PPEClasses",
+    "definition": "6052 - Dimension - PPE Classes",
+    "numeric_part": 6052,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "52fc00e2-714f-4a43-866e-87a710e8731a",
+        "qname": "core:PropertyPlantEquipmentClassesDimension",
+        "name": "Property, plant and equipment classes [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dosbarthiadau eiddo, offer a chyfarpar [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:PropertyPlantEquipmentClassesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "a95793a0-d9b9-4dd2-9256-64cfb6c3fd12",
+            "qname": "core:TotalPropertyPlantEquipmentDefault",
+            "name": "Total property, plant and equipment [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm eiddo, offer a chyfarpar [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalPropertyPlantEquipmentDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-PPEOwnership",
+    "definition": "6053 - Dimension - PPE Ownership",
+    "numeric_part": 6053,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "2ec03773-88d1-4aa9-afc7-397a44964b0a",
+        "qname": "core:PPEOwnershipDimension",
+        "name": "PPE ownership [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "PPE perchnogaeth [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:PPEOwnershipDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "3cd4714a-b956-4c93-9718-9b7394da2f21",
+            "qname": "core:TotalOwnedLeasedPPEAssetsDefault",
+            "name": "Total owned and leased PPE assets [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm asedau PPE a berchnogir ac ar brydles [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalOwnedLeasedPPEAssetsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-IntangibleAssetClasses",
+    "definition": "6054 - Dimension - Intangible Asset Classes",
+    "numeric_part": 6054,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "7df253a5-4eb6-4ce2-a8ce-c9298b01ce19",
+        "qname": "core:IntangibleAssetClassesDimension",
+        "name": "Intangible asset classes [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dosbarthiadau asedau anniriaethol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:IntangibleAssetClassesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "6b2a5497-eaf0-4579-8c36-a5f54cf9f543",
+            "qname": "core:TotalIntangibleAssetsIncludingGoodwillDefault",
+            "name": "Total intangible assets including goodwill [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm asedau anniriaethol yn cynnwys ewyllys da [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalIntangibleAssetsIncludingGoodwillDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-IntangibleAssetsGenerationType",
+    "definition": "6055 - Dimension - Intangible Assets Generation Type",
+    "numeric_part": 6055,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "75189613-5638-4522-b857-7c5207f1f115",
+        "qname": "core:IntangibleAssetsGenerationTypeDimension",
+        "name": "Intangible assets generation type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gynhyrchu asedau anniriaethol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:IntangibleAssetsGenerationTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "e95b77ff-a2e4-4c8e-84e3-514ae6bc0839",
+            "qname": "core:TotalInternallyExternallyAcquiredIntangibleAssetsDefault",
+            "name": "Total internally and externally acquired intangible assets [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm asedau anniriaethol wedi eu caffael yn allanol ac yn fewnol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalInternallyExternallyAcquiredIntangibleAssetsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-IntangibleAssetsLifeType",
+    "definition": "6056 - Dimension - Intangible Assets Life Type",
+    "numeric_part": 6056,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "7bc73beb-a877-46e1-b409-583e5468bb1c",
+        "qname": "core:IntangibleAssetsLifeTypeDimension",
+        "name": "Intangible assets life type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o fywyd asedau anniriaethol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:IntangibleAssetsLifeTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "3eb26977-1ea6-421a-a9d9-f13f12fd68d3",
+            "qname": "core:TotalIntangibleAssetsWithFiniteWithIndefiniteLivesDefault",
+            "name": "Total intangible assets with finite and with indefinite lives [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm asedau anniriaethol gydag oes amhenodol a phenodol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalIntangibleAssetsWithFiniteWithIndefiniteLivesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-InvestmentPropertyOwnershipType",
+    "definition": "6057 - Dimension - Investment Property Ownership Type",
+    "numeric_part": 6057,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "ebe40107-ed98-45bb-83ea-148707a242dc",
+        "qname": "core:InvestmentPropertyOwnershipTypeDimension",
+        "name": "Investment property ownership type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o berchnogaeth eiddo buddsoddi [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:InvestmentPropertyOwnershipTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "1e4fe7ba-0b9e-4865-91f7-69336dcb9356",
+            "qname": "core:TotalOwnedLeasedInvestmentPropertyDefault",
+            "name": "Total owned and leased investment property [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm eiddo buddsoddi a berchnogir ac ar brydles [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalOwnedLeasedInvestmentPropertyDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-BiologicalAssetClasses",
+    "definition": "6058 - Dimension - Biological Asset Classes",
+    "numeric_part": 6058,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "17e4e724-ecc8-4320-97c9-f50a14570416",
+        "qname": "core:BiologicalAssetClassesDimension",
+        "name": "Biological asset classes [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dosbarthiadau asedau biolegol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:BiologicalAssetClassesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "4cec18d8-5aa9-4eb1-89c1-3149358c45c3",
+            "qname": "core:TotalBiologicalAssetsDefault",
+            "name": "Total biological assets [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm ased biolegol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalBiologicalAssetsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-BiologicalAssetMaturity",
+    "definition": "6059 - Dimension - Biological Asset Maturity",
+    "numeric_part": 6059,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "49150759-cea3-4b52-811b-8fe220970ea6",
+        "qname": "core:BiologicalAssetMaturityDimension",
+        "name": "Biological asset maturity [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Aeddfedrwydd asedau biolegol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:BiologicalAssetMaturityDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "84a5ed01-3cdf-4fda-b261-74abc90c3a3a",
+            "qname": "core:AllBiologicalAssetsDefault",
+            "name": "All biological assets [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob ased biolegol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AllBiologicalAssetsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-MajorCustomerType",
+    "definition": "6060 - Dimension - Major Customer Type",
+    "numeric_part": 6060,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "14ea5e27-38ca-4c3b-8f05-cf580ad5514a",
+        "qname": "core:MajorCustomerTypeDimension",
+        "name": "Major customer type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gwsmer mawr [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:MajorCustomerTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "02ad5f50-709e-423c-b102-a1d4efdb7091",
+            "qname": "core:MajorCustomerTypeHeading",
+            "name": "Major customer type [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o gwsmer mawr [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:MajorCustomerTypeHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-Subsidiaries",
+    "definition": "6080 - Dimension - Subsidiaries",
+    "numeric_part": 6080,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "857892b6-6c6a-4c58-a4b6-1b929c722ff7",
+        "qname": "core:SubsidiariesDimension",
+        "name": "Subsidiaries [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Is-gwmnïau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:SubsidiariesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "2cdd89b4-7799-424c-a4bd-2099d8db2d9f",
+            "qname": "core:TotalSubsidiariesDefault",
+            "name": "Total subsidiaries [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm is-gwmnïau [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalSubsidiariesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-Associates",
+    "definition": "6081 - Dimension - Associates",
+    "numeric_part": 6081,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "e0d5f0b6-6871-441b-9fb5-7cfbe1df9173",
+        "qname": "core:AssociatesDimension",
+        "name": "Associates [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Unigolion cyswllt [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:AssociatesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "81c54b9e-0157-4154-8237-26e5be1f9cab",
+            "qname": "core:TotalAssociatesDefault",
+            "name": "Total associates [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm unigolion cyswllt [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalAssociatesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-JointVentures",
+    "definition": "6082 - Dimension - Joint Ventures",
+    "numeric_part": 6082,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "4ba90ff6-0843-4a93-b49f-905c5489c263",
+        "qname": "core:JointVenturesDimension",
+        "name": "Joint ventures [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Mentrau ar y cyd [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:JointVenturesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "7dd3ebf7-0df6-4e2d-b494-57b82ff4c9c5",
+            "qname": "core:TotalJointVenturesDefault",
+            "name": "Total joint ventures [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm mentrau ar y cyd [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalJointVenturesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-UnconsolidatedStructuredEntities",
+    "definition": "6083 - Dimension - Unconsolidated Structured Entities",
+    "numeric_part": 6083,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "ee783175-ac24-42cc-89aa-ba5725eec7b4",
+        "qname": "core:UnconsolidatedStructuredEntitiesDimension",
+        "name": "Unconsolidated structured entities [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Endidau strwythuredig heb eu cyfuno [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:UnconsolidatedStructuredEntitiesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "20cf5923-e5a2-4512-a1d6-daf0e456a735",
+            "qname": "core:TotalUnconsolidatedStructuredEntitiesDefault",
+            "name": "Total unconsolidated structured entities [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm endidau strwythuredig heb eu cyfuno [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalUnconsolidatedStructuredEntitiesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-InvestmentsMovements",
+    "definition": "6084 - Dimension - Investments Movements",
+    "numeric_part": 6084,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "5ba797a8-76b4-4d00-9edb-2bc7e8442a18",
+        "qname": "core:InvestmentsMovementsDimension",
+        "name": "Investments movements [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Symudiadau buddsoddiadau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:InvestmentsMovementsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "45c4bdcc-e6b2-4145-841a-bfe73708f639",
+            "qname": "core:NetBookValueCarryingValueDefault",
+            "name": "Net book value / carrying value [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Gwerth llyfr net / gwerth cario ymlaen [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:NetBookValueCarryingValueDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-CurrentAndNon-CurrentInventories",
+    "definition": "6085 - Dimension - Current And Non-Current Inventories",
+    "numeric_part": 6085,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "e325ae0a-434e-4864-8138-a7adb6dd90ae",
+        "qname": "core:CurrentNon-currentInventoriesDimension",
+        "name": "Current and non-current inventories [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Stocrestrau cyfredol ac anghyfredol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:CurrentNon-currentInventoriesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "7df88a2e-6495-45a2-b622-e239df1798b9",
+            "qname": "core:TotalCurrentNon-currentInventoriesDefault",
+            "name": "Total current and non-current inventories [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm stocrestrau cyfredol ac anghyfredol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalCurrentNon-currentInventoriesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-ParentEntities",
+    "definition": "6086 - Dimension - Parent Entities",
+    "numeric_part": 6086,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "2c478d9b-2d0f-413e-bd76-edc27875fbe5",
+        "qname": "core:ParentEntitiesDimension",
+        "name": "Parent entities [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Rhiant endidau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:ParentEntitiesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "d2cfa532-1074-4da9-a1c9-b2993ebdf873",
+            "qname": "core:AllParentEntitiesDefault",
+            "name": "All parent entities [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob rhiant endid [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AllParentEntitiesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-OtherRelatedPartyType",
+    "definition": "6087 - Dimension - Other Related Party Type",
+    "numeric_part": 6087,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "369124c1-3455-445e-a3da-64d558763f61",
+        "qname": "core:OtherRelatedPartyTypeDimension",
+        "name": "Other related party type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o barti cysylltiedig arall [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:OtherRelatedPartyTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "f658f961-2986-44b3-b56c-c9111518b0bf",
+            "qname": "core:AllOtherRelatedPartiesDefault",
+            "name": "All other related parties [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob parti cysylltiedig arall [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AllOtherRelatedPartiesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FinanceLeaseContractType",
+    "definition": "6088 - Dimension - Finance Lease Contract Type",
+    "numeric_part": 6088,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "43409a84-03b0-443c-9414-114487b39e7d",
+        "qname": "core:FinanceLeaseContractTypeDimension",
+        "name": "Finance lease contract type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gontract les cyllid [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FinanceLeaseContractTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "125cb61f-d061-4c7d-8958-2da44f13b6f5",
+            "qname": "core:AllContractTypesDefault",
+            "name": "All contract types [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob math o gontract [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AllContractTypesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-ProvisionsClasses",
+    "definition": "6089 - Dimension - Provisions Classes",
+    "numeric_part": 6089,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "0eb9e504-2feb-4dbe-851a-4b3599629a28",
+        "qname": "core:ProvisionsClassesDimension",
+        "name": "Provisions classes [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dosbarthiadau darpariaethau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:ProvisionsClassesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "5f5bb7ae-01b2-46bc-8875-e225f8575fab",
+            "qname": "core:TotalProvisionsDefault",
+            "name": "Total provisions [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm darpariaethau [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalProvisionsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FinancialInstrumentsClassesAndCategories",
+    "definition": "6090 - Dimension - Financial Instruments Classes And Categories",
+    "numeric_part": 6090,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "f08e2172-5b9d-4a1a-bf0b-4a0e6f3c87dd",
+        "qname": "core:FinancialInstrumentsClassesCategoriesDimension",
+        "name": "Financial instruments classes and categories [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dosbarthau a chategorïau offerynnau ariannol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FinancialInstrumentsClassesCategoriesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "6c05ffb6-67e3-4db3-aa69-c8f9de40d8e3",
+            "qname": "core:TotalFinancialInstrumentsDefault",
+            "name": "Total financial instruments [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm Offerynnau ariannol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalFinancialInstrumentsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FinancialAssetsClassesAndCategories",
+    "definition": "6091 - Dimension - Financial Assets Classes And Categories",
+    "numeric_part": 6091,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "05f79efc-2483-4d29-9ea4-06958a7b2f87",
+        "qname": "core:FinancialAssetsClassesCategoriesDimension",
+        "name": "Financial assets classes and categories [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dosbarthau a chategorïau asedau ariannol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FinancialAssetsClassesCategoriesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "d6e6336e-60dd-4000-b28b-164bc5506c01",
+            "qname": "core:TotalFinancialAssetsDefault",
+            "name": "Total financial assets [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm asedau ariannol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalFinancialAssetsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FinancialLiabilitiesClassesAndCategories",
+    "definition": "6092 - Dimension - Financial Liabilities Classes And Categories",
+    "numeric_part": 6092,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "81b71514-c1dc-40ae-8902-7d7dcb25823b",
+        "qname": "core:FinancialLiabilitiesClassesCategoriesDimension",
+        "name": "Financial liabilities classes and categories [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dosbarthau a chategorïau rhwymedigaethau ariannol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FinancialLiabilitiesClassesCategoriesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "c8aaa9cf-c9ee-48ae-806b-dbda58ae152d",
+            "qname": "core:TotalFinancialLiabilitiesDefault",
+            "name": "Total financial liabilities [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm atebolrwydd ariannol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalFinancialLiabilitiesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-EquityClassesHeld",
+    "definition": "6093 - Dimension - Equity Classes Held",
+    "numeric_part": 6093,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "9ac0ff4a-4388-4706-9226-871b24aa04bc",
+        "qname": "core:EquityClassesHeldDimension",
+        "name": "Equity classes held [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dosbarthiadau ecwiti a ddelir [Dimensiynau]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:EquityClassesHeldDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "7c69d990-bad9-44c4-8052-65080baac5ef",
+            "qname": "core:AllShareClassesHeldDefault",
+            "name": "All share classes held [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob dosbarth o gyfranddaliadau a ddelir [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AllShareClassesHeldDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-DerivativesTypes",
+    "definition": "6096 - Dimension - Derivatives Types",
+    "numeric_part": 6096,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "e4a85c9b-243e-4e39-a673-9ffffa1b7c1d",
+        "qname": "core:DerivativesTypesDimension",
+        "name": "Derivatives types [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o ddeilliadau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:DerivativesTypesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "35007c14-0d7b-48ab-9dbe-185de37b5f4d",
+            "qname": "core:DerivativeFinancialInstrumentsDefault",
+            "name": "Derivative financial instruments [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Offerynnau ariannol deilliadol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:DerivativeFinancialInstrumentsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-DerivativesContracts",
+    "definition": "6097 - Dimension - Derivatives Contracts",
+    "numeric_part": 6097,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "c1dd5f76-3b7b-4f63-9b93-b1a30fde006d",
+        "qname": "core:DerivativesContractsDimension",
+        "name": "Derivatives contracts [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Contractau deilliadau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:DerivativesContractsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "fae00da0-7dec-4b54-87f8-94459f07cf65",
+            "qname": "core:TotalForAllDerivativesContractsDefault",
+            "name": "Total for all derivatives contracts [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm ar gyfer yr holl gontractau deilliadau [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalForAllDerivativesContractsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-DerivativePurpose",
+    "definition": "6098 - Dimension - Derivative Purpose",
+    "numeric_part": 6098,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "834aaf0a-f242-4a84-9912-1f7a9c5b5698",
+        "qname": "core:DerivativePurposeDimension",
+        "name": "Derivative purpose [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Diben deilliadol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:DerivativePurposeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "a02de4d7-ca69-4af1-9732-3db7b1efcdb0",
+            "qname": "core:RiskTypeCoveredByDerivativeHeading",
+            "name": "Risk type covered by derivative [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o risg yn gynwysedig yn y deilliad [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:RiskTypeCoveredByDerivativeHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FinancialInstrumentValueType",
+    "definition": "6099 - Dimension - Financial Instrument Value Type",
+    "numeric_part": 6099,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "85531f1e-2276-4c83-a7cd-48bf5b04be1f",
+        "qname": "core:FinancialInstrumentValueTypeDimension",
+        "name": "Financial instrument value type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o werth offeryn ariannol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FinancialInstrumentValueTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "8347032a-f410-422a-aec4-e78b9a4fa273",
+            "qname": "core:ValueTypeHeading",
+            "name": "Value type [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o werth [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:ValueTypeHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FinancialInstrumentCurrentAndNon-Current",
+    "definition": "6100 - Dimension - Financial Instrument Current And Non-Current",
+    "numeric_part": 6100,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "47de7854-c35f-4c91-814d-b4a2543d9c96",
+        "qname": "core:FinancialInstrumentCurrentNon-currentDimension",
+        "name": "Financial instrument current and non-current [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Offeryn ariannol cyfredol ac anghyfredol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FinancialInstrumentCurrentNon-currentDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "ba820a1c-c716-482a-a0f4-6e4fe83186c8",
+            "qname": "core:TotalCurrentNon-currentFinancialInstrumentsDefault",
+            "name": "Total current and non-current financial instruments [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm offerynnau ariannol cyfredol ac anghyfredol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalCurrentNon-currentFinancialInstrumentsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-MaturitiesOrExpirationPeriods",
+    "definition": "6101 - Dimension - Maturities Or Expiration Periods",
+    "numeric_part": 6101,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "78dcec5e-51ca-490c-ae05-d4eb36401ac0",
+        "qname": "core:MaturitiesOrExpirationPeriodsDimension",
+        "name": "Maturities or expiration periods [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Aeddfedrwydd neu gyfnodau dod i ben [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:MaturitiesOrExpirationPeriodsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "5e0bead8-1472-4ec0-bd12-43a30f9c8f30",
+            "qname": "core:AllPeriods",
+            "name": "All periods",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob cyfnod",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AllPeriods",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-InterestRateType",
+    "definition": "6102 - Dimension - Interest Rate Type",
+    "numeric_part": 6102,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "cb93a4a1-cb75-47ff-a778-f343eb5726a6",
+        "qname": "core:InterestRateTypeDimension",
+        "name": "Interest rate type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gyfradd llog [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:InterestRateTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "b338e303-8890-4ece-a951-bf595250e847",
+            "qname": "core:InterestRateTypeFinancialInstrumentHeading",
+            "name": "Interest rate type of financial instrument [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o gyfradd llog yr offeryn ariannol [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:InterestRateTypeFinancialInstrumentHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-Listed-Unlisted",
+    "definition": "6103 - Dimension - Listed - Unlisted",
+    "numeric_part": 6103,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "39ed750d-06e1-4dc7-b5bd-012599761e5d",
+        "qname": "core:Listed-unlistedDimension",
+        "name": "Listed-unlisted [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Rhestredig-ddim yn rhestredig [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:Listed-unlistedDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "3390eb2b-12ed-4fc5-a4f7-7fa59d411cc6",
+            "qname": "core:AllFinancialInstrumentsDefault",
+            "name": "All financial instruments [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob offeryn ariannol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AllFinancialInstrumentsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-DerecognitionEquityInstrumentsMeasuredFairValueThroughOCI",
+    "definition": "6104 - Dimension - Derecognition of equity instruments measured at fair value through OCI",
+    "numeric_part": 6104,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "2820d1e1-78d9-495f-b972-667795ede394",
+        "qname": "core:DerecognitionEquityInstrumentsMeasuredFairValueThroughOCIDimension",
+        "name": "Derecognition of equity instruments measured at fair value through OCI [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Datgydnabod offerynnau ecwiti a fesurwyd ar werth teg drwy OCI [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:DerecognitionEquityInstrumentsMeasuredFairValueThroughOCIDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "e2d6569b-0f56-46ea-9dab-f894c1e584e4",
+            "qname": "core:DerecognitionEquityInstrumentsMeasuredFairValueThroughOCIHeading",
+            "name": "Derecognition of equity instruments measured at fair value through OCI [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Dadgydnabod offerynnau ecwiti a fesurwyd ar werth teg drwy OCI [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:DerecognitionEquityInstrumentsMeasuredFairValueThroughOCIHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-LiquidityFeatures",
+    "definition": "6110 - Dimension - Liquidity Features",
+    "numeric_part": 6110,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "89cf5a80-8779-4e81-b9f7-d7af78d766dc",
+        "qname": "core:LiquidityFeaturesDimension",
+        "name": "Liquidity features [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Nodweddion hylifedd [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:LiquidityFeaturesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "7cc79999-b8d9-4302-a779-f815dd3bf0b4",
+            "qname": "core:LiquidityFeaturesHeading",
+            "name": "Liquidity features [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Nodweddion hylifedd [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:LiquidityFeaturesHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-PositionType",
+    "definition": "6111 - Dimension - Position Type",
+    "numeric_part": 6111,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "1fee0f34-21e1-4a5c-99ee-993a206dc661",
+        "qname": "core:PositionTypeDimension",
+        "name": "Position type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o sefyllfa [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:PositionTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "de4a7ee2-b49c-4b93-94e0-b2041d662391",
+            "qname": "core:PositionTypeHeading",
+            "name": "Position type [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o sefyllfa [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:PositionTypeHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-SecuredStatus",
+    "definition": "6112 - Dimension - Secured Status",
+    "numeric_part": 6112,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "dce1e6a2-cc4b-47cd-bd0c-bb8487cc1e52",
+        "qname": "core:SecuredStatusDimension",
+        "name": "Secured status [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Statws wedi'i sicrhau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:SecuredStatusDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "f71ec954-4e36-416c-9281-a4b26470b9e0",
+            "qname": "core:SecuredStatusHeading",
+            "name": "Secured status [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Statws wedi'i sicrhau [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:SecuredStatusHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FinancialInstrumentsHeldForSale",
+    "definition": "6113 - Dimension - Financial Instruments Held For Sale",
+    "numeric_part": 6113,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "cd2c8fc8-d588-462f-b2d0-de324e2b44d1",
+        "qname": "core:FinancialInstrumentsHeldForSaleDimension",
+        "name": "Financial instruments held for sale [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Offerynnau ariannol a ddelir i'w gwerthu [dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FinancialInstrumentsHeldForSaleDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "c9a4b3fa-3327-4bcd-be1d-566656b0446f",
+            "qname": "core:FinancialInstrumentsExcludingThoseHeldForSaleDefault",
+            "name": "Financial instruments, excluding those held for sale [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Offerynnau ariannol, ac eithrio rhai a ddelir i'w gwerthu [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:FinancialInstrumentsExcludingThoseHeldForSaleDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FairValueMovement",
+    "definition": "6114 - Dimension - Fair Value Movement",
+    "numeric_part": 6114,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "c7e14572-711d-44ac-8518-0dd0537a0480",
+        "qname": "core:FairValueMovementDimension",
+        "name": "Fair value movement [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Symudiad gwerth teg [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FairValueMovementDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "5cbe89a2-e9df-4262-8561-3becde68adb2",
+            "qname": "core:FairValueMovementsHeading",
+            "name": "Fair value movements [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Symudiadau gwerth teg [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:FairValueMovementsHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FairValueMeasurementType",
+    "definition": "6115 - Dimension - Fair Value Measurement Type",
+    "numeric_part": 6115,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "62b68e66-4c9d-4a5d-9d28-252f35b2c3f9",
+        "qname": "core:FairValueMeasurementTypeDimension",
+        "name": "Fair value measurement type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o fesuriad gwerth teg [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FairValueMeasurementTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "2baa2333-1c81-4755-befd-a50147d6b25f",
+            "qname": "core:FairValueMeasurementTypeHeading",
+            "name": "Fair value measurement type [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o fesuriad gwerth teg [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:FairValueMeasurementTypeHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FinancialInstrumentLevel",
+    "definition": "6116 - Dimension - Financial Instrument Level",
+    "numeric_part": 6116,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "9ccb7e4a-8cdc-4c46-81d8-f4c74db167c1",
+        "qname": "core:FinancialInstrumentLevelDimension",
+        "name": "Financial instrument level [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Lefel offerynnau ariannol [dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FinancialInstrumentLevelDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "41caedc6-801f-404b-b90e-16583bded80c",
+            "qname": "core:TotalAllLevelsDefault",
+            "name": "Total all levels [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm pob lefel [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalAllLevelsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-AllowanceForImpairment",
+    "definition": "6117 - Dimension - Allowance For Impairment",
+    "numeric_part": 6117,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "c6a02543-9543-40bc-8c00-0b6181d31ec3",
+        "qname": "core:AllowanceForImpairmentDimension",
+        "name": "Allowance for impairment [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Lwfans ar gyfer amhariad [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:AllowanceForImpairmentDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "acbac3f8-cfd1-4af8-86f5-1a94b46824b6",
+            "qname": "core:AllowanceForImpairmentHeading",
+            "name": "Allowance for impairment [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Lwfans ar gyfer amhariad [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AllowanceForImpairmentHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-AllowanceAccountMeasurementType",
+    "definition": "6118 - Dimension - Allowance Account Measurement Type",
+    "numeric_part": 6118,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "a0863cd4-a297-4424-9f4c-9d04602d5e1b",
+        "qname": "core:AllowanceAccountMeasurementTypeDimension",
+        "name": "Allowance account measurement type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o fesuriad cyfrif lwfans [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:AllowanceAccountMeasurementTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "0c17ad5f-8472-4722-8a72-5cc0e90c4c7f",
+            "qname": "core:TotalAllowanceAccountDefault",
+            "name": "Total allowance account [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfrif cyfanswm lwfans [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalAllowanceAccountDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FinancialAssetsReclassification",
+    "definition": "6119 - Dimension - Financial Assets Reclassification",
+    "numeric_part": 6119,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "c9b05a96-631c-4653-b4b3-ad7eb3c5182e",
+        "qname": "core:FinancialAssetsReclassificationDimension",
+        "name": "Financial assets reclassification [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Ailddosbarthu Asedau ariannol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FinancialAssetsReclassificationDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "f604e6f5-8024-4f77-bb33-27c2575130f6",
+            "qname": "core:ReclassifiedAssetsTotal",
+            "name": "Reclassified assets total",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm asedau wedi'u hailddosbarthu",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:ReclassifiedAssetsTotal",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-CreditRiskExposure",
+    "definition": "6120 - Dimension - Credit Risk Exposure",
+    "numeric_part": 6120,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "e72d450e-57c9-47b0-8141-cdedecd634af",
+        "qname": "core:CreditRiskExposureDimension",
+        "name": "Credit risk exposure [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Amlygiad risg credyd [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:CreditRiskExposureDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "c8cf3609-26fd-4996-abc0-2eaeb5c3f592",
+            "qname": "core:MaximumCreditRiskExposure",
+            "name": "Maximum credit risk exposure",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Uchafswm amlygiad risg credyd",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:MaximumCreditRiskExposure",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FinancialLiabilitiesReclassification",
+    "definition": "6121 - Dimension - Financial Liabilities Reclassification",
+    "numeric_part": 6121,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "847daa5c-55df-4b38-888b-b9c9ffe615ae",
+        "qname": "core:FinancialLiabilitiesReclassificationDimension",
+        "name": "Financial liabilities reclassification [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Ailddosbarthu dyledion ariannol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FinancialLiabilitiesReclassificationDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "c5c44669-be72-4292-a85c-f6f02e7b9384",
+            "qname": "core:ReclassifiedLiabilitiesTotal",
+            "name": "Reclassified liabilities total",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm dyledion wedi'u hailddosbarthu",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:ReclassifiedLiabilitiesTotal",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-CreditRatings",
+    "definition": "6130 - Dimension - Credit Ratings",
+    "numeric_part": 6130,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "40384133-617a-4d76-8c34-682ae465dfc5",
+        "qname": "core:CreditRatingsDimension",
+        "name": "Credit ratings [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Sgoriau credyd [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:CreditRatingsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "9c89a713-6589-4c13-8230-73ab136e2736",
+            "qname": "core:CreditRatingsHeading",
+            "name": "Credit ratings [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Sgoriau credyd [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:CreditRatingsHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-IndustryConcentrationRisk",
+    "definition": "6131 - Dimension - Industry Concentration Risk",
+    "numeric_part": 6131,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "27190daa-4488-4a3d-bb54-c0a8955bd4b4",
+        "qname": "core:IndustryConcentrationRiskDimension",
+        "name": "Industry concentration risk [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Risg crynodiad y diwydiant [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:IndustryConcentrationRiskDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "5bfbaf20-ed90-44e6-8847-d49658d2fefa",
+            "qname": "core:TypesIndustryConcentrationRiskHeading",
+            "name": "Types of industry concentration risk [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o risg crynodiad y diwydiant [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TypesIndustryConcentrationRiskHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-RegionAndCountryOfIssuer-Risk",
+    "definition": "6132 - Dimension - Region And Country Of Issuer / Risk",
+    "numeric_part": 6132,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "d2586ca4-a72d-4233-83de-1ec44dc69028",
+        "qname": "core:RegionCountryIssuerRiskDimension",
+        "name": "Region and country of issuer / risk [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Rhanbarth a gwlad y rhoddwr / risg [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:RegionCountryIssuerRiskDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "0e22f7c7-4d68-45a0-92f3-e1c94b5d2ed0",
+            "qname": "core:RegionCountryIssuerRiskHeading",
+            "name": "Region and country of issuer / risk [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Rhanbarth a gwlad y rhoddwr / risg [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:RegionCountryIssuerRiskHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-CurrencyOfDenominationOfFinancialInstruments",
+    "definition": "6133 - Dimension - Currency Of Denomination Of Financial Instruments",
+    "numeric_part": 6133,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "471fd59c-09ed-44fa-a1ae-c175df10410d",
+        "qname": "core:CurrencyDenominationFinancialInstrumentsDimension",
+        "name": "Currency of denomination of financial instruments [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Arian cyfred dynodwr offerynnau Ariannol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:CurrencyDenominationFinancialInstrumentsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "5a0f1f85-8923-43f9-9424-572ee0a4f878",
+            "qname": "core:CurrencyDenominationFinancialInstrumentsHeading",
+            "name": "Currency of denomination of financial instruments [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Arian cyfred dynodwr offerynnau Ariannol [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:CurrencyDenominationFinancialInstrumentsHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-MarketRiskType",
+    "definition": "6134 - Dimension - Market Risk Type",
+    "numeric_part": 6134,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "a7e0209a-f5fb-49da-b53d-1fe27f80da7c",
+        "qname": "core:MarketRiskTypeDimension",
+        "name": "Market risk type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o risg y farchnad [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:MarketRiskTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "14840304-72a3-4496-8eb8-64a3fad40a13",
+            "qname": "core:MarketRisk",
+            "name": "Market risk",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Risg y farchnad",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:MarketRisk",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-Range",
+    "definition": "6135 - Dimension - Range",
+    "numeric_part": 6135,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "af1ed955-8f44-404f-8f33-3511b8370c62",
+        "qname": "core:RangeDimension",
+        "name": "Range [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Ystod [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:RangeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "ee94d6b1-9262-47bf-83c5-57b28ef60809",
+            "qname": "core:SingleValueDefault",
+            "name": "Single value [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Gwerth unigol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:SingleValueDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-DeferredTaxAssetAndLiabilityClasses",
+    "definition": "6140 - Dimension - Deferred Tax Asset And Liability Classes",
+    "numeric_part": 6140,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "bf588cda-8524-4fcf-9647-923b8ff07ca7",
+        "qname": "core:DeferredTaxAssetLiabilityClassesDimension",
+        "name": "Deferred tax asset and liability classes [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Asedau treth gohiriedig a dosbarthiadau rhwymedigaethau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:DeferredTaxAssetLiabilityClassesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "167e2038-a387-4239-8764-f4e5aa70a0b8",
+            "qname": "core:TotalForDeferredTaxDefault",
+            "name": "Total for deferred tax [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm ar gyfer treth ohiriedig [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalForDeferredTaxDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-Share-BasedPaymentArrangements",
+    "definition": "6141 - Dimension - Share-Based Payment Arrangements",
+    "numeric_part": 6141,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "d7c5c54b-99cd-4511-907c-f1a641f85c37",
+        "qname": "core:Share-basedPaymentArrangementsDimension",
+        "name": "Share-based payment arrangements [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Trefniant talu seiliedig ar gyfranddaliadau [dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:Share-basedPaymentArrangementsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "10115379-2365-4fea-93b9-27a472f38f34",
+            "qname": "core:TotalForAllShare-basedPaymentArrangementsOnlyShare-basedPaymentArrangementDefault",
+            "name": "Total for all share-based payment arrangements / only share-based payment arrangement [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm ar gyfer yr holl drefniadau taliadau seiliedig ar gyfranddaliadau / dim ond trefniadau taliadau seiliedig ar gyfranddaliadau [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalForAllShare-basedPaymentArrangementsOnlyShare-basedPaymentArrangementDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-Share-BasedPaymentGrants",
+    "definition": "6142 - Dimension - Share-Based Payment Grants",
+    "numeric_part": 6142,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "df14cae5-8853-4142-9799-e1037692081c",
+        "qname": "core:Share-basedPaymentGrantsDimension",
+        "name": "Share-based payment grants [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Grantiau talu seiliedig ar gyfranddaliadau [dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:Share-basedPaymentGrantsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "e6932983-4027-4aa4-a181-bf2ffe2e6f1b",
+            "qname": "core:TotalGrantsForShare-basedPaymentArrangementDefault",
+            "name": "Total grants for share-based payment arrangement [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm grantiau ar gyfer trefniant taliadau seiliedig ar gyfranddaliadau [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalGrantsForShare-basedPaymentArrangementDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-Post-EmploymentBenefitPlans",
+    "definition": "6143 - Dimension - Post-Employment Benefit Plans",
+    "numeric_part": 6143,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "39b9e9dc-465d-4f9d-ba85-d7a0ee965df7",
+        "qname": "core:Post-employmentBenefitPlansDimension",
+        "name": "Post-employment benefit plans [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Cynlluniau buddiannau ôl-gyflogaeth [Dimensiynau]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:Post-employmentBenefitPlansDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "f6c1ef2d-6570-4e6f-bbc7-eb76c2414846",
+            "qname": "core:TotalForAllPost-employmentBenefitPlansThisTypeOnlyEntityPost-employmentBenefitPlanThisTypeDefault",
+            "name": "Total for all post-employment benefit plans of this type / only entity post-employment benefit plan of this type [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm ar gyfer yr holl gynlluniau buddiannau ôl-gyflogaeth o'r math yma / dim ond cynlluniau buddiannau ôl-gyflogaeth endid o'r math yma [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalForAllPost-employmentBenefitPlansThisTypeOnlyEntityPost-employmentBenefitPlanThisTypeDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-RelatedParties",
+    "definition": "6144 - Dimension - Related Parties",
+    "numeric_part": 6144,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "e38f634c-6a27-4e06-80df-fb2d0b5b92cc",
+        "qname": "core:RelatedPartiesDimension",
+        "name": "Related parties [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Partïon cysylltiedig [Dimensiynau]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:RelatedPartiesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "9adaafc0-abfe-4994-ab59-2f28ecd6b538",
+            "qname": "core:TotalRelatedPartiesDefault",
+            "name": "Total related parties [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm partïon cysylltiedig [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalRelatedPartiesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-RelatedPartyTransactionType",
+    "definition": "6145 - Dimension - Related Party Transaction Type",
+    "numeric_part": 6145,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "669bf7e6-e7a5-480b-b033-050ccf4f047e",
+        "qname": "core:RelatedPartyTransactionTypeDimension",
+        "name": "Related party transaction type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o drafodion partïon cysylltiedig [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:RelatedPartyTransactionTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "21fbbff3-c75f-4319-86fc-cf8c2cfd3a3f",
+            "qname": "core:AllTypesRelatedPartyTransactionsDefault",
+            "name": "All types of related party transactions [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob math o drafodion partïon cysylltiedig [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AllTypesRelatedPartyTransactionsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-ContingentLiabilitiesClasses",
+    "definition": "6146 - Dimension - Contingent Liabilities Classes",
+    "numeric_part": 6146,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "22fb1f8d-efcc-4730-af52-964ce73cc495",
+        "qname": "core:ContingentLiabilitiesClassesDimension",
+        "name": "Contingent liabilities classes [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dosbarthiadau rhwymedigaethau digwyddiadol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:ContingentLiabilitiesClassesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "f58d9323-732d-4d2d-ae29-55164b57d63c",
+            "qname": "core:AllContingentLiabilitiesDefault",
+            "name": "All contingent liabilities [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob rhwymedigaeth amodol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AllContingentLiabilitiesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-RestatementsAndFirstTimeAdoption",
+    "definition": "6150 - Dimension - Restatements And First Time Adoption",
+    "numeric_part": 6150,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "21466c82-b024-477a-8b22-f079a12a983d",
+        "qname": "core:RestatementsFirstTimeAdoptionDimension",
+        "name": "Restatements and first time adoption [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Ail-ddatganiadau a mabwysiadu tro cyntaf [Dimensiynau]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:RestatementsFirstTimeAdoptionDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "4d2f55de-29e9-44d4-ae3a-fd86121aa37c",
+            "qname": "core:RestatementsFirstTimeAdoptionHeading",
+            "name": "Restatements and first time adoption [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Ail-ddatganiadau a mabwysiadu tro cyntaf [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:RestatementsFirstTimeAdoptionHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-FinancialAssetsImpairmentStage",
+    "definition": "6160 - Dimension - Financial Assets Impairment Stage",
+    "numeric_part": 6160,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "393fdf25-90d3-412a-95ec-50426199828b",
+        "qname": "core:FinancialAssetsImpairmentStageDimension",
+        "name": "Financial assets impairment stage [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Cam amhariad asedau ariannol [dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:FinancialAssetsImpairmentStageDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "28cc6a6b-5115-4e0c-ad89-2d323e82096e",
+            "qname": "core:FinancialAssetsImpairmentStageHeading",
+            "name": "Financial assets impairment stage [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Cam amhariad asedau ariannol [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:FinancialAssetsImpairmentStageHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-CreditRiskInternalGradeRatings",
+    "definition": "6161 - Dimension - Credit Risk Internal Grade Ratings",
+    "numeric_part": 6161,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "4eaffa6e-3902-41f3-871b-0bd0588f3038",
+        "qname": "core:CreditRiskInternalGradeRatingsDimension",
+        "name": "Credit risk internal grade ratings [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Sgoriau gradd mewnol risg credyd [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:CreditRiskInternalGradeRatingsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "fb2122f1-062d-48a5-84a8-e9b5fcb67720",
+            "qname": "core:CreditRiskInternalGradeRatingsHeading",
+            "name": "Credit risk internal grade ratings [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Sgoriau gradd mewnol risg credyd [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:CreditRiskInternalGradeRatingsHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-IntangibleAssetsOwnershipType",
+    "definition": "6162 - Dimension - Intangible Assets Ownership Type",
+    "numeric_part": 6162,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "84ac661a-35dd-4ef9-9198-d98ef7431802",
+        "qname": "core:IntangibleAssetsOwnershipTypeDimension",
+        "name": "Intangible assets ownership type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o berchenogaeth asedau anniriaethol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:IntangibleAssetsOwnershipTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "7557965d-3677-4687-a667-32954867c8c6",
+            "qname": "core:TotalOwnedLeasedIntangibleAssetsDefault",
+            "name": "Total owned and leased intangible assets [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm asedau anniriaethol a berchnogir ac ar brydles [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TotalOwnedLeasedIntangibleAssetsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-ContractType",
+    "definition": "6163 - Dimension - Contract Type",
+    "numeric_part": 6163,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "3a9c0146-831b-44b1-b25c-7f1ba437726d",
+        "qname": "core:ContractTypeDimension",
+        "name": "Contract type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gontract [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:ContractTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "ea2d3770-9da4-4224-8438-4e6ade06ab5e",
+            "qname": "core:TypeContractHeading",
+            "name": "Type of contract [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o gontract [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:TypeContractHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-ContractDuration",
+    "definition": "6164 - Dimension - Contract Duration",
+    "numeric_part": 6164,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "6a68b190-db58-489a-8b0c-aaafcf8cd204",
+        "qname": "core:ContractDurationDimension",
+        "name": "Contract duration [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Hyd contract [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:ContractDurationDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "8dadbbaf-ad0c-42aa-add9-7c355201f105",
+            "qname": "core:DurationContractHeading",
+            "name": "Duration of contract [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Hyd y contract [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:DurationContractHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-GoodsServicesTransfersTiming",
+    "definition": "6165 - Dimension - Goods And Services Transfers Timing",
+    "numeric_part": 6165,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "b19a14fa-0336-4156-b0ca-5c479eba115e",
+        "qname": "core:GoodsServicesTransfersTimingDimension",
+        "name": "Goods and services transfers timing [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Amseru trosglwyddiadau nwyddau a gwasanaethau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:GoodsServicesTransfersTimingDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "5bfb5bd6-16fe-4694-8e0b-e6dd3f51b314",
+            "qname": "core:GoodsOrServicesTransferredToCustomersHeading",
+            "name": "Goods or services transferred to customers [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Nwyddau neu wasanaethau a drosglwyddwyd i gwsmeriaid [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:GoodsOrServicesTransferredToCustomersHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-SalesChannel",
+    "definition": "6166 - Dimension - Sales Channel",
+    "numeric_part": 6166,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "7ce7d4d0-602c-4c23-92c8-adf54e5f9616",
+        "qname": "core:SalesChannelDimension",
+        "name": "Sales channel [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Sianeli Gwerthu [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:SalesChannelDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "2dbc049a-c3b1-4669-a72c-ba70d6ee02f8",
+            "qname": "core:GoodsOrServicesSoldHeading",
+            "name": "Goods or services sold [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Nwyddau neu wasanaethau a werthwyd [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:GoodsOrServicesSoldHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-NaturePromise",
+    "definition": "6167 - Dimension - Nature Of Promise",
+    "numeric_part": 6167,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "00deecc5-e7ad-4509-9c03-ed19c61160a0",
+        "qname": "core:NaturePromiseDimension",
+        "name": "Nature of promise [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Natur yr addewid [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:NaturePromiseDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "5d7ddba6-98df-41f9-974c-2bd3e9a9758b",
+            "qname": "core:NaturePromiseHeading",
+            "name": "Nature of promise [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Natur yr addewid [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:NaturePromiseHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-Pay-Ratio-Percentiles",
+    "definition": "6170 - Dimension - Pay Ratio Percentiles",
+    "numeric_part": 6170,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "a1709774-b710-4829-bb73-0287d48f5b6b",
+        "qname": "direp:PayRatioPercentilesDimension",
+        "name": "Pay ratio percentiles [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Canraddau cymhareb cyflog [Dimensiwn]",
+        "substitution_group": "Q1:dimensionItem",
+        "concept_id": "direp:PayRatioPercentilesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "a55db595-ee18-483f-86f6-75d2ffbe75c3",
+            "qname": "direp:PayRatioPercentilesHeading",
+            "name": "Pay ratio percentiles [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Canraddau cymhareb cyflog [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:PayRatioPercentilesHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-Quartiles",
+    "definition": "6180 - Dimension - Quartiles",
+    "numeric_part": 6180,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "f7d6d6ea-55e8-4c83-a084-8cdc1d0682d9",
+        "qname": "direp:QuartilesDimension",
+        "name": "Quartiles [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Chwartelau (Dimensiwn)",
+        "substitution_group": "Q1:dimensionItem",
+        "concept_id": "direp:QuartilesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "0dd58912-cac9-4cf8-b1e3-d4a8b6c17535",
+            "qname": "direp:QuartilesHeading",
+            "name": "Quartiles [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Chwartelau (pennawd)",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:QuartilesHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-GPGGender",
+    "definition": "6181 - Dimension - GPG Gender",
+    "numeric_part": 6181,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "29f56090-0daf-410b-bbfb-fa4fa12a2981",
+        "qname": "direp:GPGGenderDimension",
+        "name": "GPG gender [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "GPG rhyw [Dimensiwn]",
+        "substitution_group": "Q1:dimensionItem",
+        "concept_id": "direp:GPGGenderDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "7789e213-01ce-4e48-8fdd-6c0c1cc7a446",
+            "qname": "direp:GPGGenderHeading",
+            "name": "GPG gender [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "GPG rhyw [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:GPGGenderHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-ReportingRegion",
+    "definition": "6500 - Dimension - Reporting Region",
+    "numeric_part": 6500,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "db006db2-32ce-4f0c-8c8e-0310708e41f3",
+        "qname": "direp:ReportingRegionDimension",
+        "name": "Reporting Region [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Rhanbarth Adrodd [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "direp:ReportingRegionDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "95a16785-e88e-4d45-ac6c-09792991c047",
+            "qname": "direp:AllRegionsDefault",
+            "name": "All regions [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Pob rhanbarth [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:AllRegionsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-DualReportingType",
+    "definition": "6510 - Dimension - Dual Reporting Type",
+    "numeric_part": 6510,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "b742c1ca-b6e0-4454-bd1c-286900e2638d",
+        "qname": "direp:DualReportingTypeDimension",
+        "name": "Dual reporting type [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o adrodd deuol [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "direp:DualReportingTypeDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "d4fc4eff-0f62-4e40-8170-89474bc8b13c",
+            "qname": "direp:DualReportingTypeHeading",
+            "name": "Dual reporting type [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o adrodd deuol [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:DualReportingTypeHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-EmissionsSource",
+    "definition": "6520 - Dimension - Emissions Source",
+    "numeric_part": 6520,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "e8778ff9-60c4-4a9a-b6dd-de2a6ad5a2c2",
+        "qname": "direp:EmissionsSourceDimension",
+        "name": "Emissions source [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Ffynhonnell Allyriadau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "direp:EmissionsSourceDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "5f407cd5-5525-48d2-aa98-84438a80ede4",
+            "qname": "direp:TotalFromAllEmissionsSourcesDefault",
+            "name": "Total from all emissions sources [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm o'r holl ffynonellau allyriadau [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:TotalFromAllEmissionsSourcesDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-Sex",
+    "definition": "6600 - Dimension - Sex",
+    "numeric_part": 6600,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "c31629e8-f30e-4956-8110-5255ee6912f7",
+        "qname": "direp:SexDimension",
+        "name": "Sex [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Rhyw [Dimensiwn]",
+        "substitution_group": "Q1:dimensionItem",
+        "concept_id": "direp:SexDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "0dc75c4f-105f-4d46-b583-353997a4bfdb",
+            "qname": "direp:SexHeading",
+            "name": "Sex [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Rhyw [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:SexHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-Gender",
+    "definition": "6601 - Dimension - Gender",
+    "numeric_part": 6601,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "52bea2fe-2a22-4706-87da-6faa0bac6292",
+        "qname": "direp:GenderDimension",
+        "name": "Gender [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Rhyw [Dimensiwn]",
+        "substitution_group": "Q1:dimensionItem",
+        "concept_id": "direp:GenderDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "6f45fb10-89a3-43c2-815d-2b3fbd61af91",
+            "qname": "direp:GenderHeading",
+            "name": "Gender [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Rhyw [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:GenderHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-Ethnicity",
+    "definition": "6602 - Dimension - Ethnicity",
+    "numeric_part": 6602,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "0c51f8a5-1cbf-41fc-aa48-5ac1e495e044",
+        "qname": "direp:EthnicityDimension",
+        "name": "Ethnicity [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Ethnigrwydd [Dimensiwn]",
+        "substitution_group": "Q1:dimensionItem",
+        "concept_id": "direp:EthnicityDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "fbc9792d-85be-4e4a-8700-e3436c92a9c9",
+            "qname": "direp:EthnicityHeading",
+            "name": "Ethnicity [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Ethnigrwydd [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:EthnicityHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-AlternativePerformanceMeasures",
+    "definition": "6610 - Dimension - Alternative Performance Measures",
+    "numeric_part": 6610,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "9026b14f-f9e8-4b35-b70e-ccab952eb538",
+        "qname": "direp:AlternativePerformanceMeasuresDimension",
+        "name": "Alternative Performance Measures [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Mesurau Perfformiad Amgen [Dimensiwn]",
+        "substitution_group": "Q1:dimensionItem",
+        "concept_id": "direp:AlternativePerformanceMeasuresDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "63c44824-3b4a-41bd-a7ee-fc92db15e29d",
+            "qname": "direp:AlternativePerformanceMeasuresHeading",
+            "name": "Alternative Performance Measures [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Mesurau Perfformiad Amgen [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:AlternativePerformanceMeasuresHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-ReconcilingAdjustments",
+    "definition": "6611 - Dimension - Reconciling Adjustments",
+    "numeric_part": 6611,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "d387617a-7682-4c37-b590-a676649667b5",
+        "qname": "direp:ReconcilingAdjustmentsDimension",
+        "name": "Reconciling Adjustments [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Addasiadau Cysoni [Dimensiynau]",
+        "substitution_group": "Q1:dimensionItem",
+        "concept_id": "direp:ReconcilingAdjustmentsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "b1ae9e50-de8e-46b2-a388-643fe09ec61a",
+            "qname": "direp:AdjustmentsDefault",
+            "name": "Adjustments [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "Q2:domainItemType",
+            "label_cy": "Addasiadau [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:AdjustmentsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-TypeOfExchangeRate",
+    "definition": "6612 - Dimension - Type of exchange rate",
+    "numeric_part": 6612,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "c057fd76-622a-4276-b876-b99656487d51",
+        "qname": "direp:TypeExchangeRateDimension",
+        "name": "Type of exchange rate [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gyfradd gyfnewid [Dimensiwn]",
+        "substitution_group": "Q1:dimensionItem",
+        "concept_id": "direp:TypeExchangeRateDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "a51cb524-be2c-4a37-afe4-3f18e067b3b1",
+            "qname": "direp:TypeExchangeRateHeading",
+            "name": "Type of exchange rate [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o gyfradd gyfnewid [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:TypeExchangeRateHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-TypeOfGrowthRate",
+    "definition": "6613 - Dimension - Type of growth rate",
+    "numeric_part": 6613,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "a6f9b8a2-6f81-41e4-94ca-9dc04c523ace",
+        "qname": "direp:TypeGrowthRateDimension",
+        "name": "Type of growth rate [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gyfradd twf [Dimensiwn]",
+        "substitution_group": "Q1:dimensionItem",
+        "concept_id": "direp:TypeGrowthRateDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "138a0674-492c-4421-8739-ef26a42036f7",
+            "qname": "direp:TypeGrowthRateHeading",
+            "name": "Type of growth rate [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o gyfradd twf [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "direp:TypeGrowthRateHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-Insurance-NetInsuranceContractAssetsLiabilitiesAnalysis",
+    "definition": "6700 - Dimension - Insurance - Net insurance contract assets (liabilities) analysis",
+    "numeric_part": 6700,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "16a87955-0e52-4414-a490-62a088d5c5ee",
+        "qname": "core:Insurance-NetInsuranceContractAssetsLiabilitiesAnalysisDimension",
+        "name": "Insurance - Net insurance contract assets (liabilities) analysis [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Yswiriant - Dadansoddiad o asedau (Rhwymedigaethau) contract yswiriant net [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:Insurance-NetInsuranceContractAssetsLiabilitiesAnalysisDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "98332d0a-6ffa-4c7a-81cc-c62b3161c7ac",
+            "qname": "core:Insurance-NetInsuranceContractAssetsLiabilitiesAnalysisHeading",
+            "name": "Insurance - Net insurance contract assets (liabilities) analysis [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Yswiriant - Dadansoddiad o asedau (Rhwymedigaethau) contract yswiriant net [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:Insurance-NetInsuranceContractAssetsLiabilitiesAnalysisHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-MovementAnalysisInsurance-NetInsurance",
+    "definition": "6701 - Dimension - Movement analysis Insurance - Net Insurance",
+    "numeric_part": 6701,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "4e24861b-7e0b-472e-8145-adf55f61f3a2",
+        "qname": "core:MovementAnalysisInsurance-NetInsuranceDimension",
+        "name": "Movement analysis Insurance - Net Insurance [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Yswiriant dadansoddi symudiad - Yswiriant Net [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:MovementAnalysisInsurance-NetInsuranceDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "6aa98a95-c4c6-4257-bd2e-c76d2a13d7b6",
+            "qname": "core:MovementAnalysisInsurance-NetInsuranceHeading",
+            "name": "Movement analysis Insurance - Net Insurance [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Yswiriant dadansoddi symudiad - Yswiriant Net [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:MovementAnalysisInsurance-NetInsuranceHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-NetReinsuranceContractsHeldAnalysis",
+    "definition": "6702 - Dimension - Net reinsurance contracts held analysis",
+    "numeric_part": 6702,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "1c94e8b3-df5a-48c3-9438-0a197f481d66",
+        "qname": "core:NetReinsuranceContractsHeldAnalysisDimension",
+        "name": "Net reinsurance contracts held analysis [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Dadansoddiad o gontractau ail-yswirio net a ddelir [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:NetReinsuranceContractsHeldAnalysisDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "d5b9a4b4-c205-433f-8a46-5253383aa4cc",
+            "qname": "core:NetReinsuranceContractsHeldAnalysisHeading",
+            "name": "Net reinsurance contracts held analysis [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Dadansoddiad o gontractau ail-yswirio net a ddelir [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:NetReinsuranceContractsHeldAnalysisHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-OnerousNon-onerousInsuranceContracts",
+    "definition": "6703 - Dimension - Onerous and non-onerous insurance contracts",
+    "numeric_part": 6703,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "e55aa65f-784a-492d-9a25-4a7060926167",
+        "qname": "core:OnerousNon-onerousInsuranceContractsDimension",
+        "name": "Onerous and non-onerous insurance contracts [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Contractau yswiriant beichus a rhai nad ydynt yn feichus [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:OnerousNon-onerousInsuranceContractsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "63c118dd-7009-4a26-ae8f-a271bf7f997d",
+            "qname": "core:OnerousNon-onerousInsuranceContractsHeading",
+            "name": "Onerous and non-onerous insurance contracts [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Contractau yswiriant beichus a rhai nad ydynt yn feichus [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:OnerousNon-onerousInsuranceContractsHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-AcquiredIssuedInsuranceContracts",
+    "definition": "6704 - Dimension - Acquired and issued insurance contracts",
+    "numeric_part": 6704,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "93242740-357c-42c1-84b0-b456d41efdff",
+        "qname": "core:AcquiredIssuedInsuranceContractsDimension",
+        "name": "Acquired and issued insurance contracts [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Contractau yswiriant sydd wedi'u caffael a'u rhoi [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:AcquiredIssuedInsuranceContractsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "23b94a8e-9009-4992-aefe-fce0e83fa830",
+            "qname": "core:AcquiredIssuedInsuranceContractsHeading",
+            "name": "Acquired and issued insurance contracts [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Contractau yswiriant sydd wedi'u caffael a'u rhoi [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AcquiredIssuedInsuranceContractsHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-InsuranceContractsIssuedReinsuranceContractsHeld",
+    "definition": "6705 - Dimension - Insurance contracts issued / reinsurance contracts held",
+    "numeric_part": 6705,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "ee7de56e-4ff4-4d03-bf30-3e51411a4a87",
+        "qname": "core:InsuranceContractsIssuedReinsuranceContractsHeldDimension",
+        "name": "Insurance contracts issued / reinsurance contracts held [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Contractau yswiriant a roddwyd / contractau ail-yswirio a ddelir [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:InsuranceContractsIssuedReinsuranceContractsHeldDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "340408ca-9026-4c0e-b8d9-5fe20209e3cc",
+            "qname": "core:InsuranceContractsIssuedReinsuranceContractsHeldHeading",
+            "name": "Insurance contracts issued / reinsurance contracts held [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Contractau yswiriant a roddwyd / contractau ail-yswirio a ddelir [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:InsuranceContractsIssuedReinsuranceContractsHeldHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-ContractTypeInsuranceSpecific",
+    "definition": "6706 - Dimension - Contract type (insurance specific)",
+    "numeric_part": 6706,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "6e70c053-f1cd-4abb-8488-c6e84e0e7a77",
+        "qname": "core:ContractTypeInsuranceSpecificDimension",
+        "name": "Contract type (insurance specific) [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Math o gontract (penodol i yswiriant) [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:ContractTypeInsuranceSpecificDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "4e5ce9e1-8c7f-4c64-a7ad-d1bcc680121d",
+            "qname": "core:ContractTypeInsuranceSpecificHeading",
+            "name": "Contract type (insurance specific) [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Math o gontract (penodol i yswiriant) [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:ContractTypeInsuranceSpecificHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/direp/roles/Dimension-ContractualServiceMarginInsuranceRevenue",
+    "definition": "6707 - Dimension - Contractual service margin and insurance revenue",
+    "numeric_part": 6707,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "2d05275a-278d-46eb-97cc-8435e043d859",
+        "qname": "core:ContractualServiceMarginInsuranceRevenueDimension",
+        "name": "Contractual service margin and insurance revenue [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Maint elw gwasanaeth contractiol a refeniw yswiriant [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:ContractualServiceMarginInsuranceRevenueDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "209389ca-4274-46c4-a2b1-006a061a2431",
+            "qname": "core:ContractualServiceMarginInsuranceRevenueHeading",
+            "name": "Contractual service margin and insurance revenue [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Maint elw gwasanaeth contractiol a refeniw yswiriant [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:ContractualServiceMarginInsuranceRevenueHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/2026-01-01/core/roles/Dimension-LoansAdvancesProductGrouping",
+    "definition": "6708 - Dimension - Loans and advances product grouping",
+    "numeric_part": 6708,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "93114d9e-62fc-431f-9492-ce68a7c29342",
+        "qname": "core:LoansAdvancesProductGroupingDimension",
+        "name": "Loans and advances product grouping [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Grwpio cynnyrch benthyciadau a blaensymiau [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:LoansAdvancesProductGroupingDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "82ee3555-2c4f-4487-9f71-8cb7c3de4734",
+            "qname": "core:LoansAdvancesTotal",
+            "name": "Loans and advances total",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm y benthyciadau a blaensymiau",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:LoansAdvancesTotal",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/2026-01-01/core/roles/Dimension-DrawnUndrawnLoansAdvances",
+    "definition": "6709 - Dimension - Drawn and undrawn loans and advances",
+    "numeric_part": 6709,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "8a765a49-0acd-4b85-979f-f885b02c9581",
+        "qname": "core:DrawnUndrawnLoansAdvancesDimension",
+        "name": "Drawn and undrawn loans and advances [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Blaensymiau a benthyciadau wedi'u tynnu a heb eu tynnu [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:DrawnUndrawnLoansAdvancesDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "b92a5b63-7814-48ee-a1b9-17b2dc545bee",
+            "qname": "core:DrawnUndrawnTotal",
+            "name": "Drawn and undrawn total",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Cyfanswm wedi'i dynnu a heb ei dynnu",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:DrawnUndrawnTotal",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-SupplierFinanceArrangements",
+    "definition": "6710 - Dimension - Supplier Finance Arrangements",
+    "numeric_part": 6710,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "41209379-7dcf-4ec4-833e-3d395cc59afb",
+        "qname": "core:SupplierFinanceArrangementsDimension",
+        "name": "Supplier Finance Arrangements [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Trefniadau Cyllid y Cyflenwr [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:SupplierFinanceArrangementsDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "363388f2-fd7e-45f1-8dd1-75e7dfe40cfd",
+            "qname": "core:AggregateSupplierFinanceArrangementsDefault",
+            "name": "Aggregate supplier finance arrangements [default]",
+            "xbrl_type": "domainItemType",
+            "full_type": "nonnum:domainItemType",
+            "label_cy": "Trefniadau cyllid y cyflenwr cyfanredol [diofyn]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:AggregateSupplierFinanceArrangementsDefault",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "elr": "http://xbrl.frc.org.uk/fr/core/roles/Dimension-SupplierFinanceArrangementsCarryingStatus",
+    "definition": "6711 - Dimension - Supplier Finance Arrangements Carrying Status",
+    "numeric_part": 6711,
+    "root_tree": [
+      {
+        "tree_id": "0000",
+        "uuid": "b92b0abf-69ce-4eee-bd80-2d0c2826130a",
+        "qname": "core:SupplierFinanceArrangementsCarryingStatusDimension",
+        "name": "Supplier Finance Arrangements Carrying Status [Dimension]",
+        "xbrl_type": "stringItemType",
+        "full_type": "xbrli:stringItemType",
+        "label_cy": "Statws Cario Ymlaen Trefniadau Cyllid y Cyflenwr [Dimensiwn]",
+        "substitution_group": "xbrldt:dimensionItem",
+        "concept_id": "core:SupplierFinanceArrangementsCarryingStatusDimension",
+        "abstract": true,
+        "children": [
+          {
+            "tree_id": "0000-0000",
+            "uuid": "d51f0c8a-c57f-4b39-86e3-fed5dd319600",
+            "qname": "core:StatusHeading",
+            "name": "Status [heading]",
+            "xbrl_type": "headingItemType",
+            "full_type": "types:headingItemType",
+            "label_cy": "Statws [pennawd]",
+            "substitution_group": "xbrli:item",
+            "concept_id": "core:StatusHeading",
+            "abstract": true,
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]
